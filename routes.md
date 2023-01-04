@@ -9,7 +9,12 @@ From these nouns decide which need routes:
 - contributors
 
 ### Users
-- R (read)   GET  /users/:id
+Show a list of maps that a user has contributed to
+- B GET /users/:id/maps
+Show list of user's favourite maps
+- B GET /users/:id/favourites
+Display user profile
+- R GET /users/:id
 
 ### Maps
 - B GET  /maps
@@ -23,10 +28,3 @@ From these nouns decide which need routes:
 - E POST /pins/:id
 - A POST /pins
 - D POST /pins/:id/delete
-
-### Favourites
-- B GET /users/:id/favourties
-
-### Contributors
-Show a list of maps that a user has contributed to
-- B GET /users/:id/maps
