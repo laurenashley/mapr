@@ -9,7 +9,7 @@ From these nouns decide which need routes:
 - contributors
 
 ### Users
-** Use Promise.all() fro 3 AJAX req's here?
+** Use Promise.all() for 3 AJAX req's here?
 Show a list of maps that a user has contributed to
 - B GET /users/:id/maps (Promise 3)
 Show list of user's favourite maps
