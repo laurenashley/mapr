@@ -1,6 +1,8 @@
 // See: https://sass-lang.com/
+@import 'partials/variables';
 
 body,
 html {
+  background-color: green;
   margin: 0;
 }

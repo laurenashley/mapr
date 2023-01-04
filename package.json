@@ -12,6 +12,7 @@
   "author": "Lighthouse Labs",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^5.2.3",
     "chalk": "^2.4.2",
     "dotenv": "^2.0.0",
     "ejs": "^3.1.8",
