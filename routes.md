@@ -8,20 +8,25 @@ From these nouns decide which need routes:
 - favourites
 - contributors
 
-<!-- B (browse) GET  /users -->
-R (read)   GET  /users/:id
-<!-- E (edit)   POST /users/:id -->
-<!-- A (add)    POST /users -->
-<!-- D (delete) POST /users/:id/delete -->
+### Users
+- R (read)   GET  /users/:id
 
-B GET  /maps
-R GET  /maps/:id
-E POST /maps/:id
-A POST /maps
-D POST /maps/:id/delete
+### Maps
+- B GET  /maps
+- R GET  /maps/:id (Object with map and associated pins)
+- E POST /maps/:id
+- A POST /maps
+- D POST /maps/:id/delete
 
-<!-- B GET  /pins -->
-<!-- R GET  /pins/:id -->
-<!-- E POST /pins/:id -->
-<!-- A POST /pins -->
-<!-- D POST /pins/:id/delete -->
+### Pins
+- R GET  /pins/:id
+- E POST /pins/:id
+- A POST /pins
+- D POST /pins/:id/delete
+
+### Favourites
+- B GET /users/:id/favourties
+
+### Contributors
+Show a list of maps that a user has contributed to
+- B GET /users/:id/maps
