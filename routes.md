@@ -9,7 +9,13 @@ From these nouns decide which need routes:
 - contributors
 
 ### Users
-- R (read)   GET  /users/:id
+** Use Promise.all() for 3 AJAX req's here?
+Show a list of maps that a user has contributed to
+- B GET /users/:id/maps (Promise 3)
+Show list of user's favourite maps
+- B GET /users/:id/favourites (Promise 2)
+Display user profile
+- R GET /users/:id (Promise 1)
 
 ### Maps
 - B GET  /maps
@@ -23,10 +29,3 @@ From these nouns decide which need routes:
 - E POST /pins/:id
 - A POST /pins
 - D POST /pins/:id/delete
-
-### Favourites
-- B GET /users/:id/favourties
-
-### Contributors
-Show a list of maps that a user has contributed to
-- B GET /users/:id/maps
