@@ -7,14 +7,13 @@
 
 const express = require('express');
 const router  = express.Router();
-const db = require('../db/connection');
+const mapsQueries = require('../db/queries/maps');
 
 router.get('/', (req, res) => {
-  const query = `SELECT * FROM maps`;
-  console.log(query);
-  db.query(query)
+  mapsQueries.getMaps()
     .then(data => {
       const maps = data.rows;
+      console.log('MAPS: ', maps);
       res.json({ maps });
     })
     .catch(err => {

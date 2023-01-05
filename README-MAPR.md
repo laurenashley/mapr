@@ -59,26 +59,23 @@
 
 [routes.md](./routes.md)
 
-## MVP (for startups)
-* Minimum Viable Product
-- Min feature set that user will find useful
+## MVD Requirements
+* user login GET request to set cookie
+* seed database tables with dummy data
+* create new map
+* add, edit, delete own pins
+* view map and pin details in sidebar
+* view my profile
 
-## MVD Minimum Viable Demo
-* what can we effectively show off in 5 minutes
-* if you're not going to show it, don't build it
-* Project Killer: "Wouldn't it be cool if...."
-
-## Wireframe & Mockup
-* design front end
-* anyone on team can implement design
-
-## User Registration and Login
-* Don't do it for demo
-* use GET request to set cookie
-* still users table seeded with users data
+## Wireframes
+[routes.md](./routes.md)
 
 ## Tech Choices
 * back end - node, express, postgres
 * front end - HTML, CSS, JS, jQuery
 
+## Dependencies
 
+- Node 10.x or above
+- NPM 5.x or above
+- PG 6.x
