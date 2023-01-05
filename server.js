@@ -41,7 +41,6 @@ app.use('/maps', mapsRoutes);
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-const { getMaps } = require('./db/queries/maps');
 
 app.get('/', (req, res) => {
   res.render('index');
