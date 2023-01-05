@@ -6,10 +6,12 @@
  */
 
 const express = require('express');
+
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
 
 router.get('/', (req, res) => {
+  console.log('HELLO');
   mapsQueries.getMaps()
     .then(data => {
       const maps = data.rows;
