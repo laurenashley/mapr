@@ -7,10 +7,10 @@
 
 const express = require('express');
 const router  = express.Router();
-const userQueries = require('../db/queries/users');
+const userQueries = require('../db/queries/user');
 
-router.get('/', (req, res) => {
-  userQueries.getUsers()
+router.get('/:id', (req, res) => {
+  userQueries.getUser()
     .then(users => {
       res.json({ users });
     })
@@ -19,6 +19,10 @@ router.get('/', (req, res) => {
         .status(500)
         .json({ error: err.message });
     });
+});
+
+router.get('/:id/maps', (req, res) => {
+  userQueries.getMapsByUser();
 });
 
 module.exports = router;

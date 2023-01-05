@@ -11,7 +11,7 @@ const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
 
 router.get('/', (req, res) => {
-  console.log('HELLO');
+  console.log('HELLO maps.js');
   mapsQueries.getMaps()
     .then(data => {
       const maps = data.rows;
