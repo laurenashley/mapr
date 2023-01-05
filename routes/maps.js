@@ -25,4 +25,8 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+  mapsQueries.getSingleMap();
+});
+
 module.exports = router;
