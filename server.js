@@ -5,6 +5,7 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cookie = require('cookie');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -45,7 +46,39 @@ app.use('/users', usersRoutes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  res.render('index');
+
+  // Store the cookie in a variable and pass to the template
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+
+  const templateVars = {
+    userid: userid
+  };
+
+  res.render('index', templateVars);
+});
+
+// Login Endpoint
+// Simulate login
+// When a user goes to /login using the login form, a cookie is set
+app.get('/login', (req, res) => {
+  res.setHeader('Set-Cookie', cookie.serialize('userid', 1, {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 7 // 1 week
+  }));
+
+  const cookies = cookie.parse(req.headers.cookie || '');
+
+  res.redirect('/');
+});
+
+// Logout Endpoint
+// User clicks on the logout link in the header and the cookie is cleared
+app.get('/logout', (req, res) => {
+  // Clear the logged in cookie (simulated)
+  res.clearCookie('userid');
+
+  // Redirect to main page
+  res.redirect('/');
 });
 
 app.listen(PORT, () => {
