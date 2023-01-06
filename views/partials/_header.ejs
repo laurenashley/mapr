@@ -24,13 +24,28 @@
 
       <!-- Right links -->
       <div class="header-container">
-        <button type="button" class="btn btn-link px-3 me-2">
+        <button type="button" class="btn btn-link px-3 me-3">
           Login
         </button>
         <button type="button" class="btn btn-primary me-3">
           Sign up!
         </button>
-        <i class="fa-sharp fa-solid fa-bars"></i>
+
+        <div id="main">
+          <span style="font-size:18px;cursor:pointer" onclick="openNav()"><i class="fa-sharp fa-solid fa-bars"></i> </span>
+        </div>
+
+        <script>
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "350px";
+          document.getElementById("main").style.marginLeft = "300px";
+        }
+
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+          document.getElementById("main").style.marginLeft= "0";
+        }
+        </script>
       </div>
     </div>
   </nav>
