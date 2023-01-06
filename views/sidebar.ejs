@@ -1,11 +1,22 @@
 <body>
 
-  <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times; </a>
-    <h2>Maps</h2>
-    <a href="#">Restaurants near me</a>
-    <a href="#">Favourite vacation spots in Canada</a>
-    <a href="#">Favorite vacation spots in the world</a>
+  <div class="sidenav showNav">
+    <div class="d-flex justify-content-between align-items-center title">
+      <h2>Maps</h2>
+      <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times; </a>
+    </div>
+    <article>
+      <ul class="nav justify-content-around">
+        <li class="nav-item">
+          <a href="#">Favorites</a>
+        </li>
+        <li class="nav-item">
+          <a href="#">Contributed</a>
+        </li>
+      </ul>
+      <div class="list">
+      </div>
+    </article>
   </div>
 
   </body>
