@@ -45,10 +45,10 @@ const { getMaps } = require('./db/queries/maps');
 
 app.get('/', (req, res) => {
   getMaps()
-    .then(data => {
-      console.log('MAPS: ', data);
-      res.render('index'); // How do I pass templatevars from here?
-      // res.json({ data });
+    .then(maps => {
+      console.log('MAPS: ', maps);
+      res.render('index', maps); // How do I pass templatevars from here?
+      // res.json({ maps });
     })
     .catch(err => {
       res
