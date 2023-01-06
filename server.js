@@ -56,7 +56,7 @@ app.get('/', (req, res) => {
         .status(500)
         .json({ error: err.message });
     });
-    res.render('index');
+  res.render('index');
 });
 
 app.listen(PORT, () => {
