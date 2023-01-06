@@ -3,37 +3,34 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
     <!-- Container wrapper -->
-    <div class="container-fluid mx-3">
+    <div class="container-fluid mx-3 showNav headerBar">
       <div class="header-container">
         <!-- Navbar Logo -->
         <a class="navbar-brand" href="">
-          <img alt="Mapr" width="100" src="/images/logo.png" /><span class="sr-only">Maps</span>
-          
-        </a>
-        <!-- Maps links -->
-        <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="/"><img width="100" src="/images/logo.png" /><span class="sr-only">Maps</span></a>
-          </li>
-        </ul> -->
-      </div>
+          <img alt="Mapr" width="100" src="/images/logo.png" /><span class="sr-only">Maps</span>    
+        </a>  
+    </div>
 
       <!-- Right links -->
       <div class="header-container">
         <% if (userid) { %>
-          <a href="/logout" type="button" class="btn btn-link px-3 me-3">
+          <!-- Button trigger modal -->
+          <a href="/user" class="btn btn-secondary btn-profile rounded-circle" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="fa-solid fa-user"></i></a>
+          <a href="/logout" type="button" class="btn btn-link px-3">
             Logout
           </a>
         <% } else { %>
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-link px-3 me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+          <button type="button" class="btn btn-link px-3" data-bs-toggle="modal" data-bs-target="#loginModal">
           Login
           </button>
-          <button type="button" class="btn btn-primary me-3">
+          <button type="button" class="btn btn-primary btn-sm">
             Sign up!
           </button>
-        <% } %>        
-        <i class="fa-sharp fa-solid fa-bars"></i>
+        <% } %>
+        <span style="font-size:18px;cursor:pointer;" onclick="toggleNav()"><i class="fa-sharp fa-solid fa-bars"></i></span>
+
+
       </div>
     </div>
   </nav>

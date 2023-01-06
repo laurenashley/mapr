@@ -1,10 +1,8 @@
-/*
- * Always set the map height explicitly to define the size of the div element
- * that contains the map.
- */
- #map {
-  height: 100%;
-}
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import 'partials/variables';
+@import 'partials/layout';
+@import 'partials/sidebar';
+@import 'partials/header';
 
 /*
  * Optional: Makes the sample page fill the window.
@@ -14,4 +12,6 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
 }
