@@ -10,23 +10,20 @@ const express = require('express');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
 
-router.get('/', (req, res) => {
-  console.log('HELLO maps.js');
-  mapsQueries.getMaps()
-    .then(data => {
-      const maps = data.rows;
-      console.log('MAPS: ', maps);
-      res.json({ maps });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
-});
-
 router.get('/:id', (req, res) => {
   mapsQueries.getSingleMap();
+});
+
+router.post('/:id/edit', (req, res) => {
+  mapsQueries.updateMap();
+});
+
+router.post('/new', (req, res) => {
+  mapsQueries.addNewMap();
+});
+
+router.post('/:id/delete', (req, res) => {
+  mapsQueries.deleteMap();
 });
 
 module.exports = router;
