@@ -50,14 +50,13 @@ app.get('/', (req, res) => {
       const maps = data.rows;
       console.log('MAPS: ', data);
       res.json({ maps });
-      res.render('index');
     })
     .catch(err => {
       res
         .status(500)
         .json({ error: err.message });
     });
-  // res.render('index');
+    res.render('index');
 });
 
 app.listen(PORT, () => {
