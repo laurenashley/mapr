@@ -8,6 +8,10 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script type="module" src="/scripts/index.js"></script>
 
+  <!-- Sidebar script-->
+  <script type="text/javascript" src="/scripts/sidebar.js"></script>
+
+
   <meta charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0" >
@@ -41,7 +45,7 @@
 
   <%- include('sidebar') %>
 
-  <div id="map"></div>
+  <div id="map" class="showNav"></div>
 
   <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy27fKunTSdnMYtm6KFFQPDYafI6VRYrw&callback=initMap&v=weekly"
