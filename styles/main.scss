@@ -29,7 +29,8 @@ body {
   right: 0;
   background-color: #3367d6;
   overflow-x: hidden;
-  transition: 0.5s;
+  transition: .2s;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
 
   .title {
     margin: 0 32px;
