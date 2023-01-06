@@ -3,7 +3,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
     <!-- Container wrapper -->
-    <div class="container-fluid mx-3">
+    <div class="container-fluid mx-3 showNav headerBar">
       <div class="header-container">
         <!-- Navbar Logo -->
         <a class="navbar-brand" href=""><!-- we can put the image logo here and click on home page? -->
@@ -24,28 +24,16 @@
 
       <!-- Right links -->
       <div class="header-container">
-        <button type="button" class="btn btn-link px-3 me-3">
+        <button type="button" class="btn btn-link px-4 me-3">
           Login
         </button>
-        <button type="button" class="btn btn-primary me-3">
-          Sign up!
+        <button type="button" class="btn btn-primary px-4 me-3">
+          Sign up
         </button>
 
-        <div id="main">
-          <span style="font-size:18px;cursor:pointer" onclick="openNav()"><i class="fa-sharp fa-solid fa-bars"></i> </span>
-        </div>
+        <span style="font-size:18px;cursor:pointer;" onclick="toggleNav()"><i class="fa-sharp fa-solid fa-bars"></i></span>
 
-        <script>
-        function openNav() {
-          document.getElementById("mySidenav").style.width = "350px";
-          document.getElementById("main").style.marginLeft = "300px";
-        }
 
-        function closeNav() {
-          document.getElementById("mySidenav").style.width = "0";
-          document.getElementById("main").style.marginLeft= "0";
-        }
-        </script>
       </div>
     </div>
   </nav>
