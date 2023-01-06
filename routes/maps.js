@@ -6,22 +6,24 @@
  */
 
 const express = require('express');
-const router  = express.Router();
-const db = require('../db/connection');
 
-router.get('/', (req, res) => {
-  const query = `SELECT * FROM maps`;
-  console.log(query);
-  db.query(query)
-    .then(data => {
-      const maps = data.rows;
-      res.json({ maps });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
+const router  = express.Router();
+const mapsQueries = require('../db/queries/maps');
+
+router.get('/:id', (req, res) => {
+  mapsQueries.getSingleMap();
+});
+
+router.post('/:id/edit', (req, res) => {
+  mapsQueries.updateMap();
+});
+
+router.post('/new', (req, res) => {
+  mapsQueries.addNewMap();
+});
+
+router.post('/:id/delete', (req, res) => {
+  mapsQueries.deleteMap();
 });
 
 module.exports = router;

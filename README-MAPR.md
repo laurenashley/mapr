@@ -59,26 +59,38 @@
 
 [routes.md](./routes.md)
 
-## MVP (for startups)
-* Minimum Viable Product
-- Min feature set that user will find useful
+## MVD Requirements
+* user login GET request to set cookie
+* seed database tables with dummy data
+* create new map
+* add, edit, delete own pins
+* view map and pin details in sidebar
+* view my profile
 
-## MVD Minimum Viable Demo
-* what can we effectively show off in 5 minutes
-* if you're not going to show it, don't build it
-* Project Killer: "Wouldn't it be cool if...."
-
-## Wireframe & Mockup
-* design front end
-* anyone on team can implement design
-
-## User Registration and Login
-* Don't do it for demo
-* use GET request to set cookie
-* still users table seeded with users data
+## Wireframes
+[routes.md](./routes.md)
 
 ## Tech Choices
 * back end - node, express, postgres
 * front end - HTML, CSS, JS, jQuery
 
+## Dependencies
 
+- Node 10.x or above
+- NPM 5.x or above
+- PG 6.x
+
+## Getting Started
+
+1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
+2. Update the .env file with your correct local information 
+  - username: `labber` 
+  - password: `labber` 
+  - database: `midterm`
+3. Install dependencies: `npm i`
+4. Fix to binaries for sass: `npm rebuild node-sass`
+5. Reset database: `npm run db:reset`
+  - Check the db folder to see what gets created and seeded in the SDB
+7. Run the server: `npm run local`
+  - Note: nodemon is used, so you should not have to restart your server
+8. Visit `http://localhost:8080/`
