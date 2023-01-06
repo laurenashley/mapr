@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Mapr</title>
+  <title>mapr - A wiki mapping app</title>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
   <script type="module" src="/scripts/index.js"></script>
 
@@ -36,25 +36,12 @@
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
-  <div class="dropdown">
-    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Dropdown link
-    </a>
-  
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Action</a></li>
-      <li><a class="dropdown-item" href="#">Another action</a></li>
-      <li><a class="dropdown-item" href="#">Something else here</a></li>
-    </ul>
-  </div>
-</body>
-</html>
 
   <%- include('partials/_header') %>
 
   <div id="map"></div>
 
+  <%- include('partials/_login') %>
   <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy27fKunTSdnMYtm6KFFQPDYafI6VRYrw&callback=initMap&v=weekly"
       defer
