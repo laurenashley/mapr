@@ -44,8 +44,7 @@ app.use('/users', usersRoutes);
 const { getMaps } = require('./db/queries/maps');
 
 app.get('/', (req, res) => {
-  console.log('HELLO / ');
-  getMaps()
+  const getMapList = getMaps()
     .then(data => {
       const maps = data.rows;
       console.log('MAPS: ', data);
@@ -56,7 +55,7 @@ app.get('/', (req, res) => {
         .status(500)
         .json({ error: err.message });
     });
-  res.render('index');
+  res.render('index', getMapList);
 });
 
 app.listen(PORT, () => {
