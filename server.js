@@ -42,13 +42,13 @@ app.use('/users', usersRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
+const { json } = require('express');
 
 app.get('/', (req, res) => {
   getMaps()
-    .then(maps => {
-      console.log('MAPS: ', maps);
-      res.render('index', maps); // How do I pass templatevars from here?
-      // res.json({ maps });
+    .then(data => {
+      const maps = JSON.stringify(data);
+      res.render('index', { maps });
     })
     .catch(err => {
       res
