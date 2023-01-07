@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+
 app.set('view engine', 'ejs');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -31,11 +32,15 @@ app.use(express.static('public'));
 const usersRoutes = require('./routes/users');
 const mapsRoutes = require('./routes/maps');
 
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/maps', mapsRoutes);
 app.use('/users', usersRoutes);
+
+
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
