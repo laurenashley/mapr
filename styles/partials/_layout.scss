@@ -12,16 +12,25 @@ html {
  * that contains the map.
  */
 #map {
-  height: 85vh; // 100 minus header and footer
+  margin-top: $header-height;
+  height: calc(100% - $header-height - $footer-height); // 100 minus header and footer
   // width: 100vw;
 }
 
 .section-header {
-  height: 10vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: $header-height;
 }
 
 .section-footer {
-  height: 5vh;
+  height: $footer-height;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
   width: 75vw;
 }
 
