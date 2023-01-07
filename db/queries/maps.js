@@ -22,8 +22,11 @@ const updateMap = (id) => {
     });
 };
 
-const addNewMap = () => {
-  return db.query(``)
+const addNewMap = (user_id, name, long, lat, zoom) => {
+  return db.query(`
+  INSERT INTO maps(user_id, title, longitude, latitude, zoom)
+  VALUES($1, $2, $3, $4, $5);
+  `)
     .then(data => {
       return data.rows;
     });

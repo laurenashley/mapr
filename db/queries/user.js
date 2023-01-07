@@ -1,13 +1,27 @@
 const db = require('../connection');
 
-const getSingleUser = (id) => {
-  return db.query(`
+const getSingleUser = function(id) {
+
+  const query = `
     SELECT *
     FROM users
     WHERE id = $1;
-  `)
-    .then(data => {
-      return data.rows;
+  `;
+
+  const value = [`${id}`];
+
+  return db.query(query, value)
+    .then( (data) => {
+      const user = data.rows[0];
+
+      if (!data.rows.length) {
+        console.log("No user found with that id");
+        return null;
+      }
+      return user;
+    })
+    .catch((err) => {
+      console.log(err.message);
     });
 };
 

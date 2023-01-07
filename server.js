@@ -43,17 +43,25 @@ app.use('/users', usersRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
+const { json } = require('express');
+const { getSingleUser } = require('./db/queries/user');
 
 app.get('/', (req, res) => {
-
   // Store the cookie in a variable and pass to the template
   const userid = cookie.parse(req.headers.cookie || '').userid;
 
-  const templateVars = {
-    userid: userid
-  };
-
-  res.render('index', templateVars);
+  getSingleUser(userid)
+  getMaps()
+    .then(data => {
+      const user = JSON.stringify(data);
+      const maps = JSON.stringify(data);
+      res.render('index', { user, maps, userid });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
 
 // Login Endpoint
@@ -78,17 +86,6 @@ app.get('/logout', (req, res) => {
 
   // Redirect to main page
   res.redirect('/');
-  getMaps()
-    .then(data => {
-      console.log('MAPS: ', data);
-      res.render('index'); // How do I pass templatevars from here?
-      // res.json({ data });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
 });
 
 app.listen(PORT, () => {
