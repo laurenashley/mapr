@@ -26,7 +26,8 @@ const addNewMap = (user_id, name, long, lat, zoom) => {
   return db.query(`
   INSERT INTO maps(user_id, title, longitude, latitude, zoom)
   VALUES($1, $2, $3, $4, $5);
-  `)
+  `,
+  [user_id, name, long, lat, zoom])
     .then(data => {
       return data.rows;
     });

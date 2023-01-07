@@ -22,7 +22,7 @@ router.post('/new', (req, res) => {
   const data = req.body;
   console.log('new map submitted: ', req.body.mapName);
   mapsQueries.addNewMap(
-    data.user_id,
+    1, // To Do change to login cookie
     data.mapName,
     data.mapLong,
     data.mapLat,
