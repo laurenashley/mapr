@@ -14,7 +14,7 @@ router.get('/:id', (req, res) => {
   mapsQueries.getSingleMap();
 });
 
-router.post('/:id/edit', (req, res) => {
+router.post('/:id/update', (req, res) => {
   mapsQueries.updateMap();
 });
 
