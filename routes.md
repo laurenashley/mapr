@@ -8,20 +8,24 @@ From these nouns decide which need routes:
 - favourites
 - contributors
 
-<!-- B (browse) GET  /users -->
-R (read)   GET  /users/:id
-<!-- E (edit)   POST /users/:id -->
-<!-- A (add)    POST /users -->
-<!-- D (delete) POST /users/:id/delete -->
+### Users
+** Use Promise.all() for 3 AJAX req's here?
+Show a list of maps that a user has contributed to
+- B GET /users/:id/maps (Promise 3)
+Show list of user's favourite maps
+- B GET /users/:id/favourites (Promise 2)
+Display user profile
+- R GET /users/:id (Promise 1)
 
-B GET  /maps
-R GET  /maps/:id
-E POST /maps/:id
-A POST /maps
-D POST /maps/:id/delete
+### Maps
+- B GET  /maps
+- R GET  /maps/:id (Object with map and associated pins)
+- E POST /maps/:id
+- A POST /maps
+- D POST /maps/:id/delete
 
-<!-- B GET  /pins -->
-<!-- R GET  /pins/:id -->
-<!-- E POST /pins/:id -->
-<!-- A POST /pins -->
-<!-- D POST /pins/:id/delete -->
+### Pins
+- R GET  /pins/:id
+- E POST /pins/:id
+- A POST /pins
+- D POST /pins/:id/delete
