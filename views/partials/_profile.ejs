@@ -18,26 +18,21 @@
         
       </div>        
       <div class="modal-body p-5">
-        
         <section id="favourties" class="py-4 mb-4">
           <h4 class="h5 mb-3">Favourite Maps</h4>
-          <ul class="list-group">
-            <li class="list-group-item"><a href="">An item</a></li>
-            <li class="list-group-item"><a href="">A second item</a></li>
-            <li class="list-group-item"><a href="">A third item</a></li>
-            <li class="list-group-item"><a href="">A fourth item</a></li>
-            <li class="list-group-item"><a href="">And a fifth one</a></li>
+          <ul id="user-maps" class="list-group">
+            <% userMaps.forEach((map) => { %>
+              <li class="list-group-item"><a href=""><%= map.title %></a></li>
+            <% }); %>
           </ul>
         </section>
         <hr>
         <section id="contrib" class="mb-4 py-4">
           <h4 class="h5 mb-3">Maps I've contributed to</h4>
-          <ul class="list-group">
-            <li class="list-group-item"><a href="">An item</a></li>
-            <li class="list-group-item"><a href="">A second item</a></li>
-            <li class="list-group-item"><a href="">A third item</a></li>
-            <li class="list-group-item"><a href="">A fourth item</a></li>
-            <li class="list-group-item"><a href="">And a fifth one</a></li>
+          <ul id="user-maps" class="list-group">
+            <% userFavs.forEach((map) => { %>
+              <li class="list-group-item"><a href=""><%= map.title %></a></li>
+            <% }); %>
           </ul>
         </section>
       </div>

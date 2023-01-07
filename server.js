@@ -44,19 +44,22 @@ app.use('/users', usersRoutes);
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
 const { json } = require('express');
-const { getSingleUser } = require('./db/queries/user');
+const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/user');
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const promiseUser = getSingleUser(userid);
   const promiseMaps = getMaps();
-
+  const prmoiseUserMaps = getMapsByUser(userid);
+  const promiseGetFavourites = getFavourties(userid);
   
-  Promise.all([userid, promiseMaps, promiseUser]).then(data => {    
+  Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {    
       const maps = data[1];
       const user = data[2];
-      res.render('index', { user, maps, userid });
+      const userMaps = data[3];
+      const userFavs = data[4];
+      res.render('index', { user, maps, userMaps, userFavs, userid });
     })
     .catch(err => {
       res
