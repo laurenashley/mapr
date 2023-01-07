@@ -19,14 +19,12 @@ router.post('/:id/edit', (req, res) => {
 });
 
 router.post('/new', (req, res) => {
-  const data = req.body;
-  console.log('new map submitted: ', req.body.mapName);
   mapsQueries.addNewMap(
     1, // To Do change to login cookie
-    data.mapName,
-    data.mapLong,
-    data.mapLat,
-    data.mapZoom
+    req.body.mapName,
+    req.body.mapLong,
+    req.body.mapLat,
+    req.body.mapZoom
   );
 });
 
