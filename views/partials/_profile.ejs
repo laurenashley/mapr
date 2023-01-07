@@ -5,15 +5,13 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header flex-column">
-        <!-- <h5 class="modal-title sr-only" id="profileModalLabel">My Profile</h5> -->
-        <%= user %>
         <button type="button" class="ml-auto btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         <div class="row">
-          <header class="col-12 text-center py-3">
-            <h3>FirstName LastName</h3>
-            <p>emailaddress@demo.com</p>
+          <header class="col-12 text-center py-3">              
+            <h3><%= user.username %></h3>
+            <p><%= user.email %></p>
             <a href="/logout" type="button" class="btn btn-outline-secondary">
-                Logout
+              Logout
             </a>
           </header>
         </div>

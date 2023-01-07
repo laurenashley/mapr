@@ -49,12 +49,13 @@ const { getSingleUser } = require('./db/queries/user');
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
   const userid = cookie.parse(req.headers.cookie || '').userid;
+  const promiseUser = getSingleUser(userid);
+  const promiseMaps = getMaps();
 
-  getSingleUser(userid)
-  getMaps()
-    .then(data => {
-      const user = JSON.stringify(data);
-      const maps = JSON.stringify(data);
+  
+  Promise.all([userid, promiseMaps, promiseUser]).then(data => {    
+      const maps = data[1];
+      const user = data[2];
       res.render('index', { user, maps, userid });
     })
     .catch(err => {

@@ -47,7 +47,11 @@
   <div id="map" class="showNav"></div>
 
   <%- include('partials/_login') %>
-  <%- include('partials/_profile') %>
+
+  <% if (userid) { %>
+    <%- include('partials/_profile') %>
+  <% } %>
+
   <%- include('partials/_footer') %>
   
   <!-- Google Maps API -->
