@@ -15,7 +15,11 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/:id/update', (req, res) => {
-  mapsQueries.updateMap();
+  1, // To Do change to login cookie
+  req.body.mapName,
+  req.body.mapLong,
+  req.body.mapLat,
+  req.body.mapZoom
 });
 
 router.post('/new', (req, res) => {
@@ -29,6 +33,10 @@ router.post('/new', (req, res) => {
 });
 
 router.post('/:id/delete', (req, res) => {
+  // To Do prompt use to confirm map deletion
+  // To Do pass map_id below
+  const mapId = $('#mapsList li').attr('id');
+  console.log('map id: ', mapId);
   mapsQueries.deleteMap();
 });
 
