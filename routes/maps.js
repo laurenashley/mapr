@@ -21,13 +21,13 @@ router.post('/:id/edit', (req, res) => {
 router.post('/new', (req, res) => {
   const data = req.body;
   console.log('new map submitted: ', req.body.mapName);
-  mapsQueries.addNewMap([
+  mapsQueries.addNewMap(
     data.user_id,
     data.mapName,
     data.mapLong,
     data.mapLat,
     data.mapZoom
-  ]);
+  );
 });
 
 router.post('/:id/delete', (req, res) => {
