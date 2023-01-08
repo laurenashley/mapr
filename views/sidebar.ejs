@@ -4,8 +4,7 @@
       <h2>Maps</h2>
       <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times; </a>
     </div>
-    <article id="mapsList">
-      <%= maps %>
+    <article >
       <ul class="nav justify-content-around">
         <li class="nav-item">
           <a href="#">All Maps</a>
@@ -17,32 +16,9 @@
           <a href="#">Contributed</a>
         </li>
       </ul>
-      <div class="list">
-      </div>
+      <!-- <div class="list">
+      </div> -->
+      <%- include('maps/list') %>
     </article>
-    <form id="newMapForm" action="/maps/new" method="post">
-      <title>Create new map</title>
-      <p>
-        <label for="mapName">Map name</label>
-        <input id="mapName" name="mapName" type="text" value="">
-      </p>
-      <p>
-        <label for="map-description">Description</label>
-        <textarea id="map-description"></textarea>
-      </p>
-      <p>
-        <label for="map-long">Longitude</label>
-        <input id="map-long" type="text" value="">
-      </p>
-      <p>
-        <label for="map-lat">Latitude</label>
-        <input id="map-lat" type="text" value="">
-      </p>
-      <p>
-        <label for="map-zoom">Zoom</label>
-        <input id="map-zoom" type="text" value="">
-      </p>
-      <input type="submit" name="submit" value="Save">
-    </form>
   </div>
 </body>

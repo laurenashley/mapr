@@ -14,23 +14,29 @@ router.get('/:id', (req, res) => {
   mapsQueries.getSingleMap();
 });
 
-router.post('/:id/edit', (req, res) => {
-  mapsQueries.updateMap();
+router.post('/:id/update', (req, res) => {
+  1, // To Do change to login cookie
+  req.body.mapName,
+  req.body.mapLong,
+  req.body.mapLat,
+  req.body.mapZoom
 });
 
 router.post('/new', (req, res) => {
-  const data = req.body;
-  console.log('new map submitted: ', req.body.mapName);
-  mapsQueries.addNewMap([
-    data.user_id,
-    data.mapName,
-    data.mapLong,
-    data.mapLat,
-    data.mapZoom
-  ]);
+  mapsQueries.addNewMap(
+    1, // To Do change to login cookie
+    req.body.mapName,
+    req.body.mapLong,
+    req.body.mapLat,
+    req.body.mapZoom
+  );
 });
 
 router.post('/:id/delete', (req, res) => {
+  // To Do prompt use to confirm map deletion
+  // To Do pass map_id below
+  const mapId = $('#mapsList li').attr('id');
+  console.log('map id: ', mapId);
   mapsQueries.deleteMap();
 });
 

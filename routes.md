@@ -20,12 +20,12 @@ Display user profile
 ### Maps
 - B GET  /maps
 - R GET  /maps/:id (Object with map and associated pins)
-- E POST /maps/:id/edit
+- E POST /maps/:id/update
 - A POST /maps/new
 - D POST /maps/:id/delete
 
 ### Pins
 - R GET  /pins/:id
-- E POST /pins/:id/edit
+- E POST /pins/:id/update
 - A POST /pins/new
 - D POST /pins/:id/delete

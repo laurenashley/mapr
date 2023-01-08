@@ -51,8 +51,7 @@ const { json } = require('express');
 
 app.get('/', (req, res) => {
   getMaps()
-    .then(data => {
-      const maps = JSON.stringify(data);
+    .then(maps => {
       res.render('index', { maps });
     })
     .catch(err => {

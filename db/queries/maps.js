@@ -15,8 +15,12 @@ const getSingleMap = (id) => {
     });
 };
 
-const updateMap = (id) => {
-  return db.query(``)
+const updateMap = (user_id, name, long, lat, zoom) => {
+  return db.query(`
+  INSERT INTO maps(user_id, title, longitude, latitude, zoom)
+  VALUES($1, $2, $3, $4, $5);
+  `,
+  [user_id, name, long, lat, zoom])
     .then(data => {
       return data.rows;
     });
@@ -26,14 +30,15 @@ const addNewMap = (user_id, name, long, lat, zoom) => {
   return db.query(`
   INSERT INTO maps(user_id, title, longitude, latitude, zoom)
   VALUES($1, $2, $3, $4, $5);
-  `)
+  `,
+  [user_id, name, long, lat, zoom])
     .then(data => {
       return data.rows;
     });
 };
 
 const deleteMap = (id) => {
-  return db.query(`DELETE FROM maps WHERE id = $1;`)
+  return db.query(`DELETE FROM maps WHERE id = $1;`, [id])
     .then(data => {
       return data.rows;
     });
