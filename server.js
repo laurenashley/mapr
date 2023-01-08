@@ -10,6 +10,7 @@ const cookie = require('cookie');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+
 app.set('view engine', 'ejs');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -32,11 +33,15 @@ app.use(express.static('public'));
 const usersRoutes = require('./routes/users');
 const mapsRoutes = require('./routes/maps');
 
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/maps', mapsRoutes);
 app.use('/users', usersRoutes);
+
+
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -49,12 +54,14 @@ const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/us
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
   const userid = cookie.parse(req.headers.cookie || '').userid;
-  const promiseUser = getSingleUser(userid);
-  const promiseMaps = getMaps();
-  const prmoiseUserMaps = getMapsByUser(userid);
-  const promiseGetFavourites = getFavourties(userid);
-  
-  Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {    
+
+  if (userid) {
+    const promiseUser = getSingleUser(userid);
+    const prmoiseUserMaps = getMapsByUser(userid);
+    const promiseGetFavourites = getFavourties(userid);
+    const promiseMaps = getMaps();
+
+    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {    
       const maps = data[1];
       const user = data[2];
       const userMaps = data[3];
@@ -66,6 +73,19 @@ app.get('/', (req, res) => {
         .status(500)
         .json({ error: err.message });
     });
+  } else {
+    const promiseMaps = getMaps();
+  
+    Promise.all([userid, promiseMaps]).then(data => {    
+        const maps = data[1];
+        res.render('index', { maps, userid });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  }
 });
 
 // Login Endpoint
@@ -76,8 +96,6 @@ app.get('/login', (req, res) => {
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 7 // 1 week
   }));
-
-  const cookies = cookie.parse(req.headers.cookie || '');
 
   res.redirect('/');
 });

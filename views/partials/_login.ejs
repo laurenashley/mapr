@@ -3,14 +3,14 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="loginModalLabel">Login</h1>
+        <h2 class="modal-title fs-5" id="loginModalLabel">Login</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form method="POST" action="/login">
           <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email Address:</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email" value="demo@demo.com">
+            <label for="userEmail" class="form-label">Email Address:</label>
+            <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email" value="demo@demo.com">
           </div>
           <div class="mb-3">
             <label for="inputPassword" class="form-label">Password:</label>

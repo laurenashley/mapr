@@ -34,6 +34,12 @@ html {
   width: 75vw;
 }
 
+#cta {
+  position: fixed;
+  bottom: calc($footer-height + $spacer);
+  left: $spacer;
+}
+
 .sidenav {
   height: 100vh;
 }

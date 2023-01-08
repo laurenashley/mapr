@@ -18,8 +18,8 @@
         
       </div>        
       <div class="modal-body p-5">
-        <section id="favourties" class="py-4 mb-4">
-          <h4 class="h5 mb-3">Favourite Maps</h4>
+        <section id="favourties" class="pb-3 mb-3">
+          <h4 class="h5 mb-2">Favourite Maps</h4>
           <ul id="user-maps" class="list-group">
             <% userMaps.forEach((map) => { %>
               <li class="list-group-item"><a href=""><%= map.title %></a></li>
@@ -27,8 +27,8 @@
           </ul>
         </section>
         <hr>
-        <section id="contrib" class="mb-4 py-4">
-          <h4 class="h5 mb-3">Maps I've contributed to</h4>
+        <section id="contrib" class="pb-3">
+          <h4 class="h5 mb-2">Maps I've contributed to</h4>
           <ul id="user-maps" class="list-group">
             <% userFavs.forEach((map) => { %>
               <li class="list-group-item"><a href=""><%= map.title %></a></li>

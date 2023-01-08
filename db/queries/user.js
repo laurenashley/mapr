@@ -35,6 +35,10 @@ const getMapsByUser = (id) => {
   const value = [`${id}`];
   return db.query(query, value)
     .then(data => {
+      if (!data.rows.length) {
+        console.log("No user found with that id");
+        return null;
+      }
       return data.rows;
     });
 };
@@ -52,6 +56,10 @@ const getFavourties = (id) => {
   const value = [`${id}`];
   return db.query(query, value)
     .then(data => {
+      if (!data.rows.length) {
+        console.log("No user found with that id");
+        return null;
+      }
       return data.rows;
     });
 };
