@@ -24,4 +24,8 @@ router.get('/', async (req, res) => {
     });
 });
 
+<<<<<<< HEAD
 module.exports = router;
+=======
+module.exports = router;
+>>>>>>> f181ddf9fa75705712b637574fcbdb0b5d6f7f59
