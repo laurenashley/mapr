@@ -1,5 +1,4 @@
 -- Select single map by map id
-SELECT *
-FROM maps
-WHERE id = 3
-;
+SELECT * FROM pins
+  JOIN maps ON maps.id = map_id
+  WHERE map_id = 1;
