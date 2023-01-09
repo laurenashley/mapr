@@ -75,3 +75,8 @@ function initMap() {
 // https://developers.google.com/maps/documentation/javascript/examples/event-click-latlng
 
 window.initMap = initMap;
+
+$(() => {
+
+  
+});

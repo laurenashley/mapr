@@ -40,8 +40,6 @@ const mapsRoutes = require('./routes/maps');
 app.use('/maps', mapsRoutes);
 app.use('/users', usersRoutes);
 
-
-
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -54,6 +52,7 @@ const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/us
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
   const userid = cookie.parse(req.headers.cookie || '').userid;
+  const pins = null;
 
   if (userid) {
     const promiseUser = getSingleUser(userid);
@@ -61,8 +60,7 @@ app.get('/', (req, res) => {
     const promiseGetFavourites = getFavourties(userid);
     const promiseMaps = getMaps();
 
-    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {
-      const pins = null;
+    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {      
       const maps = data[1];
       const user = data[2];
       const userMaps = data[3];
@@ -79,7 +77,7 @@ app.get('/', (req, res) => {
   
     Promise.all([userid, promiseMaps]).then(data => {    
         const maps = data[1];
-        res.render('index', { maps, userid });
+        res.render('index', { maps, userid, pins });
       })
       .catch(err => {
         res

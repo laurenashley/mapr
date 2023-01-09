@@ -6,7 +6,7 @@
  */
 
 const express = require('express');
-
+const cookie = require('cookie');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
 
@@ -33,8 +33,9 @@ router.post('/:id/update', (req, res) => {
 });
 
 router.post('/new', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
   mapsQueries.addNewMap(
-    1, // To Do change to login cookie
+    userid, // To Do change to login cookie
     req.body.mapName,
     req.body.mapLong,
     req.body.mapLat,

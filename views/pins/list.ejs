@@ -1,4 +1,4 @@
-<ul id="pinsList" class="nav">
+<ul id="pinsList" class="nav flex-column">
   <% if (pins) { %>
     <% pins.forEach((pin) => { %>
       <li id="<%= pin.id %>" class="nav-item"><%= pin.title %></li>

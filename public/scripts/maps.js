@@ -22,7 +22,6 @@ $(() => {
             <a href="">${pin.title}</a>
             <p>${pin.description}</p>
           </li>
-          <li class="pin"></li>
           `);
           $html.appendTo($pinsListEl);
         });
