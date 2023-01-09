@@ -61,12 +61,13 @@ app.get('/', (req, res) => {
     const promiseGetFavourites = getFavourties(userid);
     const promiseMaps = getMaps();
 
-    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {    
+    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {
+      const pins = null;
       const maps = data[1];
       const user = data[2];
       const userMaps = data[3];
       const userFavs = data[4];
-      res.render('index', { user, maps, userMaps, userFavs, userid });
+      res.render('index', { user, maps, userMaps, userFavs, userid, pins });
     })
     .catch(err => {
       res

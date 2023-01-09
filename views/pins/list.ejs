@@ -1,0 +1,7 @@
+<ul id="pinsList" class="nav">
+  <% if (pins) { %>
+    <% pins.forEach((pin) => { %>
+      <li id="<%= pin.id %>" class="nav-item"><%= pin.title %></li>
+    <% }); %>
+  <% } %>
+</ul>

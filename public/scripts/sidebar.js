@@ -11,3 +11,12 @@ function toggleNav() {
   }
 };
 
+// Fn to toggle which view to show within the sidebar
+const switchView = (el1, el2) => {
+  console.log('switchView');
+  // hide el1, show el2
+};
+
+$(() => {
+  // bind click events and send elements to hide/show to switchView()
+});

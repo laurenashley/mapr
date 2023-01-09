@@ -11,15 +11,25 @@ const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
 
 router.get('/:id', (req, res) => {
-  mapsQueries.getSingleMap();
+  mapsQueries.getMapWithPins(req.params.id)
+  .then(map => {
+    res.json({ pins: map });
+  })
+  .catch(err => {
+    res
+      .status(500)
+      .json({ error: err.message });
+  });
 });
 
 router.post('/:id/update', (req, res) => {
-  1, // To Do change to login cookie
-  req.body.mapName,
-  req.body.mapLong,
-  req.body.mapLat,
-  req.body.mapZoom
+  mapsQueries.updateMap(
+    1, // To Do change to login cookie
+    req.body.mapName,
+    req.body.mapLong,
+    req.body.mapLat,
+    req.body.mapZoom
+  );
 });
 
 router.post('/new', (req, res) => {

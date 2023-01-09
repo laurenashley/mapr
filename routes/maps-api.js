@@ -9,7 +9,6 @@ const express = require('express');
 const router  = express.Router();
 const db = require('../db/connection');
 
-//router.get('/', async (req, res) => {
 router.get('/', (req, res) => {
   const query = `SELECT * FROM maps`;
   console.log(query);
