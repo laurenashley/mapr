@@ -5,19 +5,17 @@ const getSingleUser = (id) => {
     SELECT *
     FROM users
     WHERE id = $1;
-  `)
+  `, [id])
     .then(data => {
       return data.rows;
     });
 };
 
-const getMapsByUser = (id) => {
+const getMapsByUser = (mapID) => {
   return db.query(`
     SELECT maps.title FROM maps
-    JOIN pins on maps.id = map_id
-    JOIN users on users.id = pins.user_id
-    WHERE pins.user_id = $1;
-  `)
+    WHERE user_id = $1;
+  `, [mapID])
     .then(data => {
       return data.rows;
     });
