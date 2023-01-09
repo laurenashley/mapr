@@ -1,24 +1,22 @@
-<body>
-  <div class="sidenav showNav">
-    <div class="d-flex justify-content-between align-items-center title">
-      <h2>Maps</h2>
-      <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times; </a>
-    </div>
-    <article >
-      <ul class="nav justify-content-around">
-        <li class="nav-item">
-          <a href="#">All Maps</a>
-        </li>
-        <li class="nav-item">
-          <a href="#">Favorites</a>
-        </li>
-        <li class="nav-item">
-          <a href="#">Contributed</a>
-        </li>
-      </ul>
-      <!-- <div class="list">
-      </div> -->
-      <%- include('maps/list') %>
-    </article>
+<div class="sidenav showNav">
+  <div class="d-flex justify-content-between align-items-center title">
+    <h2>Maps</h2>
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times; </a>
   </div>
-</body>
+  <article >
+    <ul class="nav justify-content-around">
+      <li class="nav-item">
+        <a href="#">All Maps</a>
+      </li>
+      <li class="nav-item">
+        <a href="#">Favorites</a>
+      </li>
+      <li class="nav-item">
+        <a href="#">Contributed</a>
+      </li>
+    </ul>
+    <!-- <div class="list">
+    </div> -->
+    <%- include('maps/list') %>
+  </article>
+</div>
