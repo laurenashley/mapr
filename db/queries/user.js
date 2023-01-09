@@ -26,7 +26,7 @@ const getSingleUser = function(id) {
 
 const getMapsByUser = (id) => {
   const query = `
-    SELECT DISTINCT maps.title FROM maps
+    SELECT DISTINCT maps.* FROM maps
     JOIN pins on maps.id = map_id
     JOIN users on users.id = pins.user_id
     WHERE pins.user_id = $1;
@@ -46,7 +46,7 @@ const getMapsByUser = (id) => {
 
 const getFavourties = (id) => {
   const query = `
-    SELECT DISTINCT maps.id, maps.title
+    SELECT DISTINCT maps.*
     FROM favourite_maps
     INNER JOIN maps ON maps.id = favourite_maps.map_id
     JOIN users ON users.id = favourite_maps.user_id
