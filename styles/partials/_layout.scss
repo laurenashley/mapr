@@ -1,0 +1,70 @@
+// See: https://sass-lang.com/
+
+body,
+html {
+  background-color: $white;
+  margin: 0;
+  overflow: hidden;
+}
+
+/*
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map.
+ */
+#map {
+  margin-top: $header-height;
+  height: calc(100% - $header-height - $footer-height); // 100 minus header and footer
+  // width: 100vw;
+}
+
+.section-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: $header-height;
+}
+
+.section-footer {
+  height: $footer-height;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 75vw;
+}
+
+#cta-buttons {
+  position: fixed;
+  bottom: calc($footer-height + $spacer);
+  left: $spacer;
+}
+
+.sidenav {
+  height: 100vh;
+}
+
+.showNav {
+  &.sidenav {
+    width: 25vw;
+  }
+  &.headerBar {
+    width: 74vw;
+  }
+  &#map {
+    width: 75vw;
+  }
+}
+
+.hideNav {
+  &.sidenav {
+    width: 0;
+  }
+  &.headerBar, &#map {
+    width: 100vw;
+  }
+
+  &.section-footer {
+    width: 100vw;
+  }
+}
