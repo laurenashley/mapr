@@ -20,8 +20,10 @@ const switchView = (el1, el2) => {
 $(() => {
   $('#mapsList li').on('click', (e) => {
     e.preventDefault();
+
     const mapID = $(this).data('mapid');
-    console.log('li clicked! ', mapID); // To Do mapID is undefined
+    console.log('li clicked! ', $(this)); // To Do mapID is undefined
+
     const el1 = $('#mapsList');
     const el2= $('#map');
     switchView(el1, el2);
