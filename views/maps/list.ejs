@@ -1,6 +1,6 @@
 <ul id="mapsList">
   <% maps.forEach((map) => { %>
-    <li id="<%= map.id %>" map-id=""><a href=""><%= map.title %></a></li>
+    <li id="<%= map.id %>" map-id=""><a href="?mapid=<%= map.id %>&lat=<%= map.latitude %>&long=<%= map.longitude %>&zoom=<%= map.zoom %>"><%= map.title %></a></li>
   <% }); %>
 </ul>
 
