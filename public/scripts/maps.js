@@ -14,21 +14,20 @@ $(() => {
         const $pinsListEl = $('#pinsList');
         $pinsListEl.empty();
 
-        pins.forEach(pin => {
+        pins.forEach((pin) => {
           console.log('pin data ', pin);
           const $html = $(`
-          <li>
+          <li class="pin">
             <img src="${pin.img_url}" />
             <a href="">${pin.title}</a>
             <p>${pin.description}</p>
           </li>
-          <li class="pin"></li>
           `);
           $html.appendTo($pinsListEl);
         });
       })
       .fail((err) => {
-        console.log('there was an error: ', err);
+        console.log('error: ', err);
       });
   });
 });
