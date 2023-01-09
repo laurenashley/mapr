@@ -9,7 +9,7 @@ const getMaps = () => {
 };
 
 const getSingleMap = (id) => {
-  return db.query(`SELECT * FROM maps WHERE id = $1;`)
+  return db.query(`SELECT * FROM maps WHERE id = $1;`, [id])
     .then(data => {
       return data.rows;
     });
