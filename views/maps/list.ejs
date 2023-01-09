@@ -3,7 +3,12 @@
   <% maps.forEach((map) => { %>
     <% if (map.title) { %>
     <li id="map-<%= map.id %>" map-id="<%= map.id %>" class="nav-item">
-      <a class="nav-link" href="?mapid=<%= map.id %>&lat=<%= map.latitude %>&long=<%= map.longitude %>&zoom=<%= map.zoom %>" data-mapid="<%= map.id %>"><%= map.title %></a>
+      <a class="nav-link" href="/?mapid=<%= map.id %>&lat=<%= map.latitude %>&long=<%= map.longitude %>&zoom=<%= map.zoom %>" 
+        data-mapid="<%= map.id %>"
+        data-lat="<%= map.latitude %>"
+        data-long="<%= map.longitude %>"
+        data-zoom="<%= map.zoom %>"
+      ><%= map.title %></a>
     </li>
     <% } %>
   <% }); %>
