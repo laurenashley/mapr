@@ -11,7 +11,6 @@ const getMaps = () => {
 const getMapWithPins = (mapID) => {
   // To Do this is only returning maps row data, query is correct
   return db.query(`SELECT * FROM pins
-  JOIN maps ON maps.id = map_id
   WHERE map_id = $1;`, [mapID])
     .then(data => {
       return data.rows;
