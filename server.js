@@ -5,6 +5,7 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cookie = require('cookie');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -48,17 +49,66 @@ app.use('/users', usersRoutes);
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
 const { json } = require('express');
+const { getSingleUser, getMapsByUser, getFavourites } = require('./db/queries/user');
 
 app.get('/', (req, res) => {
-  getMaps()
-    .then(maps => {
-      res.render('index', { maps });
+  // Store the cookie in a variable and pass to the template
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+
+  if (userid) {
+    const promiseUser = getSingleUser(userid);
+    const prmoiseUserMaps = getMapsByUser(userid);
+    const promiseGetFavourites = getFavourites(userid);
+    const promiseMaps = getMaps();
+
+    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {
+      const pins = null;
+      const maps = data[1];
+      const user = data[2];
+      const userMaps = data[3];
+      const userFavs = data[4];
+      res.render('index', { user, maps, userMaps, userFavs, userid, pins });
     })
     .catch(err => {
       res
         .status(500)
         .json({ error: err.message });
     });
+  } else {
+    const promiseMaps = getMaps();
+
+    Promise.all([userid, promiseMaps]).then(data => {
+        const maps = data[1];
+        res.render('index', { maps, userid });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  }
+});
+
+// Login Endpoint
+// Simulate login
+// When a user goes to /login using the login form, a cookie is set
+app.get('/login', (req, res) => {
+  res.setHeader('Set-Cookie', cookie.serialize('userid', 1, {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 7 // 1 week
+  }));
+
+  res.redirect('/');
+});
+
+// Logout Endpoint
+// User clicks on the logout link in the header and the cookie is cleared
+app.get('/logout', (req, res) => {
+  // Clear the logged in cookie (simulated)
+  res.clearCookie('userid');
+
+  // Redirect to main page
+  res.redirect('/');
 });
 
 app.listen(PORT, () => {

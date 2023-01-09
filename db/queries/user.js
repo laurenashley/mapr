@@ -1,11 +1,11 @@
 const db = require('../connection');
 
-const getSingleUser = (id) => {
+const getSingleUser = function(id) {
   return db.query(`
     SELECT *
     FROM users
     WHERE id = $1;
-  `, [id])
+  ` , [id])
     .then(data => {
       return data.rows;
     });
@@ -31,6 +31,10 @@ const getMapsByUser = (mapID) => {
     WHERE user_id = $1;
   `, [mapID])
     .then(data => {
+      if (!data.rows.length) {
+        console.log("No user found with that id");
+        return null;
+      }
       return data.rows;
     });
 };

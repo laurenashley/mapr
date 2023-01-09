@@ -1,0 +1,31 @@
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="loginModalLabel">Login</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/login">
+          <div class="mb-3">
+            <label for="userEmail" class="form-label">Email Address:</label>
+            <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email" value="demo@demo.com">
+          </div>
+          <div class="mb-3">
+            <label for="inputPassword" class="form-label">Password:</label>
+            <input type="password" class="form-control" id="inputPassword" placeholder="Password" value="demo">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div>
+        <a href="/login" type="button" class="btn btn-primary">Login</a>
+        </div>
+        <div>
+          <button type="button" class="btn btn-secondary">Create Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
