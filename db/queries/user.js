@@ -11,6 +11,20 @@ const getSingleUser = (id) => {
     });
 };
 
+const getFavourites = (id) => {
+  return db.query(`
+    SELECT maps.id, maps.title AS favourite_maps
+    FROM favourite_maps
+    INNER JOIN maps ON maps.id = favourite_maps.map_id
+    JOIN users ON users.id = favourite_maps.user_id
+    WHERE favourite_maps.user_id = $1
+    ;
+  `, [id])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const getMapsByUser = (mapID) => {
   return db.query(`
     SELECT maps.title FROM maps
@@ -21,4 +35,4 @@ const getMapsByUser = (mapID) => {
     });
 };
 
-module.exports = { getSingleUser, getMapsByUser };
+module.exports = { getSingleUser, getFavourites, getMapsByUser };
