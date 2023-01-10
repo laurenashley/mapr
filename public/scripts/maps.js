@@ -29,5 +29,34 @@ $(() => {
       .fail((err) => {
         console.log('error: ', err);
       });
+
+    $('#deleteMap').removeAttr('data-mapid').attr('data-mapid', mapID);
+    $('#updateMap').removeAttr('data-mapid').attr('data-mapid', mapID);
+  });
+
+  const confirmDelete = () => {
+    const userResponse = confirm("Are you sure you want to delete this map and all of it's pins?");
+    return userResponse;
+  };
+
+  $('#deleteMap').on('click', function(e) {
+    e.preventDefault();
+
+    if (confirmDelete()) {
+      const $this = $(this);
+      const mapID = $this.data('mapid');
+
+      $.ajax({
+        type: 'POST',
+        url: `/maps/${mapID}/delete`
+      })
+        .done((res) => {
+          console.log('map deleted ', res);
+
+        })
+        .fail((err) => {
+          console.log('error: ', err);
+        });
+    }
   });
 });

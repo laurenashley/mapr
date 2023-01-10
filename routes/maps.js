@@ -12,14 +12,14 @@ const mapsQueries = require('../db/queries/maps');
 
 router.get('/:id', (req, res) => {
   mapsQueries.getMapWithPins(req.params.id)
-  .then(map => {
-    res.json({ pins: map });
-  })
-  .catch(err => {
-    res
-      .status(500)
-      .json({ error: err.message });
-  });
+    .then(map => {
+      res.json({ pins: map });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
 
 router.post('/:id/update', (req, res) => {
@@ -43,11 +43,16 @@ router.post('/new', (req, res) => {
 });
 
 router.post('/:id/delete', (req, res) => {
-  // To Do prompt use to confirm map deletion
-  // To Do pass map_id below
-  const mapId = $('#mapsList li').attr('id');
-  console.log('map id: ', mapId);
-  mapsQueries.deleteMap();
+  mapsQueries.deleteMap(req.params.id)
+    .then(data => {
+      console.log('data after delete: ', data);
+      // To Do refresh list of maps
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
 
 module.exports = router;
