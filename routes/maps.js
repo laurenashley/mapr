@@ -21,6 +21,12 @@ router.get('/', (req, res) => {
     })
 });
 
+router.get('/new', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+
+  res.render('./maps/form-new', { userid });
+});
+
 router.get('/:id', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const mapData = mapsQueries.getSingleMap(req.params.id);  
@@ -39,16 +45,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/:id/update', (req, res) => {
-  mapsQueries.updateMap(
-    1, // To Do change to login cookie
-    req.body.mapName,
-    req.body.mapLong,
-    req.body.mapLat,
-    req.body.mapZoom
-  );
-});
-
+// POST
 router.post('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
   mapsQueries.addNewMap(
@@ -58,6 +55,20 @@ router.post('/new', (req, res) => {
     req.body.mapLat,
     req.body.mapZoom
   );
+
+  res.redirect('/');
+});
+
+router.post('/:id/update', (req, res) => {
+  mapsQueries.updateMap(
+    1, // To Do change to login cookie
+    req.body.mapName,
+    req.body.mapLong,
+    req.body.mapLat,
+    req.body.mapZoom
+  );
+
+  res.redirect('/');
 });
 
 router.post('/:id/delete', (req, res) => {
@@ -66,6 +77,8 @@ router.post('/:id/delete', (req, res) => {
   const mapId = $('#mapsList li').attr('id');
   console.log('map id: ', mapId);
   mapsQueries.deleteMap();
+
+  res.redirect('/');
 });
 
 

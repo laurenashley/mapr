@@ -144,6 +144,15 @@ $(() => {
     });
   }
 
+  const loadNewMapForm = function() {
+    $('.addNewMapBtn').on('click', function(e) {
+      e.preventDefault();
+
+      loadTemplateHTML('/maps/new', '#newMapForm' );
+    });
+  }
+
+
   /**
    * All Map - Back Button
    */
@@ -180,14 +189,10 @@ $(() => {
     });
   }
 
-  
-
-
-
-/**
- * Load Single Pin via AJAX
- * 
- */
+  /**
+   * Load Single Pin via AJAX
+   * 
+   */
 
   const getSinglePin = function() {
     const pinDiv = '#pinSingle';
@@ -207,7 +212,7 @@ $(() => {
    * Submit Add new map form via AJAX
    * 
    */
-  const addNewMap = function() {
+  const submitNewMap = function() {
     $('#newMapForm').submit( function(e) {
       e.preventDefault();
 
@@ -215,13 +220,16 @@ $(() => {
 
       $.post("/maps/new", data, function(data) {
         console.log('Done');
+
+        loadTemplateHTML('/maps', '#mapsList');
       });
     });
   }
 
 
   // Call Functions on initial page load
-  addNewMap();
+  loadNewMapForm();
+  submitNewMap();
   getSingleMap($('#mapsList a'));
   getSinglePin();
   backToAllMaps();
@@ -229,7 +237,8 @@ $(() => {
 
   // Call again on ajaxComplete
   $(document).on('ajaxComplete', function() {
-    addNewMap();
+    loadNewMapForm();
+    submitNewMap();
     getSingleMap($('#mapsList a'));
     getSinglePin();
     backToAllMaps();
