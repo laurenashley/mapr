@@ -10,8 +10,8 @@ const express = require('express');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/pins');
 
-router.get('/', (req, res, mapID) => {
-  mapsQueries.getpins(mapID);
+router.get('/:id', (req, res, mapID) => {
+  mapsQueries.getPins(mapID);
 });
 
 module.exports = router;

@@ -10,7 +10,7 @@ const cookie = require('cookie');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
 
-router.get('/:id', (req, res) => {
+router.get('/maps/:id', (req, res) => {
   mapsQueries.getMapWithPins(req.params.id)
   .then(map => {
     res.json({ pins: map });

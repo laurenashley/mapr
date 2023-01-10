@@ -14,7 +14,7 @@ const getSinglePin = async (id) => {
 };
 
 module.exports = {
-  getMaps,
+  getPins,
   getSinglePin,
   updateMap,
   addNewMap,

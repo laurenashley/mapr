@@ -33,7 +33,6 @@ app.use(express.static('public'));
 const usersRoutes = require('./routes/users');
 const mapsRoutes = require('./routes/maps');
 
-
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
@@ -48,6 +47,7 @@ app.use('/users', usersRoutes);
 const { getMaps } = require('./db/queries/maps');
 const { json } = require('express');
 const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/user');
+const { getPinsPerMap } = require('./db/queries/pins-per-map');
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
@@ -109,6 +109,20 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+app.get('/maps/:id', (req, res) => {
+  console.log(req.params.id);
+  getPinsPerMap(req.params.id)
+  .then(map => {
+    res.json({ pins: map });
+  })
+  .catch(err => {
+    res
+      .status(500)
+      .json({ error: err.message });
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+

@@ -9,6 +9,7 @@ let setLatitude = 51.04862;
 let setLongitude = -114.07085;
 let setZoom = 2.3;
 let pinsData = {};
+let markers = [];
 
 // Check for query params
 if (queryParams.mapid !== null) {
@@ -49,14 +50,12 @@ function newLocation(newLat, newLng, newZoom) {
 }
 
 // Adds a marker to the map.
-function addMarker(location, map, title) {
+function addMarker(location, map) {
   // Add the marker at the clicked location, and add the next-available label
   // from the array of alphabetical characters.
   new google.maps.Marker({
     position: location,
-    label: '',
     map,
-    title: title
   });
 }
 
@@ -76,9 +75,8 @@ function addInfoWindow(string) {
 
 window.initMap = initMap;
 
-
-
 // Handle Maps data in sidebar views
+// Start JQuery
 $(() => {
   $('#mapsList a').on('click', function(e) {
     e.preventDefault();
@@ -98,8 +96,10 @@ $(() => {
         const $pinsListEl = $('#pinsList');
         $pinsListEl.empty();
 
+        // Recenter the map
         newLocation(mapLat, mapLong, mapZoom);
 
+        // Load new pin data and create markers
         pins.forEach(pin => {
           console.log('pin data ', pin);
           pinsData = pin;
@@ -121,9 +121,13 @@ $(() => {
           const pinTitle = pin["title"];
 
           // Add Markers
-          const marker = addMarker(position, map, pinTitle);
+          markers.push(position);
 
         });
+
+        for (let position of markers) {
+          addMarker(position, map);
+        }
       })
       .fail((err) => {
         console.log('there was an error: ', err);

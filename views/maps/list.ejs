@@ -3,7 +3,7 @@
   <% maps.forEach((map) => { %>
     <% if (map.title) { %>
     <li id="map-<%= map.id %>" map-id="<%= map.id %>" class="nav-item">
-      <a class="nav-link" href="/?mapid=<%= map.id %>&lat=<%= map.latitude %>&long=<%= map.longitude %>&zoom=<%= map.zoom %>" 
+      <a class="nav-link" href="/maps/<%= map.id %>" 
         data-mapid="<%= map.id %>"
         data-lat="<%= map.latitude %>"
         data-long="<%= map.longitude %>"
