@@ -19,7 +19,7 @@ $(() => {
           const $html = $(`
           <li class="pin">
             <img src="${pin.img_url}" />
-            <a href="">${pin.title}</a>
+            <a href="/pins/${pin.id}" data-pinid="${pin.id}">${pin.title}</a>
             <p>${pin.description}</p>
           </li>
           `);

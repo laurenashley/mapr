@@ -10,8 +10,9 @@ const express = require('express');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/pins');
 
-router.get('/', (req, res, mapID) => {
-  mapsQueries.getpins(mapID);
+// To Do is this being used?
+router.get('/', (req, res) => {
+  mapsQueries.getpins();
 });
 
 module.exports = router;
