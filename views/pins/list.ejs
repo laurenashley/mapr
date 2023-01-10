@@ -1,7 +1,13 @@
 <ul id="pinsList" class="nav flex-column">
   <% if (pins) { %>
     <% pins.forEach((pin) => { %>
-      <li id="<%= pin.id %>" class="nav-item"><%= pin.title %></li>
+      <li id="<%= pin.id %>" class="d-flex py-3">
+        <img class="pe-2" src="<%= pin.image_url %>" />
+        <div>
+          <%= pin.title %>
+          <%= pin.description %>
+        </div>
+      </li>
     <% }); %>
   <% } %>
 </ul>

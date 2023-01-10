@@ -88,6 +88,21 @@ app.get('/', (req, res) => {
   }
 });
 
+app.get('/maps', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const promiseMaps = getMaps();
+
+  Promise.all([promiseMaps]).then(data => {    
+    const maps = data[0];
+    res.render('index', { maps });
+  })
+  .catch(err => {
+    res
+      .status(500)
+      .json({ error: err.message });
+  });
+});
+
 // Login Endpoint
 // Simulate login
 // When a user goes to /login using the login form, a cookie is set
@@ -110,24 +125,7 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-app.get('/maps/new', (req, res) => {
-  res.redirect('/');
-});
-
-app.get('/maps/:id', (req, res) => {
-  console.log(req.params.id);
-  const mapData = getSingleMap(req.params.id);  
-  const pinData = getPinsPerMap(req.params.id);
-  Promise.all([mapData, pinData]).then(data => {
-    res.json({ map: data[0], pins: data[1] });
-  })
-  .catch(err => {
-    res
-      .status(500)
-      .json({ error: err.message });
-  });
-});
-
+// To DO - mode to routes/pins
 app.get('/pins/:id', (req, res) => {
   console.log(req.params.id);
   const pinData = getSinglePin(req.params.id);

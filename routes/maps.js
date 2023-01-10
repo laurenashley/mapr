@@ -10,16 +10,38 @@ const cookie = require('cookie');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
 
-router.get('/maps/:id', (req, res) => {
-  mapsQueries.getMapWithPins(req.params.id)
-  .then(map => {
-    res.json({ pins: map });
-  })
-  .catch(err => {
-    res
-      .status(500)
-      .json({ error: err.message });
-  });
+
+router.get('/', (req, res) => {
+  const query = `SELECT * FROM maps`;
+  console.log(query);
+  db.query(query)
+    .then(data => {
+      const maps = data.rows;
+      res.json({ maps });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+router.get('/:id', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapData = mapsQueries.getSingleMap(req.params.id);  
+  const pinData = mapsQueries.getMapWithPins(req.params.id);
+  Promise.all([mapData, pinData])
+    .then(data => {
+      // res.json({ pins: map });
+      const maps = data[0];
+      const pins = data[1];
+      res.render('./maps/map', { maps, pins, userid });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
 
 router.post('/:id/update', (req, res) => {
@@ -50,5 +72,6 @@ router.post('/:id/delete', (req, res) => {
   console.log('map id: ', mapId);
   mapsQueries.deleteMap();
 });
+
 
 module.exports = router;
