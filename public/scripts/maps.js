@@ -6,8 +6,7 @@ let setLongitude = -114.07085;
 let setZoom = 2.3;
 let pinsData = {};
 let markers = [];
-
-
+let infoWindows = [];
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -15,10 +14,10 @@ function initMap() {
     zoom: setZoom,
   });
 
-  // This event listener calls addMarker() when the map is clicked.
-  google.maps.event.addListener(map, "click", (event) => {
-    addMarker(event.latLng, map);
-  });
+  // // This event listener calls addMarker() when the map is clicked.
+  // google.maps.event.addListener(map, "click", (event) => {
+  //   addMarker(event.latLng, map);
+  // });
 }
 
 function newLocation(newLat, newLng, newZoom) {
@@ -94,18 +93,58 @@ $(() => {
           `);
           $html.appendTo($pinsListEl);
 
+          /**
+           * Create Markers for given map id on ajax load
+           */
+
           // Create new object with lat and long
           const position = {};
           position['lat'] = Number(pin["latitude"]);
           position['lng'] = Number(pin["longitude"]);
+
+          // Create the marker
           const marker = new google.maps.Marker({
             position: position,
             map,
           });
+
+          // Add to global array
           markers.push(marker);
-        });
+
+          /**
+           * Create Info Windows
+           * @kgislason
+           */
+
+          const infoWindowContent = `
+            <div class="info-content">
+              <h6>${pin["title"]}</h6>
+              <p>${pin["description"]}</p>
+            </div>
+          `;
+
+          const infoWindow = new google.maps.InfoWindow({
+            content: infoWindowContent,
+            ariaLabel: pin["title"], 
+          });
+
+          // Add to global array
+          infoWindows.push(infoWindow);
+
+          /**
+           * Add Event Listener when marker is clicked to open infoWindow
+           */
+          marker.addListener('click', () => {
+            infoWindow.open({
+              anchor: marker,
+              map
+            });
+          });
+        }); // END forEach
 
         console.log(markers);
+        console.log(infoWindows);
+
       })
       .fail((err) => {
         console.log('there was an error: ', err);
