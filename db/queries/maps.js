@@ -8,6 +8,18 @@ const getMaps = () => {
     });
 };
 
+const getSingleMap = (id) => {
+  const query = `
+    SELECT * FROM maps
+     WHERE id = $1;
+  `;
+  const value = [`${id}`];
+  return db.query(query, value)
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const getMapWithPins = (mapID) => {
   // To Do this is only returning maps row data, query is correct
   return db.query(`SELECT * FROM pins
@@ -47,6 +59,7 @@ const deleteMap = (id) => {
 };
 
 module.exports = {
+  getSingleMap,
   getMaps,
   getMapWithPins,
   updateMap,

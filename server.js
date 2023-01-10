@@ -44,10 +44,11 @@ app.use('/users', usersRoutes);
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-const { getMaps } = require('./db/queries/maps');
+const { getMaps, getSingleMap } = require('./db/queries/maps');
 const { json } = require('express');
 const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/user');
 const { getPinsPerMap } = require('./db/queries/pins-per-map');
+const { getSinglePin } = require('./db/queries/pins');
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
@@ -109,11 +110,29 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+app.get('/maps/new', (req, res) => {
+  res.redirect('/');
+});
+
 app.get('/maps/:id', (req, res) => {
   console.log(req.params.id);
-  getPinsPerMap(req.params.id)
-  .then(map => {
-    res.json({ pins: map });
+  const mapData = getSingleMap(req.params.id);  
+  const pinData = getPinsPerMap(req.params.id);
+  Promise.all([mapData, pinData]).then(data => {
+    res.json({ map: data[0], pins: data[1] });
+  })
+  .catch(err => {
+    res
+      .status(500)
+      .json({ error: err.message });
+  });
+});
+
+app.get('/pins/:id', (req, res) => {
+  console.log(req.params.id);
+  const pinData = getSinglePin(req.params.id);
+  Promise.all([pinData]).then(data => {
+    res.json({ pin: data[0]});
   })
   .catch(err => {
     res

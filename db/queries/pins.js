@@ -9,14 +9,11 @@ const getPins = (mapID) => {
 };
 
 const getSinglePin = async (id) => {
-  const data = await db.query(`SELECT * FROM pins WHERE pin_id = $1;`, [id]);
+  const data = await db.query(`SELECT * FROM pins WHERE id = $1;`, [id]);
   return data.rows;
 };
 
 module.exports = {
   getPins,
-  getSinglePin,
-  updateMap,
-  addNewMap,
-  deleteMap
+  getSinglePin
 };
