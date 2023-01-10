@@ -1,8 +1,4 @@
-const queryParams = new Proxy(new URLSearchParams(window.location.search), {
-  get: (searchParams, prop) => searchParams.get(prop),
-});
-
-// Set Default
+// Set Defaults
 let map;
 let mapid = null;
 let setLatitude = 51.04862;
@@ -11,22 +7,7 @@ let setZoom = 2.3;
 let pinsData = {};
 let markers = [];
 
-// Check for query params
-if (queryParams.mapid !== null) {
-  mapid = queryParams.mapid;
-}
 
-if (queryParams.lat !== null) {
-  setLatitude = Number(queryParams.lat);
-}
-
-if (queryParams.long !== null) {
-  setLongitude = Number(queryParams.long);
-}
-
-if (queryParams.zoom !== null) {
-  setZoom = Number(queryParams.zoom);
-}
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -49,14 +30,11 @@ function newLocation(newLat, newLng, newZoom) {
   map.setZoom(newZoom);
 }
 
-// Adds a marker to the map.
-function addMarker(location, map) {
-  // Add the marker at the clicked location, and add the next-available label
-  // from the array of alphabetical characters.
-  new google.maps.Marker({
-    position: location,
-    map,
-  });
+function clearMarkers() {
+  for (let marker of markers) {
+    marker.setMap(null);
+  }
+  markers = [];
 }
 
 function addInfoWindow(string) {
@@ -99,6 +77,8 @@ $(() => {
         // Recenter the map
         newLocation(mapLat, mapLong, mapZoom);
 
+        clearMarkers();
+
         // Load new pin data and create markers
         pins.forEach(pin => {
           console.log('pin data ', pin);
@@ -118,16 +98,14 @@ $(() => {
           const position = {};
           position['lat'] = Number(pin["latitude"]);
           position['lng'] = Number(pin["longitude"]);
-          const pinTitle = pin["title"];
-
-          // Add Markers
-          markers.push(position);
-
+          const marker = new google.maps.Marker({
+            position: position,
+            map,
+          });
+          markers.push(marker);
         });
 
-        for (let position of markers) {
-          addMarker(position, map);
-        }
+        console.log(markers);
       })
       .fail((err) => {
         console.log('there was an error: ', err);
