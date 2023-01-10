@@ -117,9 +117,14 @@ $(() => {
            */
 
           const infoWindowContent = `
-            <div class="info-content">
-              <h6>${pin["title"]}</h6>
-              <p>${pin["description"]}</p>
+            <div class="info-content d-flex p-3">
+              <div class="pe-3">
+                <img src="${pin["image_url"]}">
+              </div>
+              <div class="">
+                <h6>${pin["title"]}</h6>
+                <p>${pin["description"]}</p>
+              </div>
             </div>
           `;
 
