@@ -30,7 +30,8 @@ const runSeedFiles = async () => {
   for (const fn of schemaFilenames) {
     const sql = fs.readFileSync(`./db/seeds/${fn}`, 'utf8');
     console.log(`\t-> Running ${chalk.green(fn)}`);
-    await db.query(sql);
+    if(fn !== '05_widgets.sql')
+      await db.query(sql);
   }
 };
 
