@@ -1,9 +1,10 @@
+<div id="pinsList">
 <% if (map) { %>
   <a id="backBtnAllMap" class="btn btn-outline-secondary" href="/maps">Back</a>
   <% map.forEach((item) => { %>
-    <h3 class="h6"><%= item.title %></h3>
+    <h3 class="h6 mt-3"><%= item.title %></h3>
   <% }); %>
-  <ul id="pinsList" class="nav flex-column">
+  <ul class="nav flex-column">
     <% if (pins) { %>
       <% pins.forEach((pin) => { %>
         <li id="<%= pin.id %>" class="d-flex py-3">
@@ -19,3 +20,4 @@
 <% } else { %>
   No map found
 <% } %>
+</div>

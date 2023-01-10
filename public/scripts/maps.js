@@ -56,7 +56,7 @@ $(() => {
 
   const loadTemplateHTML = function(url, div) {
     $('#sidenavContent').load(url + ' ' + div, function() {
-      console.log("Loaded single map and pins");
+      console.log("Loaded");
     });
   };
 
