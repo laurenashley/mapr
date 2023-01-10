@@ -34,6 +34,28 @@ $(() => {
     $('#updateMap').removeAttr('data-mapid').attr('data-mapid', mapID);
   });
 
+  // Open form to update map details
+  $('#updateMap').on('click', function(e) {
+    e.preventDefault();
+    const $this = $(this);
+    const mapID = $this.data('mapid');
+
+    // Show update form
+
+    // Use this ajax for form submit
+    // $.ajax({
+    //   type: 'POST',
+    //   url: `/maps/${mapID}/update`
+    // })
+    //   .done((res) => {
+    //     console.log('map updated ', res);
+
+    //   })
+    //   .fail((err) => {
+    //     console.log('error: ', err);
+    //   });
+  });
+
   const confirmDelete = () => {
     const userResponse = confirm("Are you sure you want to delete this map and all of it's pins?");
     return userResponse;
@@ -52,7 +74,7 @@ $(() => {
       })
         .done((res) => {
           console.log('map deleted ', res);
-
+          // To Do refresh list of maps
         })
         .fail((err) => {
           console.log('error: ', err);
