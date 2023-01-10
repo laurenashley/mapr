@@ -1,7 +1,7 @@
 <ul id="mapsList">
   <% maps.forEach((map) => { %>
-    <li id="<%= map.id %>" map-id=""><a href=""><%= map.title %></a></li>
+    <ul id="<%= map.id %>" map-id=""><a href=""><%= map.title %></a></ul>
   <% }); %>
 </ul>
 
-<%- include('map') %>
+<!-- <%- include('map') %> -->

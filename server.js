@@ -32,6 +32,7 @@ app.use(express.static('public'));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require('./routes/users');
 const mapsRoutes = require('./routes/maps');
+const categoriesRoutes = require('./routes/categories')
 
 
 // Mount all resource routes
@@ -39,7 +40,7 @@ const mapsRoutes = require('./routes/maps');
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/maps', mapsRoutes);
 app.use('/users', usersRoutes);
-
+app.use('/categories', categoriesRoutes);
 
 
 // Note: mount other resources here, using the same pattern above
@@ -50,33 +51,49 @@ app.use('/users', usersRoutes);
 const { getMaps } = require('./db/queries/maps');
 const { json } = require('express');
 const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/user');
+const { getCategories }= require('./db/queries/categories');
 
 app.get('/', (req, res) => {
-<<<<<<< HEAD
-  getMaps()
-    .then(maps => {
-      res.render('index', { maps });
-=======
   // Store the cookie in a variable and pass to the template
   const userid = cookie.parse(req.headers.cookie || '').userid;
-  const promiseUser = getSingleUser(userid);
-  const promiseMaps = getMaps();
-  const prmoiseUserMaps = getMapsByUser(userid);
-  const promiseGetFavourites = getFavourties(userid);
-  
-  Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {    
+  // const userid = 1;
+  console.log("userid: ", userid);
+
+  if (userid) {
+    const promiseUser = getSingleUser(userid);
+    const prmoiseUserMaps = getMapsByUser(userid);
+    const promiseGetFavourites = getFavourties(userid);
+    const promiseMaps = getMaps();
+    const promiseCategories = getCategories();
+
+    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites, promiseCategories]).then(data => {
       const maps = data[1];
       const user = data[2];
       const userMaps = data[3];
       const userFavs = data[4];
-      res.render('index', { user, maps, userMaps, userFavs, userid });
->>>>>>> f181ddf9fa75705712b637574fcbdb0b5d6f7f59
+      const categories = data[5];
+      res.render('index', { user, maps, userMaps, userFavs, userid, categories });
     })
     .catch(err => {
       res
         .status(500)
         .json({ error: err.message });
     });
+  } else {
+    const promiseMaps = getMaps();
+    const promiseCategories = getCategories();
+
+    Promise.all([userid, promiseMaps, promiseCategories]).then(data => {
+        const maps = data[1];
+        const categories = data[2];
+        res.render('index', { maps, userid, categories });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  }
 });
 
 // Login Endpoint

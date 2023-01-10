@@ -1,10 +1,10 @@
-<body>
-  <div class="sidenav showNav">
-    <div class="d-flex justify-content-between align-items-center title">
-      <h2>Maps</h2>
-      <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times; </a>
-    </div>
-    <article >
+<div class="sidenav showNav">
+  <div class="d-flex justify-content-between align-items-center title">
+    <h2>Maps</h2>
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times; </a>
+  </div>
+  <article >
+    <% if (userid) { %>
       <ul class="nav justify-content-around">
         <li class="nav-item">
           <a href="#">All Maps</a>
@@ -16,9 +16,9 @@
           <a href="#">Contributed</a>
         </li>
       </ul>
-      <!-- <div class="list">
-      </div> -->
-      <%- include('maps/list') %>
-    </article>
-  </div>
-</body>
+    <% } %>
+    <div id="sidebarContent">
+    </div>
+  </article>
+</div>
+
