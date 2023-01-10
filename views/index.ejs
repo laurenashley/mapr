@@ -1,44 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
-    <title>Mapr</title>
-
-    <!-- Map API script-->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script type="module" src="/scripts/index.js"></script>
-
+    <title>mapr - A wiki mapping app</title>
 
     <meta charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/icon.png">
+
     <!-- App CSS -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
     <link rel="stylesheet" href="/vendor/border-box.css" />
     <link rel="stylesheet" href="/styles/main.css" />
-    <link rel="stylesheet" href="/styles/layout.css" />
-    <link rel="stylesheet" href="/styles/header.css" />
-    <script src="/vendor/jquery-3.0.0.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js" integrity="sha512-6UofPqm0QupIL0kzS/UIzekR73/luZdC6i/kXDbWnLOJoqwklBK6519iUnShaYceJ0y4FaiPtX/hRnV/X/xlUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/js/bootstrap.min.js" integrity="sha512-ewfXo9Gq53e1q1+WDTjaHAGZ8UvCWq0eXONhwDuIoaH8xz2r96uoAYaQCm1oQhnBfRXrvJztNXFsTloJfgbL5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script defer src="/scripts/app.js"></script>
-    <script src="https://unpkg.com/@googlemaps/js-api-loader@1.0.0/dist/index.min.js"></script>
-
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/81e162047e.js" crossorigin="anonymous"></script>
-
-    <!-- Google fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet" />
 
-    <!-- Sidebar script-->
+     <!-- Google fonts -->
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- SCRIPTS -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://unpkg.com/@googlemaps/js-api-loader@1.0.0/dist/index.min.js"></script>
+
+    <!-- JQuery -->
+    <script src="/vendor/jquery-3.0.0.js"></script>
+
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js" integrity="sha512-6UofPqm0QupIL0kzS/UIzekR73/luZdC6i/kXDbWnLOJoqwklBK6519iUnShaYceJ0y4FaiPtX/hRnV/X/xlUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/js/bootstrap.min.js" integrity="sha512-ewfXo9Gq53e1q1+WDTjaHAGZ8UvCWq0eXONhwDuIoaH8xz2r96uoAYaQCm1oQhnBfRXrvJztNXFsTloJfgbL5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- app.js -->
+    <!-- Custom scripts-->
+    <script type="module" src="/scripts/index.js"></script>
     <script type="text/javascript" src="/scripts/sidebar.js"></script>
     <script type="text/javascript" src="/scripts/maps.js"></script>
     <script type="text/javascript" src="/scripts/pins.js"></script>
+    <script defer src="/scripts/app.js"></script>
 
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/81e162047e.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -46,12 +52,21 @@
 
     <div id="map" class="showNav"></div>
 
+    <%- include('partials/_footer') %>
+    <%- include('sidebar') %>
+
+    <!-- Modals -->
+    <%- include('partials/_login') %>
+    <% if (userid) { %>
+      <%- include('user/_profile') %>
+      <%- include('partials/_cta-buttons') %>
+    <% } %>
+
+    <!-- Google Maps API -->
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDy27fKunTSdnMYtm6KFFQPDYafI6VRYrw&callback=initMap&v=weekly"
         defer
       >
     </script>
-
-    <%- include('sidebar') %>
   </body>
 </html>

@@ -1,8 +1,18 @@
-<div id="map">
-  <ul id="pinsList"></ul>
-  <%- include('form-new') %>
-  <%- include('form-update') %>
+<div class="card card-body">
+  <%- include('../pins/list') %>
+    <div class="collapse" id="collapseAddNewMap">
+      <%- include('form-new') %>
+    </div>
 
-  <a href="/maps/delete" id="deleteMap">Delete Map</a>
-  <a href="/maps/update" id="updateMap">Edit Map Details</a>
+    <div class="collapse" id="collapseEditMap">
+      <%- include('form-update') %>
+    </div>
+
+    <nav class="nav">
+      <a id="deleteMap" class="nav-link nav-item" href="/maps/delete" id="deleteMap">Delete Map</a>
+      <a id="updateMap" class="nav-link nav-item" href="/maps/update" data-bs-toggle="collapse" href="#collapseEditMap" role="button" aria-expanded="false"
+        aria-controls="collapseEditMap">
+        Edit Map
+      </a>
+    </nav>
 </div>

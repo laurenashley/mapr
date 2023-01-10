@@ -8,16 +8,14 @@ const getPins = (mapID) => {
     });
 };
 
-const getSinglePin = (id) => {
-  return db.query(`SELECT * FROM pins WHERE pin_id = $1;`, [id])
-    .then(data => {
-      return data.rows;
-    });
+const getSinglePin = async (id) => {
+  const data = await db.query(`SELECT * FROM pins WHERE pin_id = $1;`, [id]);
+  return data.rows;
 };
 
 module.exports = {
   getMaps,
-  getSingleMap,
+  getSinglePin,
   updateMap,
   addNewMap,
   deleteMap

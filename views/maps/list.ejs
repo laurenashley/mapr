@@ -1,8 +1,11 @@
-<ul id="mapsList">
+<h3 class="bg-dark text-light h5 p-3 mb-0"><i class="fa-solid fa-map mr-3 text-secondary"></i> All Maps</h3>
+<ul id="mapsList" class="nav">
   <% maps.forEach((map) => { %>
-    <li>
-      <a href="maps/<%= map.id %>" data-mapid="<%= map.id %>"><%= map.title %></a>
+    <% if (map.title) { %>
+    <li id="map-<%= map.id %>" map-id="<%= map.id %>" class="nav-item">
+      <a class="nav-link" href="?mapid=<%= map.id %>&lat=<%= map.latitude %>&long=<%= map.longitude %>&zoom=<%= map.zoom %>" data-mapid="<%= map.id %>"><%= map.title %></a>
     </li>
+    <% } %>
   <% }); %>
 </ul>
 
