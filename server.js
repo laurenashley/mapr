@@ -32,6 +32,8 @@ app.use(express.static('public'));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require('./routes/users');
 const mapsRoutes = require('./routes/maps');
+const loginRoutes = require('./routes/login');
+const logoutRoutes = require('./routes/logout');
 
 
 // Mount all resource routes
@@ -39,7 +41,8 @@ const mapsRoutes = require('./routes/maps');
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/maps', mapsRoutes);
 app.use('/users', usersRoutes);
-
+app.use('/login', loginRoutes);
+app.use('/logout', logoutRoutes);
 
 
 // Note: mount other resources here, using the same pattern above
@@ -87,28 +90,6 @@ app.get('/', (req, res) => {
           .json({ error: err.message });
       });
   }
-});
-
-// Login Endpoint
-// Simulate login
-// When a user goes to /login using the login form, a cookie is set
-app.get('/login', (req, res) => {
-  res.setHeader('Set-Cookie', cookie.serialize('userid', 1, {
-    httpOnly: true,
-    maxAge: 60 * 60 * 24 * 7 // 1 week
-  }));
-
-  res.redirect('/');
-});
-
-// Logout Endpoint
-// User clicks on the logout link in the header and the cookie is cleared
-app.get('/logout', (req, res) => {
-  // Clear the logged in cookie (simulated)
-  res.clearCookie('userid');
-
-  // Redirect to main page
-  res.redirect('/');
 });
 
 app.listen(PORT, () => {
