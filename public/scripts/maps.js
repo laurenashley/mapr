@@ -13,11 +13,6 @@ function initMap() {
     center: { lat: setLatitude, lng: setLongitude },
     zoom: setZoom,
   });
-
-  // // This event listener calls addMarker() when the map is clicked.
-  // google.maps.event.addListener(map, "click", (event) => {
-  //   addMarker(event.latLng, map);
-  // });
 }
 
 function newLocation(newLat, newLng, newZoom) {
@@ -59,8 +54,14 @@ $(() => {
   // Global Vars
   const sidenavContent = $('#sidenavContent');
 
-  const getSingleMap = function() {
-    $('#mapsList a').on('click', function(e) {
+  const loadTemplateHTML = function(url, div) {
+    $('#sidenavContent').load(url + ' ' + div, function() {
+      console.log("Loaded single map and pins");
+    });
+  };
+
+  const getSingleMap = function(link) {
+    link.on('click', function(e) {
       e.preventDefault();
 
       const $this = $(this);
@@ -68,112 +69,120 @@ $(() => {
       const mapLat = $this.data('lat');
       const mapLong = $this.data('long');
       const mapZoom = $this.data('zoom');
-      console.log(mapID);
       const url = `/maps/${mapID}`;
+      const api = `/maps-api/${mapID}`;
 
-      $('#sidenavContent').load(url + ' #mapSingle', function() {
-        console.log("Loaded single map and pins");
-      });
+      loadTemplateHTML(url, '#mapSingle');
 
-      // $.ajax({
-      //   type: 'GET',
-      //   url: `/maps/${mapID}`
-      // })
-        // .done((res) => {
-          // const { pins } = res;
-          // const $pinsListEl = $('#pinsList');
-          // const $pinDiv = $('#pinSingle');
-          // $pinsListEl.empty();
-          // $pinDiv.empty();
+      $.ajax({
+        type: 'GET',
+        url: api
+      })
+        .done((res) => {
+          const pins = res["pins"];
 
-          // // Recenter the map
-          // newLocation(mapLat, mapLong, mapZoom);
+          // Recenter the map
+          newLocation(mapLat, mapLong, mapZoom);
 
-          // // Clear markers from previous map
-          // clearMarkers();
+          // Clear markers from previous map
+          clearMarkers();
 
-          // // Load new pin data and create markers
-          // pins.forEach(pin => {
-          //   console.log('pin data ', pin);
-          //   pinsData = pin;
-          //   const $html = $(`
-          //   <li class="d-flex mb-3">
-          //     <div class="pe-3">
-          //       <img alt="${pin.title}" width="75" height="75" src="${pin.image_url}" loading="lazy" />
-          //     </div>
-          //     <div>
-          //       <a href="/pins/${pin.id}" data-pinid="${pin.id}" dat-lat="${pin.latitude}" data-long="${pin.longitude}" >${pin.title}</a>
-          //       <p>${pin.description}</p>
-          //     </div>
-          //   </li>
-          //   `);
-          //   $html.appendTo($pinsListEl);
+          // Load new pin data and create markers
+          pins.forEach(pin => {
 
-          //   /**
-          //    * Create Markers for given map id on ajax load
-          //    */
+            // Create new object with lat and long
+            const position = {};
+            position['lat'] = Number(pin["latitude"]);
+            position['lng'] = Number(pin["longitude"]);
 
-          //   // Create new object with lat and long
-          //   const position = {};
-          //   position['lat'] = Number(pin["latitude"]);
-          //   position['lng'] = Number(pin["longitude"]);
+            // Create the marker
+            const marker = new google.maps.Marker({
+              position: position,
+              map,
+            });
 
-          //   // Create the marker
-          //   const marker = new google.maps.Marker({
-          //     position: position,
-          //     map,
-          //   });
+            // Add to global array
+            markers.push(marker);
 
-          //   // Add to global array
-          //   markers.push(marker);
+            // Create Info Windows
 
-          //   /**
-          //    * Create Info Windows
-          //    * @kgislason
-          //    */
+            const infoWindowContent = `
+              <div class="info-content d-flex p-3">
+                <div class="pe-3">
+                  <img src="${pin["image_url"]}">
+                </div>
+                <div class="">
+                  <h6>${pin["title"]}</h6>
+                  <p>${pin["description"]}</p>
+                </div>
+              </div>
+            `;
 
-          //   const infoWindowContent = `
-          //     <div class="info-content d-flex p-3">
-          //       <div class="pe-3">
-          //         <img src="${pin["image_url"]}">
-          //       </div>
-          //       <div class="">
-          //         <h6>${pin["title"]}</h6>
-          //         <p>${pin["description"]}</p>
-          //       </div>
-          //     </div>
-          //   `;
+            const infoWindow = new google.maps.InfoWindow({
+              content: infoWindowContent,
+              ariaLabel: pin["title"], 
+            });
 
-          //   const infoWindow = new google.maps.InfoWindow({
-          //     content: infoWindowContent,
-          //     ariaLabel: pin["title"], 
-          //   });
+            // Add to global array
+            infoWindows.push(infoWindow);
 
-          //   // Add to global array
-          //   infoWindows.push(infoWindow);
+            /**
+             * Add Event Listener when marker is clicked to open infoWindow
+             */
+            marker.addListener('click', () => {
+              infoWindow.open({
+                anchor: marker,
+                map
+              });
+            });
+          }); // END forEach
 
-          //   /**
-          //    * Add Event Listener when marker is clicked to open infoWindow
-          //    */
-          //   marker.addListener('click', () => {
-          //     infoWindow.open({
-          //       anchor: marker,
-          //       map
-          //     });
-          //   });
-          // }); // END forEach
-
-          // console.log(markers);
-          // console.log(infoWindows);
-
-        // })
-        // .fail((err) => {
-        //   console.log('there was an error: ', err);
-        // });
+        })
+        .fail((err) => {
+          console.log('there was an error: ', err);
+        });
     });
   }
 
-  getSingleMap();
+  /**
+   * All Map - Back Button
+   */
+
+  const backToAllMaps = function() {
+    $('#backBtnAllMap').on('click', function(e) {
+      e.preventDefault();
+
+      loadTemplateHTML('/maps', '#mapsList');
+
+      // Recenter the map
+      newLocation(setLatitude, setLongitude, setZoom);
+
+      // Clear markers from previous map
+      clearMarkers();
+    });
+  }
+
+  /**
+   * Map - Back Button
+   */
+
+  const backToMap = function() {
+    $('#backBtnMap').on('click', function(e) {
+      e.preventDefault();
+
+      const href = $(this).attr('href');
+
+      loadTemplateHTML(href, '#mapSingle');
+
+      getSingleMap($(this));
+
+      
+    });
+  }
+
+  
+
+
 
 /**
  * Load Single Pin via AJAX
@@ -181,51 +190,18 @@ $(() => {
  */
 
   const getSinglePin = function() {
-    const $pinDiv = $('#pinSingle');
+    const pinDiv = '#pinSingle';
 
     $('#pinsList li a').on('click', function(e) {
-      const $this = $(this);
-
       e.preventDefault();
+      const pinID = $(this).data('pinid');
+      const url = `/pins/${pinID}`;
 
-      const pinID = $this.data('pinid');
-      console.log('pinid: ', pinID);
-
-      $.ajax({
-        type: 'GET',
-        url: `/pins/${pinID}`
-      })
-      .done((res) => {
-        const { pin } = res;
-        $pinDiv.empty();
-
-        console.log(pin);
-
-        pin.forEach(pinData => {
-
-        const $html = $(`
-          <li class="d-flex mb-3 bg-light">
-            <div class="pe-3">
-              <img alt="${pinData .title}" width="100" height="100" src="${pinData.image_url}" loading="lazy" />
-            </div>
-            <div class="p-3">
-              <h4 class="h5 text-primary">${pinData.title}</h4>
-              <p>${pinData.description}</p>
-            </div>
-          </li>
-          `);
-          $html.appendTo($pinDiv);
-        });
-      });
-
+      loadTemplateHTML(url, pinDiv);
     });
   }
 
-  getSinglePin();
-
-  $(document).on('ajaxComplete', function() {
-    getSinglePin();
-  });
+  
 
   /**
    * Submit Add new map form via AJAX
@@ -242,5 +218,21 @@ $(() => {
       });
     });
   }
+
+
+  // Call Functions on initial page load
   addNewMap();
+  getSingleMap($('#mapsList a'));
+  getSinglePin();
+  backToAllMaps();
+  backToMap();
+
+  // Call again on ajaxComplete
+  $(document).on('ajaxComplete', function() {
+    addNewMap();
+    getSingleMap($('#mapsList a'));
+    getSinglePin();
+    backToAllMaps();
+    backToMap();
+  });
 });

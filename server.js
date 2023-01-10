@@ -10,7 +10,6 @@ const cookie = require('cookie');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
-
 app.set('view engine', 'ejs');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -32,28 +31,31 @@ app.use(express.static('public'));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require('./routes/users');
 const mapsRoutes = require('./routes/maps');
+const pinsRoutes = require('./routes/pins');
+const mapsApiRoutes = require('./routes/maps-api');
+const pinApiRoutes = require('./routes/pin-api');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/maps', mapsRoutes);
 app.use('/users', usersRoutes);
+app.use('/pins', pinsRoutes);
+app.use('/maps-api', mapsApiRoutes);
+app.use('pin-api', pinApiRoutes);
 
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-const { getMaps, getSingleMap } = require('./db/queries/maps');
+const { getMaps } = require('./db/queries/maps');
 const { json } = require('express');
 const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/user');
-const { getPinsPerMap } = require('./db/queries/pins-per-map');
-const { getSinglePin } = require('./db/queries/pins');
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
   const userid = cookie.parse(req.headers.cookie || '').userid;
-  const pins = null;
 
   if (userid) {
     const promiseUser = getSingleUser(userid);
@@ -66,7 +68,7 @@ app.get('/', (req, res) => {
       const user = data[2];
       const userMaps = data[3];
       const userFavs = data[4];
-      res.render('index', { user, maps, userMaps, userFavs, userid, pins });
+      res.render('index', { user, maps, userMaps, userFavs, userid });
     })
     .catch(err => {
       res
@@ -78,7 +80,7 @@ app.get('/', (req, res) => {
   
     Promise.all([userid, promiseMaps]).then(data => {    
         const maps = data[1];
-        res.render('index', { maps, userid, pins });
+        res.render('index', { maps, userid });
       })
       .catch(err => {
         res
@@ -88,24 +90,13 @@ app.get('/', (req, res) => {
   }
 });
 
-app.get('/maps', (req, res) => {
-  const userid = cookie.parse(req.headers.cookie || '').userid;
-  const promiseMaps = getMaps();
 
-  Promise.all([promiseMaps]).then(data => {    
-    const maps = data[0];
-    res.render('index', { maps });
-  })
-  .catch(err => {
-    res
-      .status(500)
-      .json({ error: err.message });
-  });
-});
-
-// Login Endpoint
-// Simulate login
-// When a user goes to /login using the login form, a cookie is set
+/**
+ * Login Endpoint
+ * 
+ * Description: Simulate login
+ * When a user goes to /users/login using the login form, a cookie is set
+*/
 app.get('/login', (req, res) => {
   res.setHeader('Set-Cookie', cookie.serialize('userid', 1, {
     httpOnly: true,
@@ -115,8 +106,12 @@ app.get('/login', (req, res) => {
   res.redirect('/');
 });
 
-// Logout Endpoint
-// User clicks on the logout link in the header and the cookie is cleared
+/**
+ * Logout Endpoint
+ * 
+ * Description: User clicks on the logout link in the header and the cookie is cleared
+ */
+
 app.get('/logout', (req, res) => {
   // Clear the logged in cookie (simulated)
   res.clearCookie('userid');
@@ -125,20 +120,8 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-// To DO - mode to routes/pins
-app.get('/pins/:id', (req, res) => {
-  console.log(req.params.id);
-  const pinData = getSinglePin(req.params.id);
-  Promise.all([pinData]).then(data => {
-    res.json({ pin: data[0]});
-  })
-  .catch(err => {
-    res
-      .status(500)
-      .json({ error: err.message });
-  });
-});
 
+// Listen 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

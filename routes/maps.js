@@ -10,20 +10,15 @@ const cookie = require('cookie');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
 
-
 router.get('/', (req, res) => {
   const query = `SELECT * FROM maps`;
-  console.log(query);
-  db.query(query)
+  const maps = mapsQueries.getMaps();
+  console.log(maps);
+  Promise.all([maps])
     .then(data => {
-      const maps = data.rows;
-      res.json({ maps });
+      const maps = data[0];
+      res.render('./maps/list', { maps });
     })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
 });
 
 router.get('/:id', (req, res) => {
@@ -32,10 +27,10 @@ router.get('/:id', (req, res) => {
   const pinData = mapsQueries.getMapWithPins(req.params.id);
   Promise.all([mapData, pinData])
     .then(data => {
-      // res.json({ pins: map });
-      const maps = data[0];
+      const map = data[0];
       const pins = data[1];
-      res.render('./maps/map', { maps, pins, userid });
+      console.log(data);
+      res.render('./maps/map', { map, pins, userid });
     })
     .catch(err => {
       res
