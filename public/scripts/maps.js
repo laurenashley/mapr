@@ -37,28 +37,6 @@ function initMap() {
   google.maps.event.addListener(map, "click", (event) => {
     addMarker(event.latLng, map);
   });
-
-  // const contentString =
-  //   `<div id="content">
-  //     This is a test
-  //   </div>`;
-  // const infowindow = new google.maps.InfoWindow({
-  //   content: contentString,
-  //   ariaLabel: "test",
-  // });
-
-  // const marker = new google.maps.Marker({
-  //   position: { lat: 51.04862, lng: -114.07085 },
-  //   map,
-  //   title: "TEST",
-  // });
-
-  // marker.addListener("click", () => {
-  //   infowindow.open({
-  //     anchor: marker,
-  //     map,
-  //   });
-  // });
 }
 
 function newLocation(newLat, newLng, newZoom) {
@@ -71,17 +49,28 @@ function newLocation(newLat, newLng, newZoom) {
 }
 
 // Adds a marker to the map.
-// function addMarker(location, map) {
-//   // Add the marker at the clicked location, and add the next-available label
-//   // from the array of alphabetical characters.
-//   new google.maps.Marker({
-//     position: location,
-//     label: 'A',
-//     map,
-//     title: "New test"
-//   });
+function addMarker(location, map, title) {
+  // Add the marker at the clicked location, and add the next-available label
+  // from the array of alphabetical characters.
+  new google.maps.Marker({
+    position: location,
+    label: '',
+    map,
+    title: title
+  });
+}
 
-// }
+function addInfoWindow(string) {
+  const contentString =
+    `<div id="content">
+      ${string}
+    </div>`;
+  
+  new google.maps.InfoWindow({
+    content: contentString,
+    ariaLabel: string,
+  });
+}
 
 // https://developers.google.com/maps/documentation/javascript/examples/event-click-latlng
 
@@ -94,11 +83,11 @@ $(() => {
   $('#mapsList a').on('click', function(e) {
     e.preventDefault();
     const $this = $(this);
-    const queryString = $this.attr('href');
     const mapID = $this.data('mapid');
     const mapLat = $this.data('lat');
     const mapLong = $this.data('long');
     const mapZoom = $this.data('zoom');
+    console.log(mapID);
 
     $.ajax({
       type: 'GET',
@@ -118,12 +107,21 @@ $(() => {
           <li class="d-flex mb-3">
             <img class="pr-3" alt="${pin.title}" width="75" src="${pin.image_url}" loading="lazy" />
             <div>
-              <a href="">${pin.title}</a>
+              <a href="" dat-lat="${pin.latitude}" data-long="${pin.longitude}" >${pin.title}</a>
               <p>${pin.description}</p>
             </div>
           </li>
           `);
           $html.appendTo($pinsListEl);
+
+          // Create new object with lat and long
+          const position = {};
+          position['lat'] = Number(pin["latitude"]);
+          position['lng'] = Number(pin["longitude"]);
+          const pinTitle = pin["title"];
+
+          // Add Markers
+          const marker = addMarker(position, map, pinTitle);
 
         });
       })
