@@ -11,7 +11,12 @@ const getSingleUser = function(id) {
 
   return db.query(query, value)
     .then( (data) => {
+      console.log(getSingleUser);
+
+
+
       const user = data.rows[0];
+      console.log(user);
 
       if (!data.rows.length) {
         console.log("No user found with that id");
@@ -35,6 +40,12 @@ const getMapsByUser = (id) => {
   const value = [`${id}`];
   return db.query(query, value)
     .then(data => {
+
+      console.log(getMapsByUser);
+      console.log(data.rows);
+
+
+
       return data.rows;
     });
 };
@@ -52,6 +63,12 @@ const getFavourties = (id) => {
   const value = [`${id}`];
   return db.query(query, value)
     .then(data => {
+
+      console.log(getFavourties);
+      console.log(data.rows);
+
+
+
       return data.rows;
     });
 };
