@@ -39,7 +39,7 @@ const pinApiRoutes = require('./routes/pin-api');
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/maps', mapsRoutes);
-app.use('/users', usersRoutes);
+app.use('/auth', usersRoutes);
 app.use('/pins', pinsRoutes);
 app.use('/maps-api', mapsApiRoutes);
 app.use('pin-api', pinApiRoutes);
@@ -89,35 +89,6 @@ app.get('/', (req, res) => {
           .json({ error: err.message });
       });
   }
-});
-
-/**
- * Login Endpoint
- *
- * Description: Simulate login
- * When a user goes to /users/login using the login form, a cookie is set
-*/
-app.get('/login', (req, res) => {
-  res.setHeader('Set-Cookie', cookie.serialize('userid', 1, {
-    httpOnly: true,
-    maxAge: 60 * 60 * 24 * 7 // 1 week
-  }));
-
-  res.redirect('/');
-});
-
-/**
- * Logout Endpoint
- *
- * Description: User clicks on the logout link in the header and the cookie is cleared
- */
-
-app.get('/logout', (req, res) => {
-  // Clear the logged in cookie (simulated)
-  res.clearCookie('userid');
-
-  // Redirect to main page
-  res.redirect('/');
 });
 
 // Listen
