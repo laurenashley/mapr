@@ -207,7 +207,9 @@ $(() => {
     /** Load Edit Map form */
     $('#updateMap').on('click', (e) => {
       e.preventDefault();
-      loadTemplateHTML('/maps/new', '#updateMapForm');
+      console.log('edit btn clicked');
+      const mapID = $(this).data('mapid');
+      loadTemplateHTML(`/maps/${mapID}/update`, '#updateMapForm');
     });
 
     const submitMap = (url, data, cb) => {
@@ -250,7 +252,7 @@ $(() => {
         const mapID = $this.data('mapid');
         console.log('map to delete id: ', mapID);
 
-        $.post(`/maps/${mapID}/delete`, (data) => {
+        $.post(`/maps/${mapID}/delete`, () => {
           loadTemplateHTML('/maps', '#mapsList');
         });
       }
