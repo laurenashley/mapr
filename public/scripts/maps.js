@@ -201,15 +201,8 @@ $(() => {
     /** Load New Map form */
     $('.addNewMapBtn').on('click', (e) => {
       e.preventDefault();
+      console.log('add new map btn clicked');
       loadTemplateHTML('/maps/new', '#newMapForm');
-    });
-
-    /** Load Edit Map form */
-    $('#updateMap').on('click', (e) => {
-      e.preventDefault();
-      console.log('edit btn clicked');
-      mapid = $(this).data('mapid');
-      loadTemplateHTML(`/maps/${mapid}/update`, '#updateMapForm');
     });
 
     const submitMap = (url, data, cb) => {
@@ -231,8 +224,10 @@ $(() => {
     $('#updateMap').on('click', function(e) {
       // To Do this crashes app, nothing opens
       e.preventDefault();
+      console.log('edit btn clicked');
       const data = $(this).serialize();
       mapid = $(this).data('mapid');
+
       submitMap(`/maps/${mapid}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
     });
 
