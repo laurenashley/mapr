@@ -208,8 +208,8 @@ $(() => {
     $('#updateMap').on('click', (e) => {
       e.preventDefault();
       console.log('edit btn clicked');
-      const mapID = $(this).data('mapid');
-      loadTemplateHTML(`/maps/${mapID}/update`, '#updateMapForm');
+      mapid = $(this).data('mapid');
+      loadTemplateHTML(`/maps/${mapid}/update`, '#updateMapForm');
     });
 
     const submitMap = (url, data, cb) => {
@@ -232,8 +232,8 @@ $(() => {
       // To Do this crashes app, nothing opens
       e.preventDefault();
       const data = $(this).serialize();
-      const mapID = $(this).data('mapid');
-      submitMap(`/maps/${mapID}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
+      mapid = $(this).data('mapid');
+      submitMap(`/maps/${mapid}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
     });
 
     /**
@@ -249,10 +249,9 @@ $(() => {
 
       if (confirmDelete()) {
         const $this = $(this);
-        const mapID = $this.data('mapid');
-        console.log('map to delete id: ', mapID);
+        mapid = $this.data('mapid');
 
-        $.post(`/maps/${mapID}/delete`, () => {
+        $.post(`/maps/${mapid}/delete`, () => {
           loadTemplateHTML('/maps', '#mapsList');
         });
       }
