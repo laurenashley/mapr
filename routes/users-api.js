@@ -16,7 +16,7 @@ router.get('/:id/favourties', (req, res) => {
     .then(data => {
       const favourites = data[0];
       console.log(data);
-      res.render('./user/favourties', { favourites });
+      res.json({ favourites });
     })
     .catch(err => {
       res
@@ -31,7 +31,7 @@ router.get('/:id/contributions', (req, res) => {
     .then(data => {
       const contributions = data[0];
       console.log(data);
-      res.render('./user/contributions', { contributions });
+      res.json({ contributions });
     })
     .catch(err => {
       res

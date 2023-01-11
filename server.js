@@ -57,7 +57,7 @@ const { getSingleUser, getMapsByUser, getFavourites } = require('./db/queries/us
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
-  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const { userid } = cookie.parse(req.headers.cookie || '');
 
   if (userid) {
     const promiseUser = getSingleUser(userid);
@@ -65,25 +65,26 @@ app.get('/', (req, res) => {
     const promiseGetFavourites = getFavourites(userid);
     const promiseMaps = getMaps();
 
-    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {      
-      const maps = data[1];
-      const user = data[2];
-      const userMaps = data[3];
-      const userFavs = data[4];
-      res.render('index', { user, maps, userMaps, userFavs, userid });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
+    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites])
+      .then(data => {
+        const maps = data[1];
+        const user = data[2];
+        const userMaps = data[3];
+        const userFavs = data[4];
+        res.render('index', { user, maps, userMaps, userFavs, userid });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
   } else {
     const promiseMaps = getMaps();
-  
-    Promise.all([userid, promiseMaps]).then(data => {    
-        const maps = data[1];
-        res.render('index', { maps, userid });
-      })
+
+    Promise.all([userid, promiseMaps]).then(data => {
+      const maps = data[1];
+      res.render('index', { maps, userid });
+    })
       .catch(err => {
         res
           .status(500)
@@ -96,4 +97,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
