@@ -1,12 +1,16 @@
-<div id="pinSingle">
+<div id="pinSingle" class="ajaxWrap">
   <% if (pin) { %>
     <% pin.forEach((pin) => { %>
-      <a id="backBtnMap" class="btn btn-outline-secondary" href="/maps/<%= pin.map_id %>">Back to map</a>
-      <div id="<%= pin.id %>" class="d-flex py-3">
-        <img class="pe-2" width="75" height="75" src="<%= pin.image_url %>" />
-        <div>
-          <h4><%= pin.title %></h4>
-          <p><%= pin.description %></p>
+      <a id="backBtnMap" class="btn btn-outline-secondary mb-3" href="/maps/<%= pin.map_id %>">Back to map</a>
+      <div id="<%= pin.id %>" class="card" style="width: 100%;">
+        <img src="<%= pin.image_url %>" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fa-solid fa-location-dot"></i> <%= pin.title %></h5>
+          <p class="card-text"><%= pin.description %></p>
+          <div class="btn-group" role="group" aria-label="pin-actions">
+            <a type="button" class="btn btn-sm btn-outline-primary">Edit</a>
+            <a type="button" class="btn btn-sm btn-outline-primary">Delete</a>
+          </div>
         </div>
       </div>
     <% }); %>
