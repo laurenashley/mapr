@@ -1,1 +1,24 @@
-<ul id="pinsList" class="nav"></ul>
+<div id="pinsList">
+<% if (map) { %>
+  <a id="backBtnAllMap" class="btn btn-outline-secondary" href="/maps">Back</a>
+  <% map.forEach((item) => { %>
+    <h3 class="h6 mt-3"><%= item.title %></h3>
+  <% }); %>
+  <ul class="nav flex-column">
+    <% if (pins) { %>
+      <% pins.forEach((pin) => { %>
+        <li id="<%= pin.id %>" class="d-flex py-3">
+          <img class="pe-2" width="75" height="75" src="<%= pin.image_url %>" />
+          <div>
+            <h6><a href="/pins/<%= pin.id %>" data-pinid="<%= pin.id %>"><%= pin.title %></a></h6>
+            <p><%= pin.description %></p>
+          </div>
+        </li>
+      <% }); %>
+    <% } %>
+  </ul>
+  <!-- Delete and Update CTAs here -->
+<% } else { %>
+  No map found
+<% } %>
+</div>

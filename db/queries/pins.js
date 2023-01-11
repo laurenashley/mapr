@@ -9,14 +9,44 @@ const getPins = (mapID) => {
 };
 
 const getSinglePin = async (id) => {
-  const data = await db.query(`SELECT * FROM pins WHERE pin_id = $1;`, [id]);
+  const data = await db.query(`SELECT * FROM pins WHERE id = $1;`, [id]);
   return data.rows;
 };
 
+
+const updatePin = (user_id, name, long, lat, zoom) => {
+  return db.query(`
+  INSERT INTO pins(user_id, title, longitude, latitude, zoom)
+  VALUES($1, $2, $3, $4, $5);
+  `,
+  [user_id, name, long, lat, zoom])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const addNewPin = (user_id, name, long, lat, zoom) => {
+  return db.query(`
+  INSERT INTO pins(user_id, title, longitude, latitude, zoom)
+  VALUES($1, $2, $3, $4, $5);
+  `,
+  [user_id, name, long, lat, zoom])
+    .then(data => {
+      return data.rows;
+    });
+};
+
+const deletePin = (id) => {
+  return db.query(`DELETE FROM pins WHERE id = $1;`, [id])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 module.exports = {
-  getMaps,
+  getPins,
   getSinglePin,
-  updateMap,
-  addNewMap,
-  deleteMap
+  addNewPin,
+  updatePin,
+  deletePin
 };

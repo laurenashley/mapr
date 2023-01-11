@@ -12,9 +12,12 @@
     </div>
 
       <!-- Right links -->
-      <div class="header-container">
+      <div class="header-container nav">
         <% if (userid) { %>
           <!-- Button trigger modal -->
+          <a id="addNewMapBtn" class="addNewMapBtn btn btn-primary px-3 me-3" data-bs-toggle="collapse" href="#collapseAddNewMap"  role="button" aria-expanded="false" aria-controls="collapseAddNewMap">
+            <i class="fa-solid fa-plus"></i> New map
+          </a>
           <a href="/user" class="btn btn-secondary btn-profile rounded-circle" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="fa-solid fa-user"></i></a>
           <a href="/logout" type="button" class="btn btn-link px-3">
             Logout
