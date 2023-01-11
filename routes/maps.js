@@ -60,6 +60,7 @@ router.post('/new', (req, res) => {
 });
 
 router.post('/:id/update', (req, res) => {
+  console.log('post router, updateMap now ');
   mapsQueries.updateMap(
     1, // To Do change to login cookie
     req.body.mapName,
@@ -78,6 +79,8 @@ router.post('/:id/delete', (req, res) => {
         .status(500)
         .json({ error: err.message });
     });
+
+  res.redirect('/');
 });
 
 

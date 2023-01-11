@@ -251,8 +251,7 @@ $(() => {
         console.log('map to delete id: ', mapID);
 
         $.post(`/maps/${mapID}/delete`, (data) => {
-          console.log('Deleted', data);
-          loadTemplateHTML('/maps', '#mapsList'); // To Do this isn't running
+          loadTemplateHTML('/maps', '#mapsList');
         });
       }
     });
