@@ -53,7 +53,7 @@ app.use('pin-api', pinApiRoutes);
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
 const { json } = require('express');
-const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/user');
+const { getSingleUser, getMapsByUser, getFavourites } = require('./db/queries/user');
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
@@ -62,7 +62,7 @@ app.get('/', (req, res) => {
   if (userid) {
     const promiseUser = getSingleUser(userid);
     const prmoiseUserMaps = getMapsByUser(userid);
-    const promiseGetFavourites = getFavourties(userid);
+    const promiseGetFavourites = getFavourites(userid);
     const promiseMaps = getMaps();
 
     Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {      

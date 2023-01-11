@@ -3,23 +3,23 @@
 <% if (userid) { %>
 <form id="newPinForm" action="/pins/new" method="post">
   <h3 class="h5">New Pin</h3>
-  <input class="sr-only" id="mapid" type="number" value="1">
-  <input class="sr-only" id="userid" type="number" value="<%= userid %>">
+  <input class="sr-only" id="mapid" name="mapid" type="number" value="1" required>
+  <input class="sr-only" id="userid" name="userid" type="number" value="<%= userid %>" required>
   <p>
-    <label class="form-label" for="pinNameEdit">Pin name:</label>
-    <input id="pinNameEdit" class="form-control" name="pinName" type="text" value="">
+    <label class="form-label" for="pinName">Pin name:</label>
+    <input id="pinName" class="form-control" name="pinName" type="text" value="" required>
   </p>
   <p>
     <label class="form-label" for="pinImageUrl">Image link:</label>
-    <input id="pinNameEdit" class="form-control" name="pinName" type="text" value="">
+    <input id="pinImageUrl" class="form-control" name="pinImageUrl" type="text" value="" required>
   </p>
   <p>
-    <label class="form-label" for="pinLatEdit">Latitude</label>
-    <input class="form-control" id="pinLatEdit" name="pinLat" type="text" value="">
+    <label class="form-label" for="pinLat">Latitude</label>
+    <input class="form-control" id="pinLat" name="pinLat" type="text" value="" required>
   </p>
   <p>
-    <label class="form-label" for="pinLongEdit">Longitude</label>
-    <input class="form-control" id="pinLongEdit" name="pinLong" type="text" value="">
+    <label class="form-label" for="pinLong">Longitude</label>
+    <input class="form-control" id="pinLong" name="pinLong" type="text" value="" required>
   </p>
   <input class="btn btn-primary" type="submit" name="submit" value="Save">  
 </form>

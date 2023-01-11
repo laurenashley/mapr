@@ -36,14 +36,18 @@ router.get('/:id', (req, res) => {
 // (map_id, user_id, title, description, image_url, longitude, latitude)
 router.post('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
-  console.log(req.body);
-  // pinsQueries.addNewPin(
-  //   userid, // To Do change to login cookie
-  //   req.body.mapid,
-  //   // req.body.mapName,
-  //   // req.body.mapLong,
-  //   // req.body.mapLat
-  // );
+
+  pinsQueries.addNewPin(
+    userid,
+    req.body.mapid,
+    req.body.userid,
+    req.body.pinName,
+    req.body.pinImageUrl,
+    req.body.pinLat,
+    req.body.pinLong
+  );
+
+  res.redirect('/');
 });
 
 router.post('/:id/update', (req, res) => {

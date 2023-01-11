@@ -43,8 +43,7 @@ const getMapsByUser = (id) => {
     });
 };
 
-
-const getFavourties = (id) => {
+const getFavourites = (id) => {
   const query = `
     SELECT DISTINCT maps.*
     FROM favourite_maps
@@ -64,4 +63,4 @@ const getFavourties = (id) => {
     });
 };
 
-module.exports = { getSingleUser, getMapsByUser, getFavourties };
+module.exports = { getSingleUser, getMapsByUser, getFavourites };

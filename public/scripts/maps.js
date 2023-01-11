@@ -217,7 +217,25 @@ $(() => {
       const data = $(this).serialize();
 
       $.post("/maps/new", data, function(data) {
-        console.log('Done');
+        console.log('Created new map');
+
+        loadTemplateHTML('/maps', '#mapsList');
+      });
+    });
+  }
+
+  /**
+   * Submit new pin form via AJAX
+   * 
+   */
+  const submitNewPin = function() {
+    $('#newPinForm').submit( function(e) {
+      e.preventDefault();
+
+      const data = $(this).serialize();
+
+      $.post('/pins/new', data, function(data) {
+        console.log('Created new pin');
 
         loadTemplateHTML('/maps', '#mapsList');
       });
@@ -249,6 +267,7 @@ $(() => {
   backToAllMaps();
   backToMap();
   loadNewPinForm();
+  submitNewPin();
 
   // Call again on ajaxComplete
   $(document).on('ajaxComplete', function() {
@@ -259,5 +278,6 @@ $(() => {
     backToAllMaps();
     backToMap();
     loadNewPinForm();
+    submitNewPin();
   });
 });
