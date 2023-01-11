@@ -144,11 +144,7 @@ $(() => {
   }
 
   const loadNewMapForm = function() {
-    $('.addNewMapBtn').on('click', function(e) {
-      e.preventDefault();
 
-      loadTemplateHTML('/maps/new', '#newMapForm' );
-    });
   }
 
   /**
@@ -185,32 +181,6 @@ $(() => {
 
     });
   }
-
-  /**
-   * Update Map
-   *
-   */
-  // Open form to update map details
-  $('#updateMap').on('click', function(e) {
-    e.preventDefault();
-    const $this = $(this);
-    const mapID = $this.data('mapid');
-
-    // Show update form
-
-    // Use this ajax for form submit
-    // $.ajax({
-    //   type: 'POST',
-    //   url: `/maps/${mapID}/update`
-    // })
-    //   .done((res) => {
-    //     console.log('map updated ', res);
-
-  //   })
-  //   .fail((err) => {
-  //     console.log('error: ', err);
-  //   });
-  });
 
   /**
    * Delete Map
@@ -262,23 +232,43 @@ $(() => {
    * Submit Add new map form via AJAX
    *
    */
-  const submitNewMap = function() {
-    $('#newMapForm').submit( function(e) {
+  const mapForms = function() {
+    $('.addNewMapBtn').on('click', (e) => {
       e.preventDefault();
+      loadTemplateHTML('/maps/new', '#newMapForm');
+    });
 
-      const data = $(this).serialize();
-
-      $.post('/maps/new', data, function(data) {
+    const submitMap = (url, data, cb) => {
+      $.post(url, data, (data) => {
         console.log('Done');
-
-        loadTemplateHTML('/maps', '#mapsList');
+        cb();
       });
+    }
+
+    /**
+     * Submit New Map
+     */
+    $('#newMapForm').submit(function(e) {
+      e.preventDefault();
+      const data = $(this).serialize();
+      submitMap('/maps/new', data, loadTemplateHTML('/maps', '#mapsList'));
+    });
+
+    /**
+     * Update Map
+     */
+    $('#updateMap').on('click', function(e) {
+      e.preventDefault();
+      const data = $(this).serialize();
+      const mapID = $(this).data('mapid');
+      submitMap(`/maps/${mapID}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
     });
   }
 
   // Call Functions on initial page load
+  mapForms();
   loadNewMapForm();
-  submitNewMap();
+  // submitNewMap();
   getSingleMap($('#mapsList a'));
   getSinglePin();
   backToAllMaps();
@@ -287,8 +277,9 @@ $(() => {
 
   // Call again on ajaxComplete
   $(document).on('ajaxComplete', function() {
+    mapForms();
     loadNewMapForm();
-    submitNewMap();
+    // submitNewMap();
     getSingleMap($('#mapsList a'));
     getSinglePin();
     backToAllMaps();
