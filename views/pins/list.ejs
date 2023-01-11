@@ -5,7 +5,7 @@
     <h3 class="h6 mt-3"><%= item.title %></h3>
   <% }); %>
   <ul class="nav flex-column">
-    <% if (pins) { %>
+    <% if (pins.length > 0) { %>
       <% pins.forEach((pin) => { %>
         <li id="<%= pin.id %>" class="d-flex py-3">
           <img class="pe-2" width="75" height="75" src="<%= pin.image_url %>" />
@@ -15,6 +15,10 @@
           </div>
         </li>
       <% }); %>
+    <% } else { %>
+      <div class="alert alert-warning">
+        No pins found
+      </div>
     <% } %>
   </ul>
 <% } else { %>

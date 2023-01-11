@@ -1,4 +1,4 @@
-// Set Defaults
+// Set Global Variables
 let map;
 let mapid = null;
 let setLatitude = 51.04862;
@@ -205,8 +205,6 @@ $(() => {
       loadTemplateHTML(url, pinDiv);
     });
   }
-
-  
 
   /**
    * Submit Add new map form via AJAX
