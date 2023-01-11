@@ -50,12 +50,12 @@ app.use('pin-api', pinApiRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
-const { json } = require('express');
+const { json } = require('express'); // Are we using this? Looks like no
 const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/user');
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
-  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const { userid } = cookie.parse(req.headers.cookie || '');
 
   if (userid) {
     const promiseUser = getSingleUser(userid);
@@ -63,25 +63,26 @@ app.get('/', (req, res) => {
     const promiseGetFavourites = getFavourties(userid);
     const promiseMaps = getMaps();
 
-    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites]).then(data => {      
-      const maps = data[1];
-      const user = data[2];
-      const userMaps = data[3];
-      const userFavs = data[4];
-      res.render('index', { user, maps, userMaps, userFavs, userid });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
+    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites])
+      .then(data => {
+        const maps = data[1];
+        const user = data[2];
+        const userMaps = data[3];
+        const userFavs = data[4];
+        res.render('index', { user, maps, userMaps, userFavs, userid });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
   } else {
     const promiseMaps = getMaps();
-  
-    Promise.all([userid, promiseMaps]).then(data => {    
-        const maps = data[1];
-        res.render('index', { maps, userid });
-      })
+
+    Promise.all([userid, promiseMaps]).then(data => {
+      const maps = data[1];
+      res.render('index', { maps, userid });
+    })
       .catch(err => {
         res
           .status(500)
@@ -90,10 +91,9 @@ app.get('/', (req, res) => {
   }
 });
 
-
 /**
  * Login Endpoint
- * 
+ *
  * Description: Simulate login
  * When a user goes to /users/login using the login form, a cookie is set
 */
@@ -108,7 +108,7 @@ app.get('/login', (req, res) => {
 
 /**
  * Logout Endpoint
- * 
+ *
  * Description: User clicks on the logout link in the header and the cookie is cleared
  */
 
@@ -120,9 +120,7 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-
-// Listen 
+// Listen
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
