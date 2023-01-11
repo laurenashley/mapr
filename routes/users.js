@@ -20,7 +20,7 @@ router.get('/login', (req, res) => {
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 7 // 1 week
   }));
-
+  console.log('user cookie set!');
   res.redirect('/');
 });
 
