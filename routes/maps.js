@@ -45,6 +45,13 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// Pins new - must be associated to parent map id
+router.get('/:id/pins/new', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
+  res.render('./pins/form-new', { userid, mapid });
+});
+
 // POST
 router.post('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
@@ -80,6 +87,5 @@ router.post('/:id/delete', (req, res) => {
 
   res.redirect('/');
 });
-
 
 module.exports = router;

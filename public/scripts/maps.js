@@ -72,7 +72,7 @@ $(() => {
       const url = `/maps/${mapID}`;
       const api = `/maps-api/${mapID}`;
 
-      loadTemplateHTML(url, '#mapSingle');
+      loadTemplateHTML(url, '.ajaxWrap');
 
       $.ajax({
         type: 'GET',
@@ -148,7 +148,7 @@ $(() => {
     $('.addNewMapBtn').on('click', function(e) {
       e.preventDefault();
 
-      loadTemplateHTML('/maps/new', '#newMapForm' );
+      loadTemplateHTML('/maps/new', '.ajaxWrap' );
     });
   }
 
@@ -161,7 +161,7 @@ $(() => {
     $('#backBtnAllMap').on('click', function(e) {
       e.preventDefault();
 
-      loadTemplateHTML('/maps', '#mapsList');
+      loadTemplateHTML('/maps', '.ajaxWrap');
 
       // Recenter the map
       newLocation(setLatitude, setLongitude, setZoom);
@@ -181,7 +181,7 @@ $(() => {
 
       const href = $(this).attr('href');
 
-      loadTemplateHTML(href, '#mapSingle');
+      loadTemplateHTML(href, '.ajaxWrap');
 
       getSingleMap($(this));
 
@@ -202,7 +202,7 @@ $(() => {
       const pinID = $(this).data('pinid');
       const url = `/pins/${pinID}`;
 
-      loadTemplateHTML(url, pinDiv);
+      loadTemplateHTML(url, '.ajaxWrap');
     });
   }
 
@@ -219,7 +219,7 @@ $(() => {
       $.post("/maps/new", data, function(data) {
         console.log('Created new map');
 
-        loadTemplateHTML('/maps', '#mapsList');
+        loadTemplateHTML('/maps', '.ajaxWrap');
       });
     });
   }
@@ -232,12 +232,14 @@ $(() => {
     $('#newPinForm').submit( function(e) {
       e.preventDefault();
 
+      url = $(this).find('input[type="submit"]').data('referer');
+
       const data = $(this).serialize();
 
       $.post('/pins/new', data, function(data) {
         console.log('Created new pin');
 
-        loadTemplateHTML('/maps', '#mapsList');
+        loadTemplateHTML(url, '.ajaxWrap');
       });
     });
   }
@@ -247,8 +249,9 @@ $(() => {
       e.preventDefault();
 
       const mapid = $(this).data('mapid');
+      const url = $(this).attr('href');
   
-      loadTemplateHTML('/pins/new', '#newPinForm');
+      loadTemplateHTML(url, '.ajaxWrap');
   
       // Set the map id from the referring button
       $('#newPinForm').find('#mapid').val(mapid);  

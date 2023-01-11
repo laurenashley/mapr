@@ -30,7 +30,7 @@ const addNewPin = (map_id, user_id, title, desc, image_url, long, lat) => {
   INSERT INTO pins(map_id, user_id, title, description, image_url, longitude, latitude)
   VALUES($1, $2, $3, $4, $5, $6, $7);
   `,
-  [user_id, map_id, title, desc, image_url, long, lat])
+  [map_id, user_id, title, desc, image_url, long, lat])
     .then(data => {
       return data.rows;
     });
