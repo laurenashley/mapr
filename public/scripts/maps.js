@@ -173,6 +173,10 @@ $(() => {
     });
   }
 
+  /**
+   * Handle Pins & Pin Forms
+   *
+   */
   const pins = () => {
     /**
      * Load Single Pin via AJAX
