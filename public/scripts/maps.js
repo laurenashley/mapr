@@ -1,3 +1,5 @@
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable func-style */
 // Set Defaults
 let map;
 let mapid = null;
@@ -88,7 +90,6 @@ $(() => {
 
           // Load new pin data and create markers
           pins.forEach(pin => {
-
             // Create new object with lat and long
             const position = {};
             position['lat'] = Number(pin["latitude"]);
@@ -135,7 +136,6 @@ $(() => {
               });
             });
           }); // END forEach
-
         })
         .fail((err) => {
           console.log('there was an error: ', err);
@@ -143,16 +143,11 @@ $(() => {
     });
   }
 
-  const loadNewMapForm = function() {
-
-  }
-
-  /**
-   * All Map - Back Button
-   */
-
-  const backToAllMaps = function() {
-    $('#backBtnAllMap').on('click', function(e) {
+  const mapNavigation = () => {
+    /**
+    * All Map - Back Button
+    */
+    $('#backBtnAllMap').on('click', (e) => {
       e.preventDefault();
 
       loadTemplateHTML('/maps', '#mapsList');
@@ -163,13 +158,10 @@ $(() => {
       // Clear markers from previous map
       clearMarkers();
     });
-  }
 
-  /**
-   * Map - Back Button
-   */
-
-  const backToMap = function() {
+    /**
+    * Map - Back Button
+    */
     $('#backBtnMap').on('click', function(e) {
       e.preventDefault();
 
@@ -178,17 +170,69 @@ $(() => {
       loadTemplateHTML(href, '#mapSingle');
 
       getSingleMap($(this));
-
     });
   }
 
+  const pins = () => {
+    /**
+     * Load Single Pin via AJAX
+     *
+     */
+    const pinDiv = '#pinSingle';
+
+    $('#pinsList li a').on('click', function(e) {
+      e.preventDefault();
+      const pinID = $(this).data('pinid');
+      const url = `/pins/${pinID}`;
+
+      loadTemplateHTML(url, pinDiv);
+    });
+  };
+
   /**
-   * Delete Map
+   * Handle Map Forms
    *
    */
+  const mapForms = function() {
+    /** Load New Map form */
+    $('.addNewMapBtn').on('click', (e) => {
+      e.preventDefault();
+      loadTemplateHTML('/maps/new', '#newMapForm');
+    });
 
-  const deleteMap = function() {
-    // Confirm delete with user
+    /** Load Edit Map form */
+    $('#updateMap').on('click', (e) => {
+      e.preventDefault();
+      loadTemplateHTML('/maps/new', '#updateMapForm');
+    });
+
+    const submitMap = (url, data, cb) => {
+      $.post(url, data, cb);
+    }
+
+    /**
+     * Create New Map
+     */
+    $('#newMapForm').submit(function(e) {
+      e.preventDefault();
+      const data = $(this).serialize();
+      submitMap('/maps/new', data, loadTemplateHTML('/maps', '#mapsList'));
+    });
+
+    /**
+     * Update Existing Map
+     */
+    $('#updateMap').on('click', function(e) {
+      // To Do this crashes app, nothing opens
+      e.preventDefault();
+      const data = $(this).serialize();
+      const mapID = $(this).data('mapid');
+      submitMap(`/maps/${mapID}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
+    });
+
+    /**
+    * Delete Map
+    */
     const confirmDelete = () => {
       const userResponse = confirm("Are you sure you want to delete this map and all of it's pins?");
       return userResponse;
@@ -202,88 +246,27 @@ $(() => {
         const mapID = $this.data('mapid');
         console.log('map to delete id: ', mapID);
 
-        $.post(`/maps/${mapID}/delete`, function() {
-          console.log('Deleted');
-
-          loadTemplateHTML('/maps', '#mapsList');
+        $.post(`/maps/${mapID}/delete`, (data) => {
+          console.log('Deleted', data);
+          loadTemplateHTML('/maps', '#mapsList'); // To Do this isn't running
         });
       }
     });
   }
 
-  /**
-   * Load Single Pin via AJAX
-   *
-   */
-
-  const getSinglePin = function() {
-    const pinDiv = '#pinSingle';
-
-    $('#pinsList li a').on('click', function(e) {
-      e.preventDefault();
-      const pinID = $(this).data('pinid');
-      const url = `/pins/${pinID}`;
-
-      loadTemplateHTML(url, pinDiv);
-    });
-  }
-
-  /**
-   * Submit Add new map form via AJAX
-   *
-   */
-  const mapForms = function() {
-    $('.addNewMapBtn').on('click', (e) => {
-      e.preventDefault();
-      loadTemplateHTML('/maps/new', '#newMapForm');
-    });
-
-    const submitMap = (url, data, cb) => {
-      $.post(url, data, (data) => {
-        console.log('Done');
-        cb();
-      });
-    }
-
-    /**
-     * Submit New Map
-     */
-    $('#newMapForm').submit(function(e) {
-      e.preventDefault();
-      const data = $(this).serialize();
-      submitMap('/maps/new', data, loadTemplateHTML('/maps', '#mapsList'));
-    });
-
-    /**
-     * Update Map
-     */
-    $('#updateMap').on('click', function(e) {
-      e.preventDefault();
-      const data = $(this).serialize();
-      const mapID = $(this).data('mapid');
-      submitMap(`/maps/${mapID}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
-    });
-  }
-
-  // Call Functions on initial page load
+  // Load Function Groups on initial page load
   mapForms();
-  loadNewMapForm();
-  // submitNewMap();
-  getSingleMap($('#mapsList a'));
-  getSinglePin();
-  backToAllMaps();
-  backToMap();
-  deleteMap();
+  mapNavigation();
+  pins();
 
-  // Call again on ajaxComplete
+  getSingleMap($('#mapsList a'));
+
+  // Load again on ajaxComplete
   $(document).on('ajaxComplete', function() {
     mapForms();
-    loadNewMapForm();
-    // submitNewMap();
+    mapNavigation();
+    pins();
+
     getSingleMap($('#mapsList a'));
-    getSinglePin();
-    backToAllMaps();
-    backToMap();
-    deleteMap();
   });
 });
