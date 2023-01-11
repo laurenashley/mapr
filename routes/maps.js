@@ -73,10 +73,6 @@ router.post('/:id/update', (req, res) => {
 
 router.post('/:id/delete', (req, res) => {
   mapsQueries.deleteMap(req.params.id)
-    .then(data => {
-      console.log('data after delete: ', data);
-      // To Do refresh list of maps
-    })
     .catch(err => {
       res
         .status(500)

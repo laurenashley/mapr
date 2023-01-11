@@ -185,6 +185,11 @@ $(() => {
 
     });
   }
+
+  /**
+   * Update Map
+   *
+   */
   // Open form to update map details
   $('#updateMap').on('click', function(e) {
     e.preventDefault();
@@ -207,32 +212,34 @@ $(() => {
   //   });
   });
 
-  // Delete Map
-  const confirmDelete = () => {
-    const userResponse = confirm("Are you sure you want to delete this map and all of it's pins?");
-    return userResponse;
-  };
+  /**
+   * Delete Map
+   *
+   */
 
-  $('#deleteMap').on('click', function(e) {
-    e.preventDefault();
+  const deleteMap = function() {
+    // Confirm delete with user
+    const confirmDelete = () => {
+      const userResponse = confirm("Are you sure you want to delete this map and all of it's pins?");
+      return userResponse;
+    };
 
-    if (confirmDelete()) {
-      const $this = $(this);
-      const mapID = $this.data('mapid');
+    $('#deleteMap').on('click', function(e) {
+      e.preventDefault();
 
-      $.ajax({
-        type: 'POST',
-        url: `/maps/${mapID}/delete`
-      })
-        .done((res) => {
-          console.log('map deleted ', res);
-        // To Do refresh list of maps
-        })
-        .fail((err) => {
-          console.log('error: ', err);
+      if (confirmDelete()) {
+        const $this = $(this);
+        const mapID = $this.data('mapid');
+        console.log('map to delete id: ', mapID);
+
+        $.post(`/maps/${mapID}/delete`, function() {
+          console.log('Deleted');
+
+          loadTemplateHTML('/maps', '#mapsList');
         });
-    }
-  });
+      }
+    });
+  }
 
   /**
    * Load Single Pin via AJAX
@@ -276,6 +283,7 @@ $(() => {
   getSinglePin();
   backToAllMaps();
   backToMap();
+  deleteMap();
 
   // Call again on ajaxComplete
   $(document).on('ajaxComplete', function() {
@@ -285,5 +293,6 @@ $(() => {
     getSinglePin();
     backToAllMaps();
     backToMap();
+    deleteMap();
   });
 });
