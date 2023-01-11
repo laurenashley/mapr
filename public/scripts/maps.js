@@ -205,6 +205,15 @@ $(() => {
       loadTemplateHTML('/maps/new', '#newMapForm');
     });
 
+    /** Load Update Map form */
+    $('#updateMap').on('click', (e) => {
+      e.preventDefault();
+      console.log('update map btn clicked');
+      const mapID = $(this).data('mapid');
+      console.log('mapid ', mapID);
+      loadTemplateHTML(`/maps/${mapID}/update`, '#updateMapForm');
+    });
+
     const submitMap = (url, data, cb) => {
       $.post(url, data, cb);
     }
@@ -221,7 +230,7 @@ $(() => {
     /**
      * Update Existing Map
      */
-    $('#updateMap').on('click', function(e) {
+    $('#updateMapForm').submit(function(e) {
       // To Do this crashes app, nothing opens
       e.preventDefault();
       console.log('edit btn clicked');
