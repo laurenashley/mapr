@@ -224,6 +224,22 @@ $(() => {
     });
   }
 
+  const loadNewPinForm = function() {
+    $('#newPinBtn').on('click', function(e) {
+      e.preventDefault();
+
+      const mapid = $(this).data('mapid');
+  
+      loadTemplateHTML('/pins/new', '#newPinForm');
+  
+      // Set the map id from the referring button
+      $('#newPinForm').find('#mapid').val(mapid);  
+
+      // Set back button url
+      $('#backBtnMap').attr('href', '/maps/' + mapid);
+    })
+  }
+
 
   // Call Functions on initial page load
   loadNewMapForm();
@@ -232,6 +248,7 @@ $(() => {
   getSinglePin();
   backToAllMaps();
   backToMap();
+  loadNewPinForm();
 
   // Call again on ajaxComplete
   $(document).on('ajaxComplete', function() {
@@ -241,5 +258,6 @@ $(() => {
     getSinglePin();
     backToAllMaps();
     backToMap();
+    loadNewPinForm();
   });
 });

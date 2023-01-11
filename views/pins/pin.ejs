@@ -5,7 +5,7 @@
       <div id="<%= pin.id %>" class="d-flex py-3">
         <img class="pe-2" width="75" height="75" src="<%= pin.image_url %>" />
         <div>
-          <h4><a href="/pins/<%= pin.id %>" data-pinid="<%= pin.id %>"><%= pin.title %></a></h4>
+          <h4><%= pin.title %></h4>
           <p><%= pin.description %></p>
         </div>
       </div>

@@ -14,7 +14,7 @@ const getSinglePin = async (id) => {
 };
 
 
-const updatePin = (user_id, name, long, lat, zoom) => {
+const updatePin = (user_id, title, long, lat, zoom) => {
   return db.query(`
   INSERT INTO pins(user_id, title, longitude, latitude, zoom)
   VALUES($1, $2, $3, $4, $5);
@@ -25,12 +25,12 @@ const updatePin = (user_id, name, long, lat, zoom) => {
     });
 };
 
-const addNewPin = (user_id, name, long, lat, zoom) => {
+const addNewPin = (map_id, user_id, title, desc, image_url, long, lat) => {
   return db.query(`
-  INSERT INTO pins(user_id, title, longitude, latitude, zoom)
-  VALUES($1, $2, $3, $4, $5);
+  INSERT INTO pins(map_id, user_id, title, description, image_url, longitude, latitude)
+  VALUES($1, $2, $3, $4, $5, $6, $7);
   `,
-  [user_id, name, long, lat, zoom])
+  [user_id, map_id, title, desc, image_url, long, lat])
     .then(data => {
       return data.rows;
     });
