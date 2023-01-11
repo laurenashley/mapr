@@ -51,7 +51,7 @@ app.use('pin-api', pinApiRoutes);
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
 const { json } = require('express'); // Are we using this? Looks like no
-const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/user');
+const { getSingleUser, getMapsByUser, getFavourites } = require('./db/queries/user');
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
