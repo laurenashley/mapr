@@ -2,7 +2,7 @@
 <% if (map) { %>
   <a id="backBtnAllMap" class="btn btn-outline-secondary" href="/maps">Back</a>
   <% map.forEach((item) => { %>
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
       <h3 class="h6 mt-3"><%= item.title %></h3>
       <div class="ml-auto"><i class="fa-regular fa-heart text-danger"></i></div>
     </div>
