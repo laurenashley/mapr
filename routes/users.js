@@ -8,6 +8,7 @@
 const express = require('express');
 const router  = express.Router();
 const cookie  = require('cookie');
+const userQueries = require('../db/queries/user');
 
 /**
  * Login Endpoint
@@ -30,6 +31,7 @@ router.get('/login', (req, res) => {
  * Description: User clicks on the logout link in the header and the cookie is cleared
  */
 
+// To Do is this being used?
 router.get('/logout', (req, res) => {
   // Clear the logged in cookie (simulated)
   res.clearCookie('userid');
@@ -43,7 +45,7 @@ router.get('/:id/favourites', (req, res) => {
   Promise.all([favsData])
     .then(data => {
       const favourites = data[0];
-      console.log(data);
+      console.log('get favs data: ', data);
       res.render('./user/favourites', { favourites });
     })
     .catch(err => {
@@ -58,7 +60,7 @@ router.get('/:id/contributions', (req, res) => {
   Promise.all([userMapsData])
     .then(data => {
       const contributions = data[0];
-      console.log(data);
+      console.log('get contribs data: ', data);
       res.render('./user/contributions', { contributions });
     })
     .catch(err => {
