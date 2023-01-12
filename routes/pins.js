@@ -58,6 +58,8 @@ router.post('/new', (req, res) => {
     req.body.pinLong
   );
 
+  // To Do add row to contributors table
+
   res.redirect('/');
 });
 
