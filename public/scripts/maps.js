@@ -260,6 +260,7 @@ $(() => {
 
       loadTemplateHTML(url, pinDiv);
     });
+
   }
 
   /**

@@ -52,6 +52,7 @@
     background-color: white;
 
 
+
     ul {
 
       box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
@@ -96,7 +97,9 @@
 padding-left: 0.5rem;
 }
 
-
+.py-3{
+  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+}
 
 @media screen and (max-height: 450px) {
   .sidenav {
