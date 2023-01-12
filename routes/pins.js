@@ -27,6 +27,23 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.get('/:id/update', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const pin = pinsQueries.getSinglePin(req.params.id);
+
+  Promise.all([pin])
+  .then(data => {
+    const pin = data[0];
+    console.log(pin);
+    res.render('./pins/form-update', {pin, userid});
+  })
+  .catch(err => {
+    res
+      .status(500)
+      .json({ error: err.message });
+  });
+});
+
 // router.get(':id/delete', (req, res) => {
 //   res.status('200');
 // });
@@ -52,11 +69,13 @@ router.post('/new', (req, res) => {
 router.post('/:id/update', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
   pinsQueries.updatePin(
-    1, // To Do change to login cookie
+    req.body.mapid,
+    req.body.userid,
     req.body.pinName,
-    req.body.mapLong,
-    req.body.mapLat,
-    req.body.mapZoom
+    req.body.pinDesc,
+    req.body.pinImageUrl,
+    req.body.pinLat,
+    req.body.pinLong
   );
 });
 
