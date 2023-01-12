@@ -1,8 +1,8 @@
 /* eslint-disable arrow-body-style */
 const db = require('../connection');
 
-const getPins = (mapID) => {
-  return db.query(`SELECT * FROM pins WHERE map_id = $1;`, [mapID])
+const getPins = () => {
+  return db.query(`SELECT * FROM pins`)
     .then(data => {
       return data.rows;
     });
