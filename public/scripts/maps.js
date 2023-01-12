@@ -1,5 +1,6 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable func-style */
+
 // Set Defaults
 let map;
 let mapid = null;
@@ -191,6 +192,21 @@ $(() => {
   };
 
   /**
+   * Handle User Profile Links
+   * 
+   */
+
+  const users = () => {
+    $('#profileModal a').on('click', function(e) {
+      e.preventDefault();
+
+      const url = $(this).attr('href');
+
+      loadTemplateHTML(url, '.ajaxWrap');
+    });
+  }
+
+  /**
    * Handle Pins & Pin Forms
    *
    */
@@ -358,6 +374,7 @@ $(() => {
   mapForms();
   mapNavigation();
   pins();
+  users();
 
   getSingleMap($('#mapsList a'));
 
@@ -366,6 +383,7 @@ $(() => {
     mapForms();
     mapNavigation();
     pins();
+    users();
 
     getSingleMap($('#mapsList a'));
   });
