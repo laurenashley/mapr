@@ -1,0 +1,43 @@
+<div class="ajaxWrap">
+<% if (userid) { %>
+  <% if (pin) { %>
+  <a id="backBtnMap" data-mapid="<%= pin[0].map_id %>" class="btn btn-outline-secondary mb-3 btnBack" href="/maps/<%= pin[0].map_id %>">Back to map</a>
+
+  <form id="editPinForm" action="/pins/new" method="post">
+    <h3 class="h5">New Pin</h3>
+    <p class="sr-only">
+      <label class="form-label" for="mapid">Map ID:</label>
+      <input class="sr-only" id="mapid" name="mapid" type="number" value="<%= pin[0].map_id %>" required>
+    </p>
+    <p class="sr-only">
+      <label class="form-label" for="userid">User ID:</label>
+      <input class="" id="userid" name="userid" type="number" value="<%= pin[0].user_id %>" required>
+    </p>
+    <p>
+      <label class="form-label" for="pinName">Pin name:</label>
+      <input id="pinName" class="form-control" name="pinName" type="text" value="<%= pin[0].title %>" required>
+    </p>
+
+    <p>
+      <label class="form-label" for="pinDesc">Description:</label>
+      <input id="pinDesc" class="form-control" name="pinDesc" type="text" value="<%= pin[0].description %>" required>
+    </p>
+    <p>
+      <label class="form-label" for="pinImageUrl">Image link:</label>
+      <input id="pinImageUrl" class="form-control" name="pinImageUrl" type="text" value="<%= pin[0].image_url %>" required>
+    </p>
+    <p>
+      <label class="form-label" for="pinLat">Latitude</label>
+      <input class="form-control" id="pinLat" name="pinLat" type="text" value="<%= pin[0].latitude %>" required>
+    </p>
+    <p>
+      <label class="form-label" for="pinLong">Longitude</label>
+      <input class="form-control" id="pinLong" name="pinLong" type="text" value="<%= pin[0].longitude %>" required>
+    </p>
+    <input class="btn btn-primary" type="submit" name="submit" value="Save" data-referer="/maps/<%= pin[0].map_id %>">
+  </form>
+  <% } %>
+<% } else { %>
+  You do not have access to edit pins.
+<% } %>
+</div>
