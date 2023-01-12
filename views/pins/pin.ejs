@@ -2,18 +2,23 @@
   <% if (pin) { %>
     <% pin.forEach((pin) => { %>
       <a id="backBtnMap" class="btn btn-outline-secondary mb-3" href="/maps/<%= pin.map_id %>">Back to map</a>
+      
       <div id="<%= pin.id %>" class="card" style="width: 100%;">
         <!-- <img src="<%= pin.image_url %>" class="card-img-top" alt="..."> -->
         <div class="" style="background-image: url('<%= pin.image_url %>'); background-size: cover; width: 100%; height: 200px;"></div>
         <div class="card-body">
           <h5 class="card-title"><i class="fa-solid fa-location-dot"></i> <%= pin.title %></h5>
           <p class="card-text"><%= pin.description %></p>
-          <? if (userid) { %>
+          <% if (userid) { %>
           <div class="btn-group" role="group" aria-label="pin-actions">
-            <a id="editPin" class="btn btn-sm btn-outline-primary" href="/pins/<%= pin.id %>/update" data-pinid="<%= pin.id %>">Edit</a>
-            <a id="deletePin" href="/pins/<%= pin.id %>/delete" class="btn btn-sm btn-outline-primary" data-pinid="<%= pin.id %>">Delete</a>
+            <a id="updatePin" class="btn btn-sm btn-outline-dark" href="/pins/<%= pin.id %>/update"><i class="fa-solid fa-pen"></i><span class="sr-only">Edit</span></a>
+            <a id="deletePin" href="/pins/<%= pin.id %>/delete" class="btn btn-sm btn-outline-dark" data-pinid="<%= pin.id %>"><i class="fa-solid fa-trash"></i><span class="sr-only">Delete</span></a>
           </div>
-          <? } %>
+          <% } else { %>
+            <a class="" href="/login" data-bs-toggle="modal" data-bs-target="#loginModal">
+              Login
+            </a> to edit pins.
+          <% } %>
         </div>
       </div>
     <% }); %>

@@ -2,7 +2,7 @@
 <% if (userid) { %>
   <% if (pin) { %>
   <a id="backBtnMap" data-mapid="<%= pin[0].map_id %>" class="btn btn-outline-secondary mb-3 btnBack" href="/maps/<%= pin[0].map_id %>">Back to map</a>
-  <form id="editPinForm" data-mapid="<%= pin[0].map_id %>" data-pinid="<%= pin[0].id %>" action="/pins/<%= pin[0].id %>/update" method="post">
+  <form id="updatePinForm" data-mapid="<%= pin[0].map_id %>" data-pinid="<%= pin[0].id %>" action="/pins/<%= pin[0].id %>/update" method="post">
     <h3 class="h5">New Pin</h3>
     <p class="sr-only">
       <label class="form-label" for="mapid">Map ID:</label>

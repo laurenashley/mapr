@@ -2,18 +2,17 @@
 <% if (map) { %>
   <a id="backBtnAllMap" class="btn btn-outline-secondary" href="/maps">Back</a>
   <% map.forEach((item) => { %>
-    <div class="d-flex align-items-center justify-content-between">
-      <h3 class="h6 mt-3"><%= item.title %></h3>
-      <div class="ml-auto"><i class="fa-regular fa-heart text-danger"></i></div>
-    </div>
-
-    <% if(userid) { %>
-      <div class="btn-group">
-        <a id="newPinBtn" class="btn btn-sm btn-outline-primary" href="/maps/<%= item.id %>/pins/new" data-mapid="<%= item.id %>">Add pin</a>
-        <a id="updateMap" class="btn btn-sm btn-outline-primary" href="/maps/<%= map[0].id %>/update" data-mapid="<%= map[0].id %>">Edit</a>
-        <a id="deleteMap" class="btn btn-sm btn-outline-primary"  href="/maps/<%= map[0].id %>/delete" data-mapid="<%= map[0].id %>">Delete</a>
-      </div>
-    <% } %>
+    <header class="mb-3">
+      <h3 class="h4 mt-3"><%= item.title %></h3>
+      <% if(userid) { %>
+        <div class="btn-group">
+          <a id="newPinBtn" class="btn btn-sm btn-outline-dark" href="/maps/<%= item.id %>/pins/new" data-mapid="<%= item.id %>"><i class="fa-solid fa-plus"></i><span class="sr-only">Add pin</span></a>
+          <a class="btn btn-sm btn-outline-dark" href=""><i class="fa-regular fa-heart text-danger"></i><span class="sr-only">Add map to favourites</span></a>
+          <a id="updateMap" class="btn btn-sm btn-outline-dark" href="/maps/<%= map[0].id %>/update" data-mapid="<%= map[0].id %>"><i class="fa-solid fa-pen"></i><span class="sr-only">Edit</span></a>
+          <a id="deleteMap" class="btn btn-sm btn-outline-dark"  href="/maps/<%= map[0].id %>/delete" data-mapid="<%= map[0].id %>"><i class="fa-solid fa-trash"></i><span class="sr-only">Delete</span></a>
+        </div>
+      <% } %>
+    </header>
   <% }); %>
   <ul class="nav flex-column">
     <% if (pins) { %>
