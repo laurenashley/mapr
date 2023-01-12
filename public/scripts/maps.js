@@ -141,7 +141,7 @@ $(() => {
           console.log('there was an error: ', err);
         });
     });
-  }
+  };
 
   const mapNavigation = () => {
     /**
@@ -171,7 +171,7 @@ $(() => {
 
       getSingleMap($(this));
     });
-  }
+  };
 
   /**
    * Helper Functions
@@ -179,7 +179,7 @@ $(() => {
 
   const submitForm = (url, data, cb) => {
     $.post(url, data, cb);
-  }
+  };
 
   /**
     * Delete Confirm
@@ -227,7 +227,7 @@ $(() => {
 
       // Set back button url
       $('#backBtnMap').attr('href', '/maps/' + mapid);
-    })
+    });
 
     /**
      * Submit new pin form via AJAX
@@ -247,7 +247,7 @@ $(() => {
       });
     });
 
-    /** 
+    /**
      * Update Pin
      */
 
@@ -273,7 +273,6 @@ $(() => {
 
       submitForm(`/pins/${pinid}/update`, data, loadTemplateHTML(url, '.ajaxWrap'));
     });
-
 
     /**
      * Delete pin
@@ -369,7 +368,5 @@ $(() => {
     pins();
 
     getSingleMap($('#mapsList a'));
-
-
   });
 });
