@@ -8,10 +8,12 @@
         <div class="card-body">
           <h5 class="card-title"><i class="fa-solid fa-location-dot"></i> <%= pin.title %></h5>
           <p class="card-text"><%= pin.description %></p>
+          <? if (userid) { %>
           <div class="btn-group" role="group" aria-label="pin-actions">
-            <a id="editPin" type="button" class="btn btn-sm btn-outline-primary">Edit</a>
-            <a id="deletePin" type="button" href="/pins/<%= pin.id %>/delete" class="btn btn-sm btn-outline-primary" data-pinid="<%= pin.id %>">Delete</a>
+            <a id="editPin" class="btn btn-sm btn-outline-primary" href="/pins/<%= pin.id %>/update" data-pinid="<%= pin.id %>">Edit</a>
+            <a id="deletePin" href="/pins/<%= pin.id %>/delete" class="btn btn-sm btn-outline-primary" data-pinid="<%= pin.id %>">Delete</a>
           </div>
+          <? } %>
         </div>
       </div>
     <% }); %>

@@ -174,6 +174,14 @@ $(() => {
   }
 
   /**
+   * Helper Functions
+   */
+
+  const submitForm = (url, data, cb) => {
+    $.post(url, data, cb);
+  }
+
+  /**
     * Delete Confirm
     * Helper
     */
@@ -239,6 +247,32 @@ $(() => {
       });
     });
 
+    /** 
+     * Update Pin
+     */
+
+    $('a#editPin').on('click', function(e) {
+      e.preventDefault();
+
+      const pinid = $(this).data('pinid');
+
+      loadTemplateHTML(`/pins/${pinid}/update`, '.ajaxWrap');
+    });
+
+    $('#editPinForm').submit(function(e) {
+      // To Do this crashes app, nothing opens
+      e.preventDefault();
+      console.log('save btn clicked');
+      const data = $(this).serialize();
+      const pinid = $(this).data('pinid');
+      const mapid = $(this).data('mapid');
+      const url = '/maps/' + mapid;
+      console.log(mapid);
+
+      submitForm(`/pins/${pinid}/update`, data, loadTemplateHTML(url, '.ajaxWrap'));
+    });
+
+
     /**
      * Delete pin
      * 
@@ -270,19 +304,13 @@ $(() => {
       loadTemplateHTML('/maps/new', '.ajaxWrap');
     });
 
-   
-
-    const submitMap = (url, data, cb) => {
-      $.post(url, data, cb);
-    }
-
     /**
      * Create New Map
      */
     $('#newMapForm').submit(function(e) {
       e.preventDefault();
       const data = $(this).serialize();
-      submitMap('/maps/new', data, loadTemplateHTML('/maps', '.ajaxWrap'));
+      submitForm('/maps/new', data, loadTemplateHTML('/maps', '.ajaxWrap'));
     });
 
     /**
@@ -303,9 +331,9 @@ $(() => {
       e.preventDefault();
       console.log('edit btn clicked');
       const data = $(this).serialize();
-      mapid = $(this).data('mapid');
+      const mapid = $(this).data('mapid');
 
-      submitMap(`/maps/${mapid}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
+      submitForm(`/maps/${mapid}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
     });
 
     /**
@@ -317,7 +345,7 @@ $(() => {
 
       if (confirmDelete()) {
         const $this = $(this);
-        mapid = $this.data('mapid');
+        const mapid = $this.data('mapid');
 
         $.post(`/maps/${mapid}/delete`, () => {
           loadTemplateHTML('/maps', '#mapsList');

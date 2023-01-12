@@ -9,9 +9,9 @@
 
     <% if(userid) { %>
       <div class="btn-group">
-        <a id="newPinBtn" class="btn btn-sm btn-primary" href="/maps/<%= item.id %>/pins/new" data-mapid="<%= item.id %>">Add pin</a>
-        <a id="deleteMap" class="btn btn-sm btn-primary"  href="/maps/<%= map[0].id %>/delete" data-mapid="<%= map[0].id %>">Delete</a>
-        <a id="updateMap" class="btn btn-sm btn-primary" href="/maps/<%= map[0].id %>/update" type="button" data-mapid="<%= map[0].id %>">Edit</a>
+        <a id="newPinBtn" class="btn btn-sm btn-outline-primary" href="/maps/<%= item.id %>/pins/new" data-mapid="<%= item.id %>">Add pin</a>
+        <a id="updateMap" class="btn btn-sm btn-outline-primary" href="/maps/<%= map[0].id %>/update" data-mapid="<%= map[0].id %>">Edit</a>
+        <a id="deleteMap" class="btn btn-sm btn-outline-primary"  href="/maps/<%= map[0].id %>/delete" data-mapid="<%= map[0].id %>">Delete</a>
       </div>
     <% } %>
   <% }); %>

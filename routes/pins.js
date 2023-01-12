@@ -67,16 +67,20 @@ router.post('/new', (req, res) => {
 });
 
 router.post('/:id/update', (req, res) => {
+  const pinid = req.params.id;
   const userid = cookie.parse(req.headers.cookie || '').userid;
   pinsQueries.updatePin(
-    req.body.mapid,
-    req.body.userid,
+    pinid,
     req.body.pinName,
     req.body.pinDesc,
     req.body.pinImageUrl,
+    req.body.pinLong,
     req.body.pinLat,
-    req.body.pinLong
   );
+
+  //id, title, desc, image_url, long, lat
+
+  res.redirect('/');
 });
 
 router.post('/:id/delete', (req, res) => {
