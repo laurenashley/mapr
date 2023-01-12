@@ -80,7 +80,14 @@ router.post('/new', (req, res) => {
 });
 
 router.post('/users/:id/favourites', (req, res) => {
+  console.log('router starting');
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
 
+  mapsQueries.addFavourite(mapid, userid)
+    .then(data => {
+      console.log('Router: Favourite row added to favourites table');
+    });
 });
 
 router.post('/:id/update', (req, res) => {

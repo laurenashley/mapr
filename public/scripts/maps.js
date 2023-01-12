@@ -331,6 +331,32 @@ $(() => {
     });
 
     /**
+     * Add Map to Favourites
+     */
+    $('a#favouriteBtn').on('click', function(e) {
+      e.preventDefault();
+      console.log('favourite btn clicked');
+      const userid = 1;
+      const isFav = $(this).hasClass('fa-regular');
+
+      const favourite = function() {
+        // change icn to filled in heart
+        $(this).removeClass('fa-regular').addClass('fa-solid');
+      };
+
+      const unfavourite = function() {
+        // change icn back to heart outline
+        $(this).removeClass('fa-solid').addClass('fa-regular');
+      };
+
+      $.post(`/users/${userid}/favourites`, () => { // Not getting past here
+        console.log('Map added to user favourites');
+      });
+
+      isFav ? unfavourite() : favourite();
+    });
+
+    /**
      * Update Existing Map
      */
 
