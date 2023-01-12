@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
     .then(data => {
       const maps = data[0];
       res.render('./maps/list', { maps });
-    })
+    });
 });
 
 router.get('/new', (req, res) => {
@@ -29,8 +29,13 @@ router.get('/new', (req, res) => {
 
 router.get('/:id/update', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapData = mapsQueries.getSingleMap(req.params.id);
 
-  res.render('./maps/form-update', { userid });
+  Promise.all([mapData])
+    .then(data => {
+      const map = data[0]; // Renders as an object, why?
+      res.render('./maps/form-update', { userid, map });
+    });
 });
 
 router.get('/:id', (req, res) => {
