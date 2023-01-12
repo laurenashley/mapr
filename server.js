@@ -10,7 +10,6 @@ const cookie = require('cookie');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
-
 app.set('view engine', 'ejs');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -34,6 +33,9 @@ const usersRoutes = require('./routes/users');
 const mapsRoutes = require('./routes/maps');
 const categoriesRoutes = require('./routes/categories')
 
+const pinsRoutes = require('./routes/pins');
+const mapsApiRoutes = require('./routes/maps-api');
+const pinApiRoutes = require('./routes/pin-api');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -42,6 +44,9 @@ app.use('/maps', mapsRoutes);
 app.use('/users', usersRoutes);
 app.use('/categories', categoriesRoutes);
 
+app.use('/pins', pinsRoutes);
+app.use('/maps-api', mapsApiRoutes);
+app.use('pin-api', pinApiRoutes);
 
 // Note: mount other resources here, using the same pattern above
 
@@ -49,8 +54,8 @@ app.use('/categories', categoriesRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
-const { json } = require('express');
-const { getSingleUser, getMapsByUser, getFavourties } = require('./db/queries/user');
+const { json } = require('express'); // Are we using this? Looks like no
+const { getSingleUser, getMapsByUser, getFavourites } = require('./db/queries/user');
 const { getCategories }= require('./db/queries/categories');
 
 app.get('/', (req, res) => {
@@ -62,7 +67,7 @@ app.get('/', (req, res) => {
   if (userid) {
     const promiseUser = getSingleUser(userid);
     const prmoiseUserMaps = getMapsByUser(userid);
-    const promiseGetFavourites = getFavourties(userid);
+    const promiseGetFavourites = getFavourites(userid);
     const promiseMaps = getMaps();
     const promiseCategories = getCategories();
 
@@ -96,22 +101,27 @@ app.get('/', (req, res) => {
   }
 });
 
-// Login Endpoint
-// Simulate login
-// When a user goes to /login using the login form, a cookie is set
+/**
+ * Login Endpoint
+ *
+ * Description: Simulate login
+ * When a user goes to /users/login using the login form, a cookie is set
+*/
 app.get('/login', (req, res) => {
   res.setHeader('Set-Cookie', cookie.serialize('userid', 1, {
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 7 // 1 week
   }));
 
-  const cookies = cookie.parse(req.headers.cookie || '');
-
   res.redirect('/');
 });
 
-// Logout Endpoint
-// User clicks on the logout link in the header and the cookie is cleared
+/**
+ * Logout Endpoint
+ *
+ * Description: User clicks on the logout link in the header and the cookie is cleared
+ */
+
 app.get('/logout', (req, res) => {
   // Clear the logged in cookie (simulated)
   res.clearCookie('userid');
@@ -120,6 +130,7 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+// Listen
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

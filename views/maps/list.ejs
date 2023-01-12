@@ -1,7 +1,17 @@
-<ul id="mapsList">
-  <% maps.forEach((map) => { %>
-    <ul id="<%= map.id %>" map-id=""><a href=""><%= map.title %></a></ul>
-  <% }); %>
-</ul>
-
-<!-- <%- include('map') %> -->
+<div id="mapsList">
+  <h3 class="bg-light h5 p-3 mb-0"><i class="fa-solid fa-map mr-3 text-secondary"></i> All Maps</h3>
+    <ul class="nav flex-column">
+      <% maps.forEach((map) => { %>
+        <% if (map.title) { %>
+          <ul id="map-<%= map.id %>" map-id="<%= map.id %>" class="nav-item">
+            <a class="nav-link" href="/maps/<%= map.id %>"
+              data-mapid="<%= map.id %>"
+              data-lat="<%= map.latitude %>"
+              data-long="<%= map.longitude %>"
+              data-zoom="<%= map.zoom %>"
+            ><%= map.title %></a>
+          </ul>
+        <% } %>
+      <% }); %>
+  </ul>
+</div>

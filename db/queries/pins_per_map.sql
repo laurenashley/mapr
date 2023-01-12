@@ -1,4 +1,4 @@
 -- Select all pins for given map id
 SELECT * FROM pins
-WHERE map_id = 3
+WHERE map_id = 1
 ;

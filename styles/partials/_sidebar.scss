@@ -30,29 +30,45 @@
       display: block;
 
     }
+
   }
+
+  .nav-link{
+    color:black;
+    margin-bottom: 10%;
+    margin-top: 5%;
+    font-weight: 400;
+    cursor: pointer;
+
+
+    display: flex;
+  }
+
+.p-3{
+  padding-bottom: 20px;
+}
 
   article {
     background-color: white;
-    height: 100%;
-
 
 
     ul {
-      padding-top: 2%;
-      padding-bottom: 2%;
+
       box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+
+
+
+      :hover {
+        background-color: #E4E3DD
+      }
 
 
       li > a {
         font-size: 1.2em;
-        color: #3367d6;
+        color: #14110f;
       }
     }
 
-    .list {
-      min-height: 92%;
-    }
   }
 
 
@@ -71,14 +87,16 @@
 
 }
 
-#mapList {
-
-  .mapItem {
-    display: flex;
-  }
-
+.fa-map:before {
+  color: #3367d6;
 
 }
+
+.pe-2 {
+padding-left: 0.5rem;
+}
+
+
 
 @media screen and (max-height: 450px) {
   .sidenav {

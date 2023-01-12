@@ -1,21 +1,22 @@
-
-    <form id="newMapForm" action="/maps/new" method="post">
+<% if(userid) { %>
+    <form id="newMapForm" action="/maps/new" method="POST">
       <title>Create new map</title>
-      <p>
-        <label for="mapName">Map name</label>
-        <input id="mapName" name="mapName" type="text" value="">
+      <p class="form-group">
+        <label class="form-label" for="mapName">Map name</label>
+        <input class="form-control" id="mapName" name="mapName" type="text" value="">
       </p>
       <p>
-        <label for="mapLong">Longitude</label>
-        <input id="mapLong" name="mapLong" type="text" value="">
+        <label class="form-label" for="mapLat">Latitude</label>
+        <input class="form-control" id="mapLat" name="mapLat" type="text" value="">
       </p>
       <p>
-        <label for="mapLat">Latitude</label>
-        <input id="mapLat" name="mapLat" type="text" value="">
+        <label class="form-label" for="mapLong">Longitude</label>
+        <input class="form-control" id="mapLong" name="mapLong" type="text" value="">
       </p>
       <p>
-        <label for="mapZoom">Zoom</label>
-        <input id="mapZoom" name="mapZoom" type="text" value="">
+        <label class="form-label" for="mapZoom">Zoom</label>
+        <input class="form-control" id="mapZoom" name="mapZoom" type="text" value="">
       </p>
-      <input type="submit" name="submit" value="Save">
+      <input class="btn btn-primary" type="submit" name="submit" value="Save">
     </form>
+<% } %>

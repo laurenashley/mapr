@@ -100,6 +100,3 @@ const toggleNav = () => {
   }
 };
 
-
-
-

@@ -1,44 +1,11 @@
 const db = require('../connection');
 
 const getSingleUser = function(id) {
-  const query = `
+  return db.query(`
     SELECT *
     FROM users
     WHERE id = $1;
-  `;
-
-  const value = [`${id}`];
-
-  return db.query(query, value)
-    .then( (data) => {
-      console.log(getSingleUser);
-
-
-
-      const user = data.rows[0];
-      console.log(user);
-
-      if (!data.rows.length) {
-        console.log("No user found with that id");
-        return null;
-      }
-      return user;
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-};
-
-const getMapsByUser = (id) => {
-  const query = `
-    SELECT DISTINCT maps.title FROM maps
-    JOIN pins on maps.id = map_id
-    JOIN users on users.id = pins.user_id
-    WHERE pins.user_id = $1;
-  `;
-
-  const value = [`${id}`];
-  return db.query(query, value)
+  ` , [id])
     .then(data => {
 
       console.log(getMapsByUser);
@@ -50,27 +17,32 @@ const getMapsByUser = (id) => {
     });
 };
 
-
-const getFavourties = (id) => {
-  const query = `
-    SELECT DISTINCT maps.id, maps.title
+const getFavourites = (id) => {
+  return db.query(`
+    SELECT maps.id, maps.title AS favourite_maps
     FROM favourite_maps
     INNER JOIN maps ON maps.id = favourite_maps.map_id
     JOIN users ON users.id = favourite_maps.user_id
     WHERE favourite_maps.user_id = $1
     ;
-  `;
-  const value = [`${id}`];
-  return db.query(query, value)
+  `, [id])
     .then(data => {
-
-      console.log(getFavourties);
-      console.log(data.rows);
-
-
-
       return data.rows;
     });
 };
 
-module.exports = { getSingleUser, getMapsByUser, getFavourties };
+const getMapsByUser = (mapID) => {
+  return db.query(`
+    SELECT maps.title FROM maps
+    WHERE user_id = $1;
+  `, [mapID])
+    .then(data => {
+      if (!data.rows.length) {
+        console.log("No user found with that id");
+        return null;
+      }
+      return data.rows;
+    });
+};
+
+module.exports = { getSingleUser, getFavourites, getMapsByUser };
