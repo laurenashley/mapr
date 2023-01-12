@@ -33,7 +33,7 @@ router.get('/:id/update', (req, res) => {
 
   Promise.all([mapData])
     .then(data => {
-      const map = data[0]; // Renders as an object, why?
+      const map = data[0][0]; // Renders as an object, why?
       res.render('./maps/form-update', { userid, map });
     });
 });

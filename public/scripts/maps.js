@@ -203,7 +203,7 @@ $(() => {
 
     /**
      * Load New Pin Form
-     * 
+     *
      */
 
     $('#newPinBtn').on('click', function(e) {
@@ -211,11 +211,11 @@ $(() => {
 
       const mapid = $(this).data('mapid');
       const url = $(this).attr('href');
-  
+
       loadTemplateHTML(url, '.ajaxWrap');
-  
+
       // Set the map id from the referring button
-      $('#newPinForm').find('#mapid').val(mapid);  
+      $('#newPinForm').find('#mapid').val(mapid);
 
       // Set back button url
       $('#backBtnMap').attr('href', '/maps/' + mapid);
@@ -223,7 +223,7 @@ $(() => {
 
     /**
      * Submit new pin form via AJAX
-     * 
+     *
      */
     $('#newPinForm').submit( function(e) {
       e.preventDefault();
@@ -241,7 +241,7 @@ $(() => {
 
     /**
      * Delete pin
-     * 
+     *
      */
 
     $('#deletePin').on('click', function(e) {
@@ -270,8 +270,6 @@ $(() => {
       loadTemplateHTML('/maps/new', '.ajaxWrap');
     });
 
-   
-
     const submitMap = (url, data, cb) => {
       $.post(url, data, cb);
     }
@@ -299,13 +297,12 @@ $(() => {
     });
 
     $('#updateMapForm').submit(function(e) {
-      // To Do this crashes app, nothing opens
       e.preventDefault();
-      console.log('edit btn clicked');
+      console.log('Update form submit');
       const data = $(this).serialize();
-      mapid = $(this).data('mapid');
+      mapid = $(this).data('mapid'); // This is undefined (again, same as when it broke above)
 
-      submitMap(`/maps/${mapid}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
+      submitMap(`/maps/${mapid}/update`, data, loadTemplateHTML('/maps', '.ajaxWrap'));
     });
 
     /**
@@ -341,6 +338,6 @@ $(() => {
 
     getSingleMap($('#mapsList a'));
 
-     
+
   });
 });

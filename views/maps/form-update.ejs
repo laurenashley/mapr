@@ -1,6 +1,5 @@
 <div id="updateMapForm" class="ajaxWrap">
-<%= map %>
-  <form id="updateMapForm" action="/maps/update" method="post">
+  <form id="updateMapForm" action="/maps/<%= map.id %>/update" method="post">
     <h3 class="h5">Update <%= map.title %> map</h3>
     <p>
       <label class="form-label" for="mapNameEdit">Map name</label>
