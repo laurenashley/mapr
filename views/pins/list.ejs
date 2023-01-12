@@ -4,7 +4,7 @@
   <h3 class="h6 mt-3"><%= map[0].title %></h3>
   <% if(userid) { %>
     <button id="deleteMap" type="button" data-mapid="<%= map[0].id %>">Delete</button>
-    <button id="updateMap" type="button" data-mapid="<%= map[0].id %>">Edit</button>
+    <a id="updateMap" href="/maps/<%= map[0].id %>" type="button" data-mapid="<%= map[0].id %>">Edit</a>
   <% } %>
   <ul class="nav flex-column">
     <% if (pins) { %>

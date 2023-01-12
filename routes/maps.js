@@ -27,6 +27,12 @@ router.get('/new', (req, res) => {
   res.render('./maps/form-new', { userid });
 });
 
+router.get('/:id/update', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+
+  res.render('./maps/form-update', { userid });
+});
+
 router.get('/:id', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const mapData = mapsQueries.getSingleMap(req.params.id);

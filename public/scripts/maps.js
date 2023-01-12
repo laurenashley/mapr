@@ -205,14 +205,7 @@ $(() => {
       loadTemplateHTML('/maps/new', '#newMapForm');
     });
 
-    /** Load Update Map form */
-    $('#updateMap').on('click', (e) => {
-      e.preventDefault();
-      console.log('update map btn clicked');
-      const mapID = $(this).data('mapid');
-      console.log('mapid ', mapID);
-      loadTemplateHTML(`/maps/${mapID}/update`, '#updateMapForm');
-    });
+   
 
     const submitMap = (url, data, cb) => {
       $.post(url, data, cb);
@@ -230,6 +223,16 @@ $(() => {
     /**
      * Update Existing Map
      */
+
+    /** Load Update Map form */
+    $('a#updateMap').on('click', function(e) {
+      e.preventDefault();
+      console.log('update map btn clicked');
+      const mapID = $(this).data('mapid');
+      console.log('mapid: ', mapID);
+      loadTemplateHTML(`/maps/${mapID}/update`, '.ajaxWrap');
+    });
+
     $('#updateMapForm').submit(function(e) {
       // To Do this crashes app, nothing opens
       e.preventDefault();
@@ -276,5 +279,7 @@ $(() => {
     pins();
 
     getSingleMap($('#mapsList a'));
+
+     
   });
 });
