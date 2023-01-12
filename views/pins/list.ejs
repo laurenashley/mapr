@@ -1,8 +1,19 @@
-<div id="pinsList">
+<div id="pinsList" class="ajaxWrap">
 <% if (map) { %>
   <a id="backBtnAllMap" class="btn btn-outline-secondary" href="/maps">Back</a>
   <% map.forEach((item) => { %>
-    <h3 class="h6 mt-3"><%= item.title %></h3>
+    <div class="d-flex align-items-center justify-content-between">
+      <h3 class="h6 mt-3"><%= item.title %></h3>
+      <div class="ml-auto"><i class="fa-regular fa-heart text-danger"></i></div>
+    </div>
+
+    <% if(userid) { %>
+      <div class="btn-group">
+        <a id="newPinBtn" class="btn btn-sm btn-primary" href="/maps/<%= item.id %>/pins/new" data-mapid="<%= item.id %>">Add pin</a>
+        <a id="deleteMap" class="btn btn-sm btn-primary"  href="/maps/<%= map[0].id %>/delete" data-mapid="<%= map[0].id %>">Delete</a>
+        <a id="updateMap" class="btn btn-sm btn-primary" href="/maps/<%= map[0].id %>/update" type="button" data-mapid="<%= map[0].id %>">Edit</a>
+      </div>
+    <% } %>
   <% }); %>
   <ul class="nav flex-column">
     <% if (pins) { %>
@@ -15,9 +26,13 @@
           </div>
         </li>
       <% }); %>
+    <% } else { %>
+      <div class="alert alert-warning">
+        No pins found
+      </div>
     <% } %>
   </ul>
-  <!-- Delete and Update CTAs here -->
+  
 <% } else { %>
   No map found
 <% } %>

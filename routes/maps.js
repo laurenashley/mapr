@@ -18,13 +18,24 @@ router.get('/', (req, res) => {
     .then(data => {
       const maps = data[0];
       res.render('./maps/list', { maps });
-    })
+    });
 });
 
 router.get('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
 
   res.render('./maps/form-new', { userid });
+});
+
+router.get('/:id/update', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapData = mapsQueries.getSingleMap(req.params.id);
+
+  Promise.all([mapData])
+    .then(data => {
+      const map = data[0][0]; // Renders as an object, why?
+      res.render('./maps/form-update', { userid, map });
+    });
 });
 
 router.get('/:id', (req, res) => {
@@ -45,6 +56,13 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// Pins new - must be associated to parent map id
+router.get('/:id/pins/new', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
+  res.render('./pins/form-new', { userid, mapid });
+});
+
 // POST
 router.post('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
@@ -60,6 +78,7 @@ router.post('/new', (req, res) => {
 });
 
 router.post('/:id/update', (req, res) => {
+  console.log('post router, updateMap now ');
   mapsQueries.updateMap(
     1, // To Do change to login cookie
     req.body.mapName,
@@ -73,16 +92,13 @@ router.post('/:id/update', (req, res) => {
 
 router.post('/:id/delete', (req, res) => {
   mapsQueries.deleteMap(req.params.id)
-    .then(data => {
-      console.log('data after delete: ', data);
-      // To Do refresh list of maps
-    })
     .catch(err => {
       res
         .status(500)
         .json({ error: err.message });
     });
-});
 
+  res.redirect('/');
+});
 
 module.exports = router;

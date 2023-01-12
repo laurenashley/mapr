@@ -1,20 +1,22 @@
-<form id="updateMapForm" action="/maps/update" method="post">
-  <h3 class="h5">Update MAP_NAME_HERE map</h3>
-  <p>
-    <label class="form-label" for="mapNameEdit">Map name</label>
-    <input id="mapNameEdit" class="form-control" name="mapName" type="text" value="">
-  </p>
-  <p>
-    <label class="form-label" for="mapLatEdit">Latitude</label>
-    <input class="form-control" id="mapLatEdit" name="mapLat" type="text" value="">
-  </p>
-  <p>
-    <label class="form-label" for="mapLongEdit">Longitude</label>
-    <input class="form-control" id="mapLongEdit" name="mapLong" type="text" value="">
-  </p>
-  <p>
-    <label class="form-label" for="mapZoomEdit">Zoom</label>
-    <input id="mapZoomEdit" class="form-control" name="mapZoom" type="text" value="">
-  </p>
-  <input class="btn btn-primary" type="submit" name="submit" value="Save">
-</form>
+<div id="updateMapForm" class="ajaxWrap">
+  <form id="updateMapForm" action="/maps/<%= map.id %>/update" method="post">
+    <h3 class="h5">Update <%= map.title %> map</h3>
+    <p>
+      <label class="form-label" for="mapNameEdit">Map name</label>
+      <input id="mapNameEdit" class="form-control" name="mapName" type="text" value="" required>
+    </p>
+    <p>
+      <label class="form-label" for="mapLatEdit">Latitude</label>
+      <input class="form-control" id="mapLatEdit" name="mapLat" type="text" value="" required>
+    </p>
+    <p>
+      <label class="form-label" for="mapLongEdit">Longitude</label>
+      <input class="form-control" id="mapLongEdit" name="mapLong" type="text" value="" required>
+    </p>
+    <p>
+      <label class="form-label" for="mapZoomEdit">Zoom</label>
+      <input id="mapZoomEdit" class="form-control" name="mapZoom" type="text" value="" required>
+    </p>
+    <input class="btn btn-primary" type="submit" name="submit" value="Save">
+  </form>
+</div>
