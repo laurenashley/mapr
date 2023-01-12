@@ -3,13 +3,14 @@
     <% pin.forEach((pin) => { %>
       <a id="backBtnMap" class="btn btn-outline-secondary mb-3" href="/maps/<%= pin.map_id %>">Back to map</a>
       <div id="<%= pin.id %>" class="card" style="width: 100%;">
-        <img src="<%= pin.image_url %>" class="card-img-top" alt="...">
+        <!-- <img src="<%= pin.image_url %>" class="card-img-top" alt="..."> -->
+        <div class="" style="background-image: url('<%= pin.image_url %>'); background-size: cover; width: 100%; height: 200px;"></div>
         <div class="card-body">
           <h5 class="card-title"><i class="fa-solid fa-location-dot"></i> <%= pin.title %></h5>
           <p class="card-text"><%= pin.description %></p>
           <div class="btn-group" role="group" aria-label="pin-actions">
-            <a type="button" class="btn btn-sm btn-outline-primary">Edit</a>
-            <a type="button" class="btn btn-sm btn-outline-primary">Delete</a>
+            <a id="editPin" type="button" class="btn btn-sm btn-outline-primary">Edit</a>
+            <a id="deletePin" type="button" href="/pins/<%= pin.id %>/delete" class="btn btn-sm btn-outline-primary" data-pinid="<%= pin.id %>">Delete</a>
           </div>
         </div>
       </div>

@@ -27,6 +27,10 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// router.get(':id/delete', (req, res) => {
+//   res.status('200');
+// });
+
 // Post
 // (map_id, user_id, title, description, image_url, longitude, latitude)
 router.post('/new', (req, res) => {
@@ -57,10 +61,14 @@ router.post('/:id/update', (req, res) => {
 });
 
 router.post('/:id/delete', (req, res) => {
-  const userid = cookie.parse(req.headers.cookie || '').userid;
-  const pinID = $('#mapsList li').attr('id');
-  console.log('PinID: ', pinID);
-  pinsQueries.deletePin();
+  pinsQueries.deletePin(req.params.id)
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+
+  res.redirect('/');
 });
 
 module.exports = router;

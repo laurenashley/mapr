@@ -174,6 +174,15 @@ $(() => {
   }
 
   /**
+    * Delete Confirm
+    * Helper
+    */
+  const confirmDelete = () => {
+    const userResponse = confirm("Are you sure you want to delete this pin?");
+    return userResponse;
+  };
+
+  /**
    * Handle Pins & Pin Forms
    *
    */
@@ -228,6 +237,24 @@ $(() => {
 
         loadTemplateHTML(url, '.ajaxWrap');
       });
+    });
+
+    /**
+     * Delete pin
+     * 
+     */
+
+    $('#deletePin').on('click', function(e) {
+      e.preventDefault();
+
+      if (confirmDelete()) {
+        const $this = $(this);
+        const pinid = $(this).data('pinid');
+
+        $.post(`/pins/${pinid}/delete`, () => {
+          loadTemplateHTML('/maps', '.ajaxWrap');
+        });
+      }
     });
   };
 
@@ -284,10 +311,6 @@ $(() => {
     /**
     * Delete Map
     */
-    const confirmDelete = () => {
-      const userResponse = confirm("Are you sure you want to delete this map and all of it's pins?");
-      return userResponse;
-    };
 
     $('#deleteMap').on('click', function(e) {
       e.preventDefault();
