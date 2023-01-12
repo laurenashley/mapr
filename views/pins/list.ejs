@@ -19,10 +19,10 @@
     <% if (pins) { %>
       <% pins.forEach((pin) => { %>
         <li id="<%= pin.id %>" class="d-flex py-3">
-          <img class="pe-2" width="75" height="75" src="<%= pin.image_url %>" />
-          <div>
+          <img class="pe-2" width="150" height="100" src="<%= pin.image_url %>" />
+          <div class= "sideInfo">
             <h6><a href="/pins/<%= pin.id %>" data-pinid="<%= pin.id %>"><%= pin.title %></a></h6>
-            <p><%= pin.description %></p>
+            <!-- <p><%= pin.description %></p> -->
           </div>
         </li>
       <% }); %>
@@ -32,7 +32,7 @@
       </div>
     <% } %>
   </ul>
-  
+
 <% } else { %>
   No map found
 <% } %>

@@ -8,14 +8,10 @@ $(() => {
 const createMapItem = (mapInfo) => {
   const $mapItem = `
     <li class="mapItem">
-      <img src="${mapInfo.image_url}" alt="Map Image" width="200" height="200">
+      <img src="${mapInfo.image_url}" alt="Map Image" width="300" height="300">
       <div class="mapItemContent">
         <h4>${mapInfo.title}</h4>
         <p>${mapInfo.description}</p>
-        <div>
-          <span class="icon-pencil"></span>
-          <span class="icon-heart"></span>
-        </div>
       </div>
     </li>
   `;

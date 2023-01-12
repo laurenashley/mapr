@@ -76,6 +76,17 @@
 
 }
 
+.sideInfo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 2em;
+
+  a{
+    font-size: large;
+  }
+}
+
 #categoryList {
   li {
     margin-left: 1vw;
@@ -101,6 +112,8 @@ padding-left: 0.5rem;
 .py-3{
   box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
 }
+
+
 
 @media screen and (max-height: 450px) {
   .sidenav {

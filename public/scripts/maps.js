@@ -45,6 +45,7 @@ function addInfoWindow(string) {
   });
 }
 
+// clears the animation and the info window on click
 function clearMap() {
   markers.forEach(marker => marker.setAnimation(null));
   infoWindows.forEach(window => window.close());
@@ -138,7 +139,7 @@ $(() => {
              * Add Event Listener when marker is clicked to open infoWindow
              */
             marker.addListener('click', () => {
-              clearMap();
+              clearMap(); // calls the function when click
               marker.setAnimation(google.maps.Animation.BOUNCE);
 
               infoWindow.open({
