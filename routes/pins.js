@@ -10,23 +10,6 @@ const cookie = require('cookie');
 const router = express.Router();
 const pinsQueries = require('../db/queries/pins');
 
-router.get('/:id', (req, res) => {
-  const userid = cookie.parse(req.headers.cookie || '').userid;
-  const pin = pinsQueries.getSinglePin(req.params.id);
-
-  Promise.all([pin])
-    .then(data => {
-      const pin = data[0];
-      console.log(pin);
-      res.render('./pins/pin', { pin });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
-});
-
 router.get('/:id/update', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const pin = pinsQueries.getSinglePin(req.params.id);
@@ -35,7 +18,7 @@ router.get('/:id/update', (req, res) => {
   .then(data => {
     const pin = data[0];
     console.log(pin);
-    res.render('./pins/form-update', {pin, userid});
+    res.render('./pins/form-update', { pin, userid });
   })
   .catch(err => {
     res
@@ -44,12 +27,24 @@ router.get('/:id/update', (req, res) => {
   });
 });
 
-// router.get(':id/delete', (req, res) => {
-//   res.status('200');
-// });
+router.get('/:id', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const pin = pinsQueries.getSinglePin(req.params.id);
 
-// Post
-// (map_id, user_id, title, description, image_url, longitude, latitude)
+  Promise.all([pin])
+    .then(data => {
+      const pin = data[0];
+      res.render('./pins/pin', { pin, userid });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+/////// Post //////
+
 router.post('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
 
@@ -68,7 +63,7 @@ router.post('/new', (req, res) => {
 
 router.post('/:id/update', (req, res) => {
   const pinid = req.params.id;
-  const userid = cookie.parse(req.headers.cookie || '').userid;
+
   pinsQueries.updatePin(
     pinid,
     req.body.pinName,
