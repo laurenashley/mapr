@@ -10,7 +10,7 @@ const router  = express.Router();
 const cookie = require('cookie');
 const userQueries = require('../db/queries/user');
 
-router.get('/:id/favourties', (req, res) => {
+router.get('/:id/favourites', (req, res) => {
   const favsData = userQueries.getFavourites(req.params.id);
   Promise.all([favsData])
     .then(data => {
