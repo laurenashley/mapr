@@ -38,4 +38,34 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
+router.get('/:id/favourties', (req, res) => {
+  const favsData = userQueries.getFavourites(req.params.id);
+  Promise.all([favsData])
+    .then(data => {
+      const favourites = data[0];
+      console.log(data);
+      res.render('./user/favourties', { favourites });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+router.get('/:id/contributions', (req, res) => {
+  const userMapsData = userQueries.getMapsByUser(req.params.id);
+  Promise.all([userMapsData])
+    .then(data => {
+      const contributions = data[0];
+      console.log(data);
+      res.render('./user/contributions', { contributions });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
 module.exports = router;

@@ -73,7 +73,7 @@ $(() => {
       const url = `/maps/${mapID}`;
       const api = `/maps-api/${mapID}`;
 
-      loadTemplateHTML(url, '#mapSingle');
+      loadTemplateHTML(url, '.ajaxWrap');
 
       $.ajax({
         type: 'GET',
@@ -150,7 +150,7 @@ $(() => {
     $('#backBtnAllMap').on('click', (e) => {
       e.preventDefault();
 
-      loadTemplateHTML('/maps', '#mapsList');
+      loadTemplateHTML('/maps', '.ajaxWrap');
 
       // Recenter the map
       newLocation(setLatitude, setLongitude, setZoom);
@@ -167,7 +167,7 @@ $(() => {
 
       const href = $(this).attr('href');
 
-      loadTemplateHTML(href, '#mapSingle');
+      loadTemplateHTML(href, '.ajaxWrap');
 
       getSingleMap($(this));
     });
@@ -189,7 +189,45 @@ $(() => {
       const pinID = $(this).data('pinid');
       const url = `/pins/${pinID}`;
 
-      loadTemplateHTML(url, pinDiv);
+      loadTemplateHTML(url, '.ajaxWrap');
+    });
+
+    /**
+     * Load New Pin Form
+     * 
+     */
+
+    $('#newPinBtn').on('click', function(e) {
+      e.preventDefault();
+
+      const mapid = $(this).data('mapid');
+      const url = $(this).attr('href');
+  
+      loadTemplateHTML(url, '.ajaxWrap');
+  
+      // Set the map id from the referring button
+      $('#newPinForm').find('#mapid').val(mapid);  
+
+      // Set back button url
+      $('#backBtnMap').attr('href', '/maps/' + mapid);
+    })
+
+    /**
+     * Submit new pin form via AJAX
+     * 
+     */
+    $('#newPinForm').submit( function(e) {
+      e.preventDefault();
+
+      url = $(this).find('input[type="submit"]').data('referer');
+
+      const data = $(this).serialize();
+
+      $.post('/pins/new', data, function(data) {
+        console.log('Created new pin');
+
+        loadTemplateHTML(url, '.ajaxWrap');
+      });
     });
   };
 
@@ -202,7 +240,7 @@ $(() => {
     $('.addNewMapBtn').on('click', (e) => {
       e.preventDefault();
       console.log('add new map btn clicked');
-      loadTemplateHTML('/maps/new', '#newMapForm');
+      loadTemplateHTML('/maps/new', '.ajaxWrap');
     });
 
    
@@ -217,7 +255,7 @@ $(() => {
     $('#newMapForm').submit(function(e) {
       e.preventDefault();
       const data = $(this).serialize();
-      submitMap('/maps/new', data, loadTemplateHTML('/maps', '#mapsList'));
+      submitMap('/maps/new', data, loadTemplateHTML('/maps', '.ajaxWrap'));
     });
 
     /**

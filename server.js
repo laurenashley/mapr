@@ -29,6 +29,7 @@ app.use(express.static('public'));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
+const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
 const mapsRoutes = require('./routes/maps');
 const pinsRoutes = require('./routes/pins');
@@ -38,6 +39,7 @@ const pinApiRoutes = require('./routes/pin-api');
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
+app.use('', authRoutes);
 app.use('/maps', mapsRoutes);
 app.use('/users', usersRoutes);
 app.use('/pins', pinsRoutes);
@@ -50,7 +52,6 @@ app.use('pin-api', pinApiRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
-const { json } = require('express'); // Are we using this? Looks like no
 const { getSingleUser, getMapsByUser, getFavourites } = require('./db/queries/user');
 
 app.get('/', (req, res) => {
@@ -91,36 +92,7 @@ app.get('/', (req, res) => {
   }
 });
 
-/**
- * Login Endpoint
- *
- * Description: Simulate login
- * When a user goes to /users/login using the login form, a cookie is set
-*/
-app.get('/login', (req, res) => {
-  res.setHeader('Set-Cookie', cookie.serialize('userid', 1, {
-    httpOnly: true,
-    maxAge: 60 * 60 * 24 * 7 // 1 week
-  }));
-  console.log('user cookie set!');
-  res.redirect('/');
-});
-
-/**
- * Logout Endpoint
- *
- * Description: User clicks on the logout link in the header and the cookie is cleared
- */
-
-app.get('/logout', (req, res) => {
-  // Clear the logged in cookie (simulated)
-  res.clearCookie('userid');
-
-  // Redirect to main page
-  res.redirect('/');
-});
-
-// Listen
+// Listen 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

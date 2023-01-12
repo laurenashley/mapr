@@ -12,15 +12,21 @@ const getSingleUser = function(id) {
 };
 
 const getFavourites = (id) => {
-  return db.query(`
-    SELECT maps.id, maps.title AS favourite_maps
+  const query = `
+    SELECT DISTINCT maps.*
     FROM favourite_maps
     INNER JOIN maps ON maps.id = favourite_maps.map_id
     JOIN users ON users.id = favourite_maps.user_id
     WHERE favourite_maps.user_id = $1
     ;
-  `, [id])
+  `;
+  const value = [`${id}`];
+  return db.query(query, value)
     .then(data => {
+      if (!data.rows.length) {
+        console.log("No user found with that id");
+        return null;
+      }
       return data.rows;
     });
 };

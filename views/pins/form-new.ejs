@@ -1,0 +1,42 @@
+<div class="ajaxWrap">
+
+  <a id="backBtnMap" class="btn btn-outline-secondary mb-3 btnBack" href="/maps/<%= mapid %>">Back to map</a>
+
+<% if (userid) { %>
+  <form id="newPinForm" action="/pins/new" method="post">
+    <h3 class="h5">New Pin</h3>
+    <p class="sr-only">
+      <label class="form-label" for="mapid">Map ID:</label>
+      <input class="sr-only" id="mapid" name="mapid" type="number" value="<%= mapid %>" required>
+    </p>
+    <p class="sr-only">
+      <label class="form-label" for="userid">User ID:</label>
+      <input class="" id="userid" name="userid" type="number" value="<%= userid %>" required>
+    </p>
+    <p>
+      <label class="form-label" for="pinName">Pin name:</label>
+      <input id="pinName" class="form-control" name="pinName" type="text" value="Pin name example" required>
+    </p>
+
+    <p>
+      <label class="form-label" for="pinDesc">Description:</label>
+      <input id="pinDesc" class="form-control" name="pinDesc" type="text" value="Description example" required>
+    </p>
+    <p>
+      <label class="form-label" for="pinImageUrl">Image link:</label>
+      <input id="pinImageUrl" class="form-control" name="pinImageUrl" type="text" value="https://picsum.photos/100/100" required>
+    </p>
+    <p>
+      <label class="form-label" for="pinLat">Latitude</label>
+      <input class="form-control" id="pinLat" name="pinLat" type="text" value="0" required>
+    </p>
+    <p>
+      <label class="form-label" for="pinLong">Longitude</label>
+      <input class="form-control" id="pinLong" name="pinLong" type="text" value="0" required>
+    </p>
+    <input class="btn btn-primary" type="submit" name="submit" value="Save" data-referer="/maps/<%= mapid %>">  
+  </form>
+<% } else { %>
+  You do not have access to add pins.
+<% } %>
+</div>
