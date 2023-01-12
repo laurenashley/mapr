@@ -251,15 +251,17 @@ $(() => {
      * Update Pin
      */
 
-    $('a#editPin').on('click', function(e) {
+    $('a#updatePin').on('click', function(e) {
       e.preventDefault();
 
       const pinid = $(this).data('pinid');
+      const url = $(this).attr('href');
+      console.log(url);
 
-      loadTemplateHTML(`/pins/${pinid}/update`, '.ajaxWrap');
+      loadTemplateHTML(url, '.ajaxWrap');
     });
 
-    $('#editPinForm').submit(function(e) {
+    $('#updatePinForm').submit(function(e) {
       // To Do this crashes app, nothing opens
       e.preventDefault();
       console.log('save btn clicked');
