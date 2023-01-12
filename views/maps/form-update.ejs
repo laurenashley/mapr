@@ -3,19 +3,19 @@
     <h3 class="h5">Update <%= map.title %> map</h3>
     <p>
       <label class="form-label" for="mapNameEdit">Map name</label>
-      <input id="mapNameEdit" class="form-control" name="mapName" type="text" value="" required>
+      <input id="mapNameEdit" class="form-control" name="mapName" type="text" value="<%= map.title %>" required>
     </p>
     <p>
       <label class="form-label" for="mapLatEdit">Latitude</label>
-      <input class="form-control" id="mapLatEdit" name="mapLat" type="text" value="" required>
+      <input class="form-control" id="mapLatEdit" name="mapLat" type="text" value="<%= map.latitude %>" required>
     </p>
     <p>
       <label class="form-label" for="mapLongEdit">Longitude</label>
-      <input class="form-control" id="mapLongEdit" name="mapLong" type="text" value="" required>
+      <input class="form-control" id="mapLongEdit" name="mapLong" type="text" value="<%= map.longitude %>" required>
     </p>
     <p>
       <label class="form-label" for="mapZoomEdit">Zoom</label>
-      <input id="mapZoomEdit" class="form-control" name="mapZoom" type="text" value="" required>
+      <input id="mapZoomEdit" class="form-control" name="mapZoom" type="text" value="<%= map.zoom %>" required>
     </p>
     <input class="btn btn-primary" type="submit" name="submit" value="Save">
   </form>

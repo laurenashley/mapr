@@ -34,6 +34,7 @@ router.get('/:id/update', (req, res) => {
   Promise.all([mapData])
     .then(data => {
       const map = data[0][0]; // Renders as an object, why?
+      console.log(map);
       res.render('./maps/form-update', { userid, map });
     });
 });
