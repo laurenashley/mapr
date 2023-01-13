@@ -40,13 +40,13 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/:id/favs', (req, res) => {
+router.get('/:id/favourites', (req, res) => {
   const favsData = userQueries.getFavourites(req.params.id);
   Promise.all([favsData])
     .then(data => {
       const userFavs = data[0];
       console.log(data);
-      res.render('./user/favs', { userFavs });
+      res.render('./user/favourites', { userFavs });
     })
     .catch(err => {
       res
@@ -70,7 +70,7 @@ router.get('/:id/contrib', (req, res) => {
     });
 });
 
-router.post('/:id/favs/add', (req, res) => {
+router.post('/:id/favourites/add', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const mapid = req.params.id;
 
@@ -80,7 +80,7 @@ router.post('/:id/favs/add', (req, res) => {
     });
 });
 
-router.post('/:id/favs/remove', (req, res) => {
+router.post('/:id/favourites/remove', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const mapid = req.params.id;
 

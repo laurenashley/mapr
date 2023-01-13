@@ -38,6 +38,7 @@ html {
   position: fixed;
   bottom: calc($footer-height + $spacer);
   left: $spacer;
+  z-index: 9999;
 }
 
 .sidenav {

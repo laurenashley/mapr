@@ -12,9 +12,7 @@ const mapsQueries = require('../db/queries/maps');
 const usersQueries = require('../db/queries/user');
 
 router.get('/', (req, res) => {
-  const query = `SELECT * FROM maps`;
   const maps = mapsQueries.getMaps();
-  console.log(maps);
   Promise.all([maps])
     .then(data => {
       const maps = data[0];
@@ -48,7 +46,7 @@ router.get('/:id', (req, res) => {
     .then(data => {
       const map = data[0];
       const pins = data[1];
-      console.log(data);
+
       res.render('./maps/map', { map, pins, userid });
     })
     .catch(err => {
@@ -68,30 +66,21 @@ router.get('/:id/pins/new', (req, res) => {
 // POST
 router.post('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
-  const mapid = req.params.id;
-  const addMap = mapsQueries.addNewMap(
+  mapsQueries.addNewMap(
     userid,
     req.body.mapName,
     req.body.mapLong,
     req.body.mapLat,
     req.body.mapZoom
-  );
-  const addContributor = usersQueries.addMapToContributors(mapid, userid);
-
-  Promise.all([addMap, addContributor])
-    .then(data => {
-      const map = data[0];
-      const contributors = data[1];
-      console.log('router posted new map: ', data);
-      res.render('./maps/map', { map, contributors, userid });
+  )
+    .then(() => {
+      res.redirect('/');
     })
     .catch(err => {
       res
         .status(500)
         .json({ error: err.message });
     });
-
-  res.redirect('/');
 });
 
 router.post('/:id/update', (req, res) => {

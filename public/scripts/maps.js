@@ -12,6 +12,7 @@ let markers = [];
 let infoWindows = [];
 let tempMarker;
 let currentPosition = null;
+let currentZoom = null;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -152,9 +153,8 @@ $(() => {
 
 
   /**
-   * Load new pin from clicking on map
-   * Get coordinates when clicking on map
-   * 
+   * Load coordiates and zoom and set a temp marker by clicking on map
+   * Use this data to set add new pin and new map forms
    */
 
   const getCurrentCoordinates = () => {
@@ -170,6 +170,7 @@ $(() => {
 
         // Save the position
         const position = mapsMouseEvent.latLng;
+        const currentZoom = map.getZoom();
 
         // Update global variable
         currentPosition = position;
@@ -181,10 +182,23 @@ $(() => {
         });
 
         if (currentPosition) {
-          // Set the map id from the referring button
+          // Map Form
+          $('#newMapForm').find('#mapLat').val(currentPosition["lat"]);
+          $('#newMapForm').find('#mapLong').val(currentPosition["lng"]);
+
+          // Pin Form
           $('#newPinForm').find('#pinLat').val(currentPosition["lat"]);
-          // Set the map id from the referring button
           $('#newPinForm').find('#pinLong').val(currentPosition["lng"]);
+
+          // Pin Update Form
+          $('#updatePinForm').find('#pinLat').val(currentPosition["lat"]);
+          $('#updatePinForm').find('#pinLong').val(currentPosition["lng"]);
+        }
+
+        if (currentZoom) {
+          console.log(currentZoom);
+          // Get current zoom from map
+          $('#newMapForm').find('#mapZoom').val(currentZoom);
         }
 
         // Simulate click event
@@ -219,7 +233,6 @@ $(() => {
 
       loadTemplateHTML(href, '.ajaxWrap');
 
-      // getSingleMap($(this));
     });
   };
 
@@ -235,8 +248,8 @@ $(() => {
     * Delete Confirm
     * Helper
     */
-  const confirmDelete = () => {
-    const userResponse = confirm("Are you sure you want to delete this pin?");
+  const confirmDelete = (type) => {
+    const userResponse = confirm(`Are you sure you want to delete this ${type}?`);
     return userResponse;
   };
 
@@ -293,8 +306,6 @@ $(() => {
       // Set the map id from the referring button
       $('#newPinForm').find('#mapid').val(mapid);
 
-      console.log(currentPosition["lat"]);
-
       // Set Lat and Lng from clicking on the map
 
       // Set back button url
@@ -308,15 +319,20 @@ $(() => {
     $('#newPinForm').submit( function(e) {
       e.preventDefault();
 
-      url = $(this).find('input[type="submit"]').data('referer');
-
+      const url = $(this).find('input[type="submit"]').data('referer');
+      const mapid = $(this).find('input[type="submit"]').data('mapid');
       const data = $(this).serialize();
 
       $.post('/pins/new', data, function(data) {
-        console.log('Created new pin');
-
+        console.log('Created new pin');        
+      })
+      .then(function() {
         loadTemplateHTML(url, '.ajaxWrap');
-      });
+        getSingleMap(mapid);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     });
 
     /**
@@ -331,6 +347,7 @@ $(() => {
       console.log(url);
 
       loadTemplateHTML(url, '.ajaxWrap');
+      getCurrentCoordinates();
     });
 
     $('#updatePinForm').submit(function(e) {
@@ -354,7 +371,7 @@ $(() => {
     $('#deletePin').on('click', function(e) {
       e.preventDefault();
 
-      if (confirmDelete()) {
+      if (confirmDelete('pin')) {
         const $this = $(this);
         const pinid = $(this).data('pinid');
 
@@ -371,9 +388,10 @@ $(() => {
    */
   const mapForms = function() {
     /** Load New Map form */
-    $('.addNewMapBtn').off().on('click', (e) => {
+    $('.addNewMapBtn').on('click', (e) => {
       e.preventDefault();
       loadTemplateHTML('/maps/new', '.ajaxWrap');
+      getCurrentCoordinates();
     });
 
     /**
@@ -382,7 +400,9 @@ $(() => {
     $('#newMapForm').submit(function(e) {
       e.preventDefault();
       const data = $(this).serialize();
-      submitForm('/maps/new', data, loadTemplateHTML('/maps', '.ajaxWrap'));
+      submitForm('/maps/new', data, function() {
+        loadTemplateHTML('/maps', '.ajaxWrap')
+      });
     });
 
     /**
@@ -399,12 +419,12 @@ $(() => {
         // change icn back to heart outline
         $icon.removeClass('fa-solid').addClass('fa-regular');
 
-        $.post(`/users/${userid}/favs/remove`, () => {});
+        $.post(`/users/${userid}/favourites/remove`, () => {});
       } else {
         // change icn to filled in heart
         $icon.removeClass('fa-regular').addClass('fa-solid');
 
-        $.post(`/users/${userid}/favs/add`, () => {});
+        $.post(`/users/${userid}/favourites/add`, () => {});
       }
     });
 
@@ -437,7 +457,7 @@ $(() => {
     $('#deleteMap').off().on('click', function(e) {
       e.preventDefault();
 
-      if (confirmDelete()) {
+      if (confirmDelete('map')) {
         const $this = $(this);
         const mapid = $this.data('mapid');
 

@@ -7,7 +7,9 @@
     <%- include('partials/_header') %>
 
     <div id="map" class="showNav"></div>
-
+    <% if (userid) { %>
+      <%- include('partials/_cta-buttons') %>
+      <% } %>
     <%- include('partials/_footer') %>
     <%- include('sidebar') %>
 
@@ -15,7 +17,6 @@
     <%- include('partials/_login') %>
     <% if (userid) { %>
       <%- include('user/profile') %>
-      <%- include('partials/_cta-buttons') %>
     <% } %>
 
     <!-- Google Maps API -->

@@ -4,7 +4,7 @@
   <% map.forEach((item) => { %>
     <header class="mb-3">
       <h3 class="h4 mt-3"><%= item.title %></h3>
-      <% if(userid) { %>
+      <% if (userid) { %>
         <div class="btn-group">
           <a id="newPinBtn" class="btn btn-sm btn-outline-dark" href="/maps/<%= item.id %>/pins/new" data-mapid="<%= item.id %>"><i class="fa-solid fa-plus"></i><span class="sr-only">Add pin</span></a>
           <a id="favouriteBtn" data-mapid="<%= item.id %>" class="btn btn-sm btn-outline-dark" href=""><i class="fa-regular fa-heart text-danger"></i><span class="sr-only">Add map to favourites</span></a>
@@ -27,7 +27,7 @@
       <% }); %>
     <% } else { %>
       <div class="alert alert-warning">
-        No pins found
+        No pins found.
       </div>
     <% } %>
   </ul>
