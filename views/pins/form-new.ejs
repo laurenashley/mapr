@@ -20,7 +20,7 @@
 
     <p>
       <label class="form-label" for="pinDesc">Description:</label>
-      <input id="pinDesc" class="form-control" name="pinDesc" type="text" value="Description example" required>
+      <input id="pinDesc" class="form-control" name="pinDesc" type="textarea" value="Description example" required>
     </p>
     <p>
       <label class="form-label" for="pinImageUrl">Image link:</label>
@@ -34,7 +34,7 @@
       <label class="form-label" for="pinLong">Longitude</label>
       <input class="form-control" id="pinLong" name="pinLong" type="text" value="0" required>
     </p>
-    <input class="btn btn-primary" type="submit" name="submit" value="Save" data-referer="/maps/<%= mapid %>">  
+    <input class="btn btn-primary" type="submit" name="submit" value="Save" data-referer="/maps/<%= mapid %>">
   </form>
 <% } else { %>
   You do not have access to add pins.
