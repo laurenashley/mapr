@@ -315,7 +315,7 @@ $(() => {
    */
   const mapForms = function() {
     /** Load New Map form */
-    $('.addNewMapBtn').on('click', (e) => {
+    $('.addNewMapBtn').off().on('click', (e) => {
       e.preventDefault();
       console.log('add new map btn clicked');
       loadTemplateHTML('/maps/new', '.ajaxWrap');
@@ -348,8 +348,8 @@ $(() => {
         $icon.removeClass('fa-regular').addClass('fa-solid');
       }
 
-      $.post(`/users/${userid}/favourites`, () => { // CRITICAL:: Not getting past here
-        console.log('Map added to user favourites');
+      $.post(`/users/${userid}/favs`, (res) => { // CRITICAL:: Not getting past here
+        console.log('Map added to user favourites', res);
       });
     });
 
@@ -358,7 +358,7 @@ $(() => {
      */
 
     /** Load Update Map form */
-    $('a#updateMap').on('click', function(e) {
+    $('a#updateMap').off().on('click', function(e) {
       e.preventDefault();
       console.log('update map btn clicked');
       const mapID = $(this).data('mapid');
@@ -379,7 +379,7 @@ $(() => {
     * Delete Map
     */
 
-    $('#deleteMap').on('click', function(e) {
+    $('#deleteMap').off().on('click', function(e) {
       e.preventDefault();
 
       if (confirmDelete()) {

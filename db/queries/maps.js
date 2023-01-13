@@ -28,14 +28,6 @@ const getMapWithPins = (mapID) => {
     });
 };
 
-const addFavourite = (mapid, userid) => {
-  return db.query(`INSERT INTO favourite_maps(map_id, user_id)
-  VALUES($1, $2)`, [mapid, userid])
-  .then(data => {
-    return data.rows;
-  });
-};
-
 const updateMap = (user_id, name, long, lat, zoom) => {
   return db.query(`
   INSERT INTO maps(user_id, title, longitude, latitude, zoom)
@@ -71,6 +63,5 @@ module.exports = {
   getMapWithPins,
   updateMap,
   addNewMap,
-  deleteMap,
-  addFavourite
+  deleteMap
 };

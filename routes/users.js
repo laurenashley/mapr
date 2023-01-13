@@ -70,4 +70,15 @@ router.get('/:id/contrib', (req, res) => {
     });
 });
 
+router.post('/:id/favs', (req, res) => {
+  console.log('router starting favs');
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
+
+  userQueries.addFavourite(mapid, userid)
+    .then(data => {
+      console.log('Router: Favourite row added to favourites table');
+    });
+});
+
 module.exports = router;

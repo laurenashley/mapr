@@ -80,9 +80,19 @@ const addMapToContributors = (mapid, userid) => {
     });
 };
 
+const addFavourite = (mapid, userid) => {
+  return db.query(`INSERT INTO favourite_maps(map_id, user_id)
+  VALUES($1, $2)`, [mapid, userid])
+  .then(data => {
+    console.log('Favourite added to db now');
+    return data.rows;
+  });
+};
+
 module.exports = { getSingleUser,
   getFavourites,
   getMapsByUser,
   addMapToContributors,
-  getContributed
+  getContributed,
+  addFavourite
 };
