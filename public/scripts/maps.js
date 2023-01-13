@@ -59,8 +59,10 @@ $(() => {
   // Global Vars
   const sidenavContent = $('#sidenavContent');
 
-  const loadTemplateHTML = function(url, div) {
-    $('#sidenavContent').load(url + ' ' + div, function() {
+  const loadTemplateHTML = function(url, div, selector) {
+    const container = selector ? selector : '#sidenavContent';
+
+    $(container).load(url + ' ' + div, function() {
       console.log("Loaded");
     });
   };
@@ -82,15 +84,15 @@ $(() => {
       // To Do if map is fav'd by user show filled heart icon
       // SELECT * FROM favourite_maps WHERE user_id = $1 AND map_id = $2;
       // if above is not empty, switch icon class to solid
-      const favIcon = $('#favouriteBtn').children('i');
-      $.ajax({
-        type: 'GET',
-        url: '/users/1/favourites' // To Do replace userid with cookie
-      })
-        .done((res) => {
-          console.log('is favourite ', res);
-          // if res not empty set icon to solid
-        });
+      // const favIcon = $('#favouriteBtn').children('i');
+      // $.ajax({
+      //   type: 'GET',
+      //   url: '/users/1/favourites' // To Do replace userid with cookie
+      // })
+      //   .done((res) => {
+      //     console.log('is favourite ', res);
+      //     // if res not empty set icon to solid
+      //   });
 
       $.ajax({
         type: 'GET',
@@ -268,12 +270,12 @@ $(() => {
    */
 
   const users = () => {
-    $('#profileModal a').on('click', function(e) {
+    $('#user-favs a').on('click', function(e) {
       e.preventDefault();
 
       const url = $(this).attr('href');
-
-      loadTemplateHTML(url, '.ajaxWrap');
+      console.log('clicked on map link in profile: ', url);
+      loadTemplateHTML(url, '#mapSingle');
     });
   };
 
@@ -333,15 +335,10 @@ $(() => {
       const data = $(this).serialize();
 
       $.post('/pins/new', data, function(data) {
-        console.log('Created new pin');        
-      })
-      .then(function() {
+        console.log('Created new pin');
         loadTemplateHTML(url, '.ajaxWrap');
-        getSingleMap(mapid);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        getSingleMap($(this).find('input[type="submit"]'));      
+      });
     });
 
     /**
@@ -369,6 +366,7 @@ $(() => {
       console.log(mapid);
 
       submitForm(`/pins/${pinid}/update`, data, loadTemplateHTML(url, '.ajaxWrap'));
+      getSingleMap($(this).find('input[type="submit"]'));
     });
 
     /**
@@ -434,6 +432,7 @@ $(() => {
 
         $.post(`/users/${userid}/favourites/add`, () => {});
       }
+      loadTemplateHTML('/', '#profileModal', '#ajaxModalWrap');
     });
 
     /**
@@ -453,9 +452,9 @@ $(() => {
       e.preventDefault();
       console.log('Update form submit');
       const data = $(this).serialize();
-      const mapid = $(this).data('mapid');
-
-      submitForm(`/maps/${mapid}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
+      const mapID = $(this).attr('data-mapid');
+      const url = `/maps/3/update`;
+      submitForm(url, data, loadTemplateHTML('/maps', '.ajaxWrap'));
     });
 
     /**
@@ -470,7 +469,7 @@ $(() => {
         const mapid = $this.data('mapid');
 
         $.post(`/maps/${mapid}/delete`, () => {
-          loadTemplateHTML('/maps', '#mapsList');
+          loadTemplateHTML('/maps', '.ajaxWrap');
         });
       }
     });
