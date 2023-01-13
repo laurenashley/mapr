@@ -7,7 +7,9 @@
   right: 0;
   background-color: #3367d6;
   overflow-x: hidden;
-  transition: 0.5s;
+  transition: all 0.5s;
+  transform: translate3d(0, 0, 0);
+
 
   .title {
     margin: 0 32px;
@@ -17,7 +19,7 @@
       font-size: 40px;
       color: white;
       display: block;
-      transition: 0.3s;
+      transition: all 0.5s;
 
       &:hover {
         color: #f1f1f1;
@@ -30,23 +32,127 @@
       display: block;
 
     }
+
   }
+
+  .nav-link{
+    color:black;
+    margin-bottom: 10%;
+    margin-top: 5%;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+
+
+  }
+
+.p-3{
+  padding-bottom: 20px;
+}
 
   article {
     background-color: white;
     min-height: 100%;
 
+
+
     ul {
-      padding-top: 2%;
-      padding-bottom: 2%;
-      // box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+
+      box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+
+
+
+      :hover {
+        background-color: #E4E3DD
+      }
+
+
+      li > a {
+        font-size: 1.2em;
+        color: #14110f;
+      }
     }
 
-    .list {
-      min-height: 92%;
-    }
+  }
+
+
+}
+
+.sideInfo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 1em;
+
+  a{
+    font-size: 500;
+    justify-content: flex-start;
+    align-items: center;
   }
 }
+
+#categoryList {
+  li {
+    margin-left: 1vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+
+  }
+
+
+}
+
+.fa-map:before {
+  color: #3367d6;
+
+}
+
+.pe-2 {
+  margin-left: 1rem;
+}
+
+.pe-3 {
+  img {
+    height: 200x;
+    width: 200px;
+  }
+}
+
+.py-3{
+  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+}
+
+#updatePin{
+ color: green;
+
+ &:hover{
+
+  background-color: green;
+  color: white;
+
+ }
+}
+
+#deletePin{
+
+  color: red;
+
+  &:hover{
+
+    background-color: #ea4335;
+    color: white;
+
+   }
+}
+
+
+.fa-location-dot:before {
+color: #ea4335;
+margin-right: .3em;
+}
+
 
 @media screen and (max-height: 450px) {
   .sidenav {
