@@ -193,7 +193,7 @@ $(() => {
 
   /**
    * Handle User Profile Links
-   * 
+   *
    */
 
   const users = () => {
@@ -400,12 +400,8 @@ $(() => {
     });
   }
 
-  // Load Function Groups on initial page load
-  mapForms();
-  mapNavigation();
-  pins();
+  // Load Function Groups for Users and Maps List on initial page load
   users();
-
   getSingleMap($('#mapsList a'));
 
   // Load again on ajaxComplete
@@ -414,7 +410,6 @@ $(() => {
     mapNavigation();
     pins();
     users();
-
     getSingleMap($('#mapsList a'));
   });
 });
