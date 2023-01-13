@@ -9,22 +9,23 @@ const express = require('express');
 const cookie = require('cookie');
 const router = express.Router();
 const pinsQueries = require('../db/queries/pins');
+const usersQueries = require('../db/queries/user');
 
 router.get('/:id/update', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const pin = pinsQueries.getSinglePin(req.params.id);
 
   Promise.all([pin])
-  .then(data => {
-    const pin = data[0];
-    console.log(pin);
-    res.render('./pins/form-update', { pin, userid });
-  })
-  .catch(err => {
-    res
-      .status(500)
-      .json({ error: err.message });
-  });
+    .then(data => {
+      const pin = data[0];
+      console.log(pin);
+      res.render('./pins/form-update', { pin, userid });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 });
 
 router.get('/:id', (req, res) => {
@@ -47,9 +48,10 @@ router.get('/:id', (req, res) => {
 
 router.post('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.body.mapid;
 
-  pinsQueries.addNewPin(
-    req.body.mapid,
+  const addNewPin = pinsQueries.addNewPin(
+    mapid,
     req.body.userid,
     req.body.pinName,
     req.body.pinDesc,
@@ -57,8 +59,6 @@ router.post('/new', (req, res) => {
     req.body.pinLat,
     req.body.pinLong
   );
-
-  // To Do add row to contributors table
 
   res.redirect('/');
 });

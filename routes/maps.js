@@ -77,14 +77,12 @@ router.post('/new', (req, res) => {
     req.body.mapLat,
     req.body.mapZoom
   );
-  const addContributor = usersQueries.addMapToContributors(mapid, userid);
 
-  Promise.all([addMap, addContributor])
+  Promise.all([addMap])
     .then(data => {
       const map = data[0];
-      const contributors = data[1];
       console.log('router posted new map: ', data);
-      res.render('./maps/map', { map, contributors, userid });
+      res.render('./maps/map', { map, userid });
     })
     .catch(err => {
       res
@@ -97,13 +95,15 @@ router.post('/new', (req, res) => {
 
 router.post('/:id/update', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
 
   mapsQueries.updateMap(
     userid,
     req.body.mapName,
     req.body.mapLong,
     req.body.mapLat,
-    req.body.mapZoom
+    req.body.mapZoom,
+    mapid
   );
 
   res.redirect('/');
