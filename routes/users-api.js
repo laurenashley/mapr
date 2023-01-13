@@ -14,9 +14,9 @@ router.get('/:id/favourites', (req, res) => {
   const favsData = userQueries.getFavourites(req.params.id);
   Promise.all([favsData])
     .then(data => {
-      const favourites = data[0];
+      const userFavs = data[0];
       console.log(data);
-      res.json({ favourites });
+      res.json({ userFavs });
     })
     .catch(err => {
       res

@@ -24,15 +24,23 @@
               <%= map %> <!-- Prints nothing but map.title works -->
               <!-- Load favourite id here instead of mapid -->
               <li class="list-group-item"><a data-mapid="<%= map.id %>" href="?mapid=<%= map.id %>&lat=<%= map.latitude %>&long=<%= map.longitude %>&zoom=<%= map.zoom %>"><%= map.title %></a></li>
+        <section id="favs" class="userFavs mb-4">
+          <h4 class="h5 mb-4">My Favourite Maps</h4>
+          <ul id="user-favs" class="list-group">
+            <% userFavs.forEach((map) => { %>
+              <li class="list-group-item">
+                <a data-mapid="<%= map.id %>" href="/maps/<%= map.id %>" class="" data-bs-dismiss="modal" aria-label="Close"><%= map.title %></a></li>
             <% }); %>
           </ul>
         </section>
         <hr>
-        <section id="contrib" class="pb-3">
+        <div>
+        <section id="contrib" class="contrib pb-3">
           <h4 class="h5 mb-2">Maps I've contributed to</h4>
           <ul id="user-maps" class="list-group">
-            <% userFavs.forEach((map) => { %>
-              <li class="list-group-item"><a href="?mapid=<%= map.id %>&lat=<%= map.latitude %>&long=<%= map.longitude %>&zoom=<%= map.zoom %>"><%= map.title %></a></li>
+            <% userMaps.forEach((map) => { %>
+              <li class="list-group-item">
+                <a class="" data-bs-dismiss="modal" aria-label="Close" data-mapid="<%= map.id %>" href="/maps/<%= map.id %>"><%= map.title %></a></li>
             <% }); %>
           </ul>
         </section>

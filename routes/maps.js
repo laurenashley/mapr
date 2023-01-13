@@ -35,6 +35,7 @@ router.get('/:id/update', (req, res) => {
   Promise.all([mapData])
     .then(data => {
       const map = data[0][0]; // Renders as an object, why?
+      console.log(map);
       res.render('./maps/form-update', { userid, map });
     });
 });
@@ -105,9 +106,10 @@ router.post('/users/:id/favourites', (req, res) => {
 });
 
 router.post('/:id/update', (req, res) => {
-  console.log('post router, updateMap now ');
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+
   mapsQueries.updateMap(
-    1, // To Do change to login cookie req.params.id
+    userid,
     req.body.mapName,
     req.body.mapLong,
     req.body.mapLat,

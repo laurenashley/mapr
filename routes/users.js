@@ -40,13 +40,13 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/:id/favourites', (req, res) => {
+router.get('/:id/favs', (req, res) => {
   const favsData = userQueries.getFavourites(req.params.id);
   Promise.all([favsData])
     .then(data => {
-      const favourites = data[0];
-      console.log('get favs data: ', data);
-      res.render('./user/favourites', { favourites });
+      const userFavs = data[0];
+      console.log(data);
+      res.render('./user/favs', { userFavs });
     })
     .catch(err => {
       res
@@ -55,13 +55,13 @@ router.get('/:id/favourites', (req, res) => {
     });
 });
 
-router.get('/:id/contributions', (req, res) => {
+router.get('/:id/contrib', (req, res) => {
   const userMapsData = userQueries.getMapsByUser(req.params.id);
   Promise.all([userMapsData])
     .then(data => {
-      const contributions = data[0];
-      console.log('get contribs data: ', data);
-      res.render('./user/contributions', { contributions });
+      const contrib = data[0];
+      console.log(data);
+      res.render('./user/contrib', { contrib });
     })
     .catch(err => {
       res
