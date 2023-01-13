@@ -404,7 +404,7 @@ $(() => {
   users();
   getSingleMap($('#mapsList a'));
 
-  // Load again on ajaxComplete
+  // Load on ajaxComplete
   $(document).on('ajaxComplete', function() {
     mapForms();
     mapNavigation();
