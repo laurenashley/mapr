@@ -33,12 +33,11 @@ const getFavourites = (id) => {
 
 const getContributed = (id) => {
   const query = `
-  SELECT DISTINCT map_id, maps.*
-  FROM contributors
-  INNER JOIN pins ON pins.id = contributors.pin_id
-  JOIN maps ON maps.id = pins.map_id
-  JOIN users ON users.id = contributors.user_id
-  WHERE contributors.user_id = $1
+    SELECT maps.title
+    FROM pins
+    JOIN maps ON maps.id = pins.map_id
+    WHERE pins.user_id = $1
+    GROUP BY maps.title
   ;
   `;
   const value = [`${id}`];
