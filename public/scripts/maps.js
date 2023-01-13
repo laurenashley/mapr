@@ -76,6 +76,10 @@ $(() => {
 
       loadTemplateHTML(url, '.ajaxWrap');
 
+      // To Do if map is fav'd by user show filled heart icon
+      // SELECT * FROM favourite_maps WHERE user_id = $1 AND map_id = $2;
+      // if above is not empty, switch icon class to solid
+
       $.ajax({
         type: 'GET',
         url: api
@@ -344,16 +348,12 @@ $(() => {
         // change icn back to heart outline
         $icon.removeClass('fa-solid').addClass('fa-regular');
 
-        $.post(`/users/${userid}/favs/remove`, (res) => {
-          console.log('Map added to user favourites', res);
-        });
+        $.post(`/users/${userid}/favs/remove`, () => {});
       } else {
         // change icn to filled in heart
         $icon.removeClass('fa-regular').addClass('fa-solid');
 
-        $.post(`/users/${userid}/favs/add`, (res) => {
-          console.log('Map added to user favourites', res);
-        });
+        $.post(`/users/${userid}/favs/add`, () => {});
       }
     });
 
