@@ -94,7 +94,6 @@ const rmvFavourite = (mapid, userid) => {
   WHERE map_id = $1 AND user_id = $2;
   `, [mapid, userid])
   .then(data => {
-    console.log('Favourite removed from db now');
     return data.rows;
   });
 };

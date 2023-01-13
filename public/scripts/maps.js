@@ -321,7 +321,6 @@ $(() => {
     /** Load New Map form */
     $('.addNewMapBtn').off().on('click', (e) => {
       e.preventDefault();
-      console.log('add new map btn clicked');
       loadTemplateHTML('/maps/new', '.ajaxWrap');
     });
 
@@ -339,7 +338,7 @@ $(() => {
      */
     $('a#favouriteBtn').off().on('click', function(e) {
       e.preventDefault();
-      console.log('favourite btn clicked');
+
       const userid = 1;
       const $icon = $(this).children('i');
       const isFav = $icon.hasClass('fa-solid');

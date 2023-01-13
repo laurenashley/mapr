@@ -81,7 +81,6 @@ router.post('/:id/favs/add', (req, res) => {
 });
 
 router.post('/:id/favs/remove', (req, res) => {
-  console.log('router starting favs');
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const mapid = req.params.id;
 
