@@ -270,8 +270,6 @@ $(() => {
       const data = $(this).serialize();
 
       $.post('/pins/new', data, function(data) {
-        console.log('Created new pin');
-
         loadTemplateHTML(url, '.ajaxWrap');
       });
     });
@@ -285,19 +283,16 @@ $(() => {
 
       const pinid = $(this).data('pinid');
       const url = $(this).attr('href');
-      console.log(url);
 
       loadTemplateHTML(url, '.ajaxWrap');
     });
 
     $('#updatePinForm').submit(function(e) {
       e.preventDefault();
-      console.log('save btn clicked');
       const data = $(this).serialize();
       const pinid = $(this).data('pinid');
       const mapid = $(this).data('mapid');
       const url = '/maps/' + mapid;
-      console.log(mapid);
 
       submitForm(`/pins/${pinid}/update`, data, loadTemplateHTML(url, '.ajaxWrap'));
     });
@@ -371,15 +366,13 @@ $(() => {
     /** Load Update Map form */
     $('a#updateMap').off().on('click', function(e) {
       e.preventDefault();
-      console.log('update map btn clicked');
       const mapID = $(this).data('mapid');
-      console.log('mapid: ', mapID);
+
       loadTemplateHTML(`/maps/${mapID}/update`, '.ajaxWrap');
     });
 
     $('#updateMapForm').submit(function(e) {
       e.preventDefault();
-      console.log('Update form submit');
       const data = $(this).serialize();
       const mapid = $(this).data('mapid');
 

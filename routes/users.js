@@ -45,7 +45,7 @@ router.get('/:id/favs', (req, res) => {
   Promise.all([favsData])
     .then(data => {
       const userFavs = data[0];
-      console.log(data);
+
       res.render('./user/favs', { userFavs });
     })
     .catch(err => {
@@ -60,7 +60,7 @@ router.get('/:id/contrib', (req, res) => {
   Promise.all([userMapsData])
     .then(data => {
       const contrib = data[0];
-      console.log('contrib data: ', data);
+
       res.render('./user/contrib', { contrib });
     })
     .catch(err => {

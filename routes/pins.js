@@ -18,7 +18,7 @@ router.get('/:id/update', (req, res) => {
   Promise.all([pin])
     .then(data => {
       const pin = data[0];
-      console.log(pin);
+
       res.render('./pins/form-update', { pin, userid });
     })
     .catch(err => {
