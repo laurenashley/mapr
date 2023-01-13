@@ -11,11 +11,12 @@ const cookie = require('cookie');
 const userQueries = require('../db/queries/user');
 
 router.get('/:id/favourites', (req, res) => {
+  console.log('get contribs starting');
   const favsData = userQueries.getFavourites(req.params.id);
   Promise.all([favsData])
     .then(data => {
       const userFavs = data[0];
-      console.log(data);
+      console.log('userFavs: ', data);
       res.json({ userFavs });
     })
     .catch(err => {
@@ -26,11 +27,13 @@ router.get('/:id/favourites', (req, res) => {
 });
 
 router.get('/:id/contributions', (req, res) => {
-  const userMapsData = userQueries.getMapsByUser(req.params.id);
-  Promise.all([userMapsData])
+  // To Do currently not working yet
+  console.log('get contribs starting');
+  const contribsData = userQueries.getContributed(req.params.id);
+  Promise.all([contribsData])
     .then(data => {
       const contributions = data[0];
-      console.log(data);
+      console.log('contributed to: ', contributions);
       res.json({ contributions });
     })
     .catch(err => {

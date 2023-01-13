@@ -12,7 +12,6 @@ const getSingleUser = function(id) {
 };
 
 const getFavourites = (id) => {
-  // To Do query only returning a map title? Does not return a map_id which is needed here
   const query = `
     SELECT DISTINCT map_id, maps.*
     FROM favourite_maps
@@ -20,6 +19,29 @@ const getFavourites = (id) => {
     JOIN users ON users.id = favourite_maps.user_id
     WHERE favourite_maps.user_id = $1
     ;
+  `;
+  const value = [`${id}`];
+  return db.query(query, value)
+    .then(data => {
+      if (!data.rows.length) {
+        console.log("No user found with that id");
+        return null;
+      }
+      return data.rows;
+    });
+};
+
+const getContributed = (id) => {
+  // To Do this query needs tweaking to get map associated with pin_id
+  console.log('getContributed Query');
+  const query = `
+  SELECT DISTINCT map_id, maps.*
+  FROM contributors
+  INNER JOIN pins ON pins.id = contributors.pin_id
+  JOIN maps ON maps.id = pins.map_id
+  JOIN users ON users.id = contributors.user_id
+  WHERE contributors.user_id = $1
+  ;
   `;
   const value = [`${id}`];
   return db.query(query, value)
@@ -60,4 +82,9 @@ const addMapToContributors = (mapid, userid) => {
     });
 };
 
-module.exports = { getSingleUser, getFavourites, getMapsByUser, addMapToContributors };
+module.exports = { getSingleUser,
+  getFavourites,
+  getMapsByUser,
+  addMapToContributors,
+  getContributed
+};
