@@ -19,17 +19,17 @@
             <i class="fa-solid fa-plus"></i> New map
           </a>
           <a href="/user" class="btn btn-secondary btn-profile rounded-circle" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="fa-solid fa-user"></i></a>
-          <a href="/logout" type="button" class="btn btn-link px-3">
+          <a href="/logout" class="btn btn-link px-3">
             Logout
           </a>
         <% } else { %>
           <!-- Button trigger modal -->
-          <button type="button" class="btn btn-link px-3" data-bs-toggle="modal" data-bs-target="#loginModal">
-          Login
-          </button>
-          <button type="button" class="btn btn-primary btn-sm">
+          <a class="btn btn-link px-3" data-bs-toggle="modal" data-bs-target="#loginModal">
+            Login
+          </a>
+          <a href="" class="btn btn-primary btn-sm">
             Sign up!
-          </button>
+          </a>
         <% } %>
         <button class="btn btn-link" style="font-size:18px;cursor:pointer;" onclick="toggleNav()"><i class="fa-sharp fa-solid fa-bars"></i></button>
 

@@ -23,12 +23,19 @@ const getSingleMap = (id) => {
 };
 
 const getMapWithPins = (mapID) => {
-  // To Do this is only returning maps row data, query is correct
   return db.query(`SELECT * FROM pins
   WHERE map_id = $1;`, [mapID])
     .then(data => {
       return data.rows;
     });
+};
+
+const addFavourite = (mapid, userid) => {
+  return db.query(`INSERT INTO favourite_maps(map_id, user_id)
+  VALUES($1, $2)`, [mapid, userid])
+  .then(data => {
+    return data.rows;
+  });
 };
 
 const updateMap = (user_id, name, long, lat, zoom) => {

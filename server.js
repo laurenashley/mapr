@@ -7,6 +7,9 @@ const express = require('express');
 const morgan = require('morgan');
 const cookie = require('cookie');
 
+// Keep - needed for api pages
+const { json } = require('express');
+
 const PORT = process.env.PORT || 8080;
 const app = express();
 
@@ -36,7 +39,7 @@ const categoriesRoutes = require('./routes/categories')
 
 const pinsRoutes = require('./routes/pins');
 const mapsApiRoutes = require('./routes/maps-api');
-const pinApiRoutes = require('./routes/pin-api');
+const pinApiRoutes = require('./routes/pins-api');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -48,7 +51,7 @@ app.use('/categories', categoriesRoutes);
 
 app.use('/pins', pinsRoutes);
 app.use('/maps-api', mapsApiRoutes);
-app.use('pin-api', pinApiRoutes);
+app.use('/pins-api', pinApiRoutes);
 
 // Note: mount other resources here, using the same pattern above
 

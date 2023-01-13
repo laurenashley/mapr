@@ -1,8 +1,8 @@
 /* eslint-disable arrow-body-style */
 const db = require('../connection');
 
-const getPins = (mapID) => {
-  return db.query(`SELECT * FROM pins WHERE map_id = $1;`, [mapID])
+const getPins = () => {
+  return db.query(`SELECT * FROM pins`)
     .then(data => {
       return data.rows;
     });
@@ -13,13 +13,15 @@ const getSinglePin = async (id) => {
   return data.rows;
 };
 
-
-const updatePin = (user_id, title, long, lat, zoom) => {
-  return db.query(`
-  INSERT INTO pins(user_id, title, longitude, latitude, zoom)
-  VALUES($1, $2, $3, $4, $5);
-  `,
-  [user_id, name, long, lat, zoom])
+const updatePin = (id, title, desc, image_url, long, lat) => {
+  const query = `
+    UPDATE pins 
+    SET title = $1, description = $2, image_url = $3,
+    longitude = $4, latitude = $5
+    WHERE id = $6;
+  `;
+  const values = [`${title}`, `${desc}`, `${image_url}`, `${long}`, `${lat}`, `${id}`];
+  return db.query(query, values)
     .then(data => {
       return data.rows;
     });

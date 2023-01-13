@@ -1,0 +1,8 @@
+<section id="contrib" class="pb-3">
+  <h4 class="h5 mb-2">Maps I've contributed to</h4>
+  <ul id="user-maps" class="list-group">
+    <% contrib.forEach((map) => { %>
+      <li class="list-group-item"><a href="?mapid=<%= map.id %>&lat=<%= map.latitude %>&long=<%= map.longitude %>&zoom=<%= map.zoom %>"><%= map.title %></a></li>
+    <% }); %>
+  </ul>
+</section>

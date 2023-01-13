@@ -10,23 +10,6 @@ const cookie = require('cookie');
 const router = express.Router();
 const pinsQueries = require('../db/queries/pins');
 
-router.get('/:id', (req, res) => {
-  const userid = cookie.parse(req.headers.cookie || '').userid;
-  const pin = pinsQueries.getSinglePin(req.params.id);
-
-  Promise.all([pin])
-    .then(data => {
-      const pin = data[0];
-      console.log(pin);
-      res.render('./pins/pin', { pin });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
-});
-
 router.get('/:id/update', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const pin = pinsQueries.getSinglePin(req.params.id);
@@ -35,7 +18,7 @@ router.get('/:id/update', (req, res) => {
   .then(data => {
     const pin = data[0];
     console.log(pin);
-    res.render('./pins/form-update', {pin, userid});
+    res.render('./pins/form-update', { pin, userid });
   })
   .catch(err => {
     res
@@ -44,12 +27,24 @@ router.get('/:id/update', (req, res) => {
   });
 });
 
-// router.get(':id/delete', (req, res) => {
-//   res.status('200');
-// });
+router.get('/:id', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const pin = pinsQueries.getSinglePin(req.params.id);
 
-// Post
-// (map_id, user_id, title, description, image_url, longitude, latitude)
+  Promise.all([pin])
+    .then(data => {
+      const pin = data[0];
+      res.render('./pins/pin', { pin, userid });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+/////// Post //////
+
 router.post('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
 
@@ -63,20 +58,26 @@ router.post('/new', (req, res) => {
     req.body.pinLong
   );
 
+  // To Do add row to contributors table
+
   res.redirect('/');
 });
 
 router.post('/:id/update', (req, res) => {
-  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const pinid = req.params.id;
+
   pinsQueries.updatePin(
-    req.body.mapid,
-    req.body.userid,
+    pinid,
     req.body.pinName,
     req.body.pinDesc,
     req.body.pinImageUrl,
+    req.body.pinLong,
     req.body.pinLat,
-    req.body.pinLong
   );
+
+  //id, title, desc, image_url, long, lat
+
+  res.redirect('/');
 });
 
 router.post('/:id/delete', (req, res) => {

@@ -47,9 +47,17 @@ html {
 .showNav {
   &.sidenav {
     width: 25vw;
+
+    @include media-breakpoint-down(md) {
+      width: 300px;
+    }
   }
   &.headerBar {
     width: 74vw;
+
+    @include media-breakpoint-down(md) {
+      width: 100%;
+    }
   }
   &#map {
     width: 75vw;

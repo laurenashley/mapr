@@ -8,6 +8,7 @@
 const express = require('express');
 const router  = express.Router();
 const cookie  = require('cookie');
+const userQueries = require('../db/queries/user');
 
 /**
  * Login Endpoint
@@ -38,13 +39,13 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/:id/favourties', (req, res) => {
+router.get('/:id/favs', (req, res) => {
   const favsData = userQueries.getFavourites(req.params.id);
   Promise.all([favsData])
     .then(data => {
-      const favourites = data[0];
+      const userFavs = data[0];
       console.log(data);
-      res.render('./user/favourties', { favourites });
+      res.render('./user/favs', { userFavs });
     })
     .catch(err => {
       res
@@ -53,13 +54,13 @@ router.get('/:id/favourties', (req, res) => {
     });
 });
 
-router.get('/:id/contributions', (req, res) => {
+router.get('/:id/contrib', (req, res) => {
   const userMapsData = userQueries.getMapsByUser(req.params.id);
   Promise.all([userMapsData])
     .then(data => {
-      const contributions = data[0];
+      const contrib = data[0];
       console.log(data);
-      res.render('./user/contributions', { contributions });
+      res.render('./user/contrib', { contrib });
     })
     .catch(err => {
       res

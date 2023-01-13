@@ -39,7 +39,7 @@ const getFavourites = (id) => {
 
 const getMapsByUser = (mapID) => {
   return db.query(`
-    SELECT maps.title FROM maps
+    SELECT * FROM maps
     WHERE user_id = $1;
   `, [mapID])
     .then(data => {

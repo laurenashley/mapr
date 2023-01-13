@@ -1,5 +1,6 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable func-style */
+
 // Set Defaults
 let map;
 let mapid = null;
@@ -154,7 +155,7 @@ $(() => {
           console.log('there was an error: ', err);
         });
     });
-  }
+  };
 
   map.addListener('click', clearMap);
 
@@ -186,7 +187,15 @@ $(() => {
 
       getSingleMap($(this));
     });
-  }
+  };
+
+  /**
+   * Helper Functions
+   */
+
+  const submitForm = (url, data, cb) => {
+    $.post(url, data, cb);
+  };
 
   /**
     * Delete Confirm
@@ -196,6 +205,21 @@ $(() => {
     const userResponse = confirm("Are you sure you want to delete this pin?");
     return userResponse;
   };
+
+  /**
+   * Handle User Profile Links
+   * 
+   */
+
+  const users = () => {
+    $('#profileModal a').on('click', function(e) {
+      e.preventDefault();
+
+      const url = $(this).attr('href');
+
+      loadTemplateHTML(url, '.ajaxWrap');
+    });
+  }
 
   /**
    * Handle Pins & Pin Forms
@@ -239,7 +263,7 @@ $(() => {
 
       // Set back button url
       $('#backBtnMap').attr('href', '/maps/' + mapid);
-    })
+    });
 
     /**
      * Submit new pin form via AJAX
@@ -257,6 +281,33 @@ $(() => {
 
         loadTemplateHTML(url, '.ajaxWrap');
       });
+    });
+
+    /**
+     * Update Pin
+     */
+
+    $('a#updatePin').on('click', function(e) {
+      e.preventDefault();
+
+      const pinid = $(this).data('pinid');
+      const url = $(this).attr('href');
+      console.log(url);
+
+      loadTemplateHTML(url, '.ajaxWrap');
+    });
+
+    $('#updatePinForm').submit(function(e) {
+      // To Do this crashes app, nothing opens
+      e.preventDefault();
+      console.log('save btn clicked');
+      const data = $(this).serialize();
+      const pinid = $(this).data('pinid');
+      const mapid = $(this).data('mapid');
+      const url = '/maps/' + mapid;
+      console.log(mapid);
+
+      submitForm(`/pins/${pinid}/update`, data, loadTemplateHTML(url, '.ajaxWrap'));
     });
 
     /**
@@ -290,17 +341,39 @@ $(() => {
       loadTemplateHTML('/maps/new', '.ajaxWrap');
     });
 
-    const submitMap = (url, data, cb) => {
-      $.post(url, data, cb);
-    }
-
     /**
      * Create New Map
      */
     $('#newMapForm').submit(function(e) {
       e.preventDefault();
       const data = $(this).serialize();
-      submitMap('/maps/new', data, loadTemplateHTML('/maps', '.ajaxWrap'));
+      submitForm('/maps/new', data, loadTemplateHTML('/maps', '.ajaxWrap'));
+    });
+
+    /**
+     * Add Map to Favourites
+     */
+    $('a#favouriteBtn').on('click', function(e) {
+      e.preventDefault();
+      console.log('favourite btn clicked');
+      const userid = 1;
+      const isFav = $(this).hasClass('fa-regular');
+
+      const favourite = function() {
+        // change icn to filled in heart
+        $(this).removeClass('fa-regular').addClass('fa-solid');
+      };
+
+      const unfavourite = function() {
+        // change icn back to heart outline
+        $(this).removeClass('fa-solid').addClass('fa-regular');
+      };
+
+      $.post(`/users/${userid}/favourites`, () => { // Not getting past here
+        console.log('Map added to user favourites');
+      });
+
+      isFav ? unfavourite() : favourite();
     });
 
     /**
@@ -320,9 +393,9 @@ $(() => {
       e.preventDefault();
       console.log('Update form submit');
       const data = $(this).serialize();
-      mapid = $(this).data('mapid'); // This is undefined (again, same as when it broke above)
+      const mapid = $(this).data('mapid');
 
-      submitMap(`/maps/${mapid}/update`, data, loadTemplateHTML('/maps', '.ajaxWrap'));
+      submitForm(`/maps/${mapid}/update`, data, loadTemplateHTML('/maps', '#mapsList'));
     });
 
     /**
@@ -334,7 +407,7 @@ $(() => {
 
       if (confirmDelete()) {
         const $this = $(this);
-        mapid = $this.data('mapid');
+        const mapid = $this.data('mapid');
 
         $.post(`/maps/${mapid}/delete`, () => {
           loadTemplateHTML('/maps', '#mapsList');
@@ -347,6 +420,7 @@ $(() => {
   mapForms();
   mapNavigation();
   pins();
+  users();
 
   getSingleMap($('#mapsList a'));
 
@@ -355,9 +429,8 @@ $(() => {
     mapForms();
     mapNavigation();
     pins();
+    users();
 
     getSingleMap($('#mapsList a'));
-
-
   });
 });
