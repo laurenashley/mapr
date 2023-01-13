@@ -67,6 +67,7 @@ router.get('/:id/pins/new', (req, res) => {
 
 // POST
 router.post('/new', (req, res) => {
+  console.log('post fired');
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const mapid = req.params.id;
   const addMap = mapsQueries.addNewMap(

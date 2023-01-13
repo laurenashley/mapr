@@ -79,6 +79,15 @@ $(() => {
       // To Do if map is fav'd by user show filled heart icon
       // SELECT * FROM favourite_maps WHERE user_id = $1 AND map_id = $2;
       // if above is not empty, switch icon class to solid
+      const favIcon = $('#favouriteBtn').children('i');
+      $.ajax({
+        type: 'GET',
+        url: '/users/1/favs' // To Do replace userid with cookie
+      })
+        .done((res) => {
+          console.log('is favourite ', res);
+          // if res not empty set icon to solid
+        });
 
       $.ajax({
         type: 'GET',
@@ -208,7 +217,7 @@ $(() => {
 
       loadTemplateHTML(url, '.ajaxWrap');
     });
-  }
+  };
 
   /**
    * Handle Pins & Pin Forms
@@ -253,7 +262,7 @@ $(() => {
      * Submit new pin form via AJAX
      *
      */
-    $('#newPinForm').submit( function(e) {
+    $('#newPinForm').submit(function(e) {
       e.preventDefault();
 
       url = $(this).find('input[type="submit"]').data('referer');
@@ -282,7 +291,6 @@ $(() => {
     });
 
     $('#updatePinForm').submit(function(e) {
-      // To Do this crashes app, nothing opens
       e.preventDefault();
       console.log('save btn clicked');
       const data = $(this).serialize();
@@ -394,7 +402,7 @@ $(() => {
         });
       }
     });
-  }
+  };
 
   // Load Function Groups for Users and Maps List on initial page load
   users();
