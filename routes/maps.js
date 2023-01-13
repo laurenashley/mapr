@@ -86,13 +86,15 @@ router.post('/new', (req, res) => {
 
 router.post('/:id/update', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
 
   mapsQueries.updateMap(
     userid,
     req.body.mapName,
     req.body.mapLong,
     req.body.mapLat,
-    req.body.mapZoom
+    req.body.mapZoom,
+    mapid
   );
 
   res.redirect('/');
