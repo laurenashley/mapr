@@ -82,7 +82,6 @@ app.get('/', (req, res) => {
         const userMaps = data[3];
         const userFavs = data[4];
         const userContribs = data[5];
-        console.log(userMaps);
         res.render('index', { user, maps, userMaps, userFavs, userid, userContribs });
       })
       .catch(err => {
