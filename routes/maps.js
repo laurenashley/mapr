@@ -9,6 +9,7 @@ const express = require('express');
 const cookie = require('cookie');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
+const usersQueries = require('../db/queries/user');
 
 router.get('/', (req, res) => {
   const query = `SELECT * FROM maps`;
@@ -67,28 +68,30 @@ router.get('/:id/pins/new', (req, res) => {
 // POST
 router.post('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
-  mapsQueries.addNewMap(
+  const mapid = req.params.id;
+  const addMap = mapsQueries.addNewMap(
     userid,
     req.body.mapName,
     req.body.mapLong,
     req.body.mapLat,
     req.body.mapZoom
   );
+  const addContributor = usersQueries.addMapToContributors(mapid, userid);
 
-  // To Do add row to contributors table
+  Promise.all([addMap, addContributor])
+    .then(data => {
+      const map = data[0];
+      const contributors = data[1];
+      console.log('router posted new map: ', data);
+      res.render('./maps/map', { map, contributors, userid });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 
   res.redirect('/');
-});
-
-router.post('/users/:id/favourites', (req, res) => {
-  console.log('router starting');
-  const userid = cookie.parse(req.headers.cookie || '').userid;
-  const mapid = req.params.id;
-
-  mapsQueries.addFavourite(mapid, userid)
-    .then(data => {
-      console.log('Router: Favourite row added to favourites table');
-    });
 });
 
 router.post('/:id/update', (req, res) => {

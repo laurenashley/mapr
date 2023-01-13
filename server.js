@@ -55,7 +55,7 @@ app.use('/pins-api', pinApiRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
-const { getSingleUser, getMapsByUser, getFavourites } = require('./db/queries/user');
+const { getSingleUser, getMapsByUser, getFavourites, getContributed } = require('./db/queries/user');
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
@@ -65,16 +65,25 @@ app.get('/', (req, res) => {
     const promiseUser = getSingleUser(userid);
     const prmoiseUserMaps = getMapsByUser(userid);
     const promiseGetFavourites = getFavourites(userid);
+    const promiseGetContributed = getContributed(userid);
     const promiseMaps = getMaps();
 
-    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites])
+    Promise.all([
+      userid,
+      promiseMaps,
+      promiseUser,
+      prmoiseUserMaps,
+      promiseGetFavourites,
+      promiseGetContributed
+    ])
       .then(data => {
         const maps = data[1];
         const user = data[2];
         const userMaps = data[3];
         const userFavs = data[4];
+        const userContribs = data[5];
         console.log(userMaps);
-        res.render('index', { user, maps, userMaps, userFavs, userid });
+        res.render('index', { user, maps, userMaps, userFavs, userid, userContribs });
       })
       .catch(err => {
         res
@@ -96,7 +105,7 @@ app.get('/', (req, res) => {
   }
 });
 
-// Listen 
+// Listen
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
