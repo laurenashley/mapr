@@ -318,26 +318,30 @@ $(() => {
      * Add Map to Favourites
      */
     $('a#favouriteBtn').on('click', function(e) {
+      // CRITICAL:: this click fires twice
       e.preventDefault();
       console.log('favourite btn clicked');
       const userid = 1;
-      const isFav = $(this).hasClass('fa-regular');
+      const $icon = $(this).children('i');
+      const isFav = $icon.hasClass('fa-regular');
+      console.log('icon isFavd ', isFav);
 
-      const favourite = function() {
+      const favourite = function(e) {
         // change icn to filled in heart
-        $(this).removeClass('fa-regular').addClass('fa-solid');
+        $icon.removeClass('fa-regular').addClass('fa-solid');
       };
+      favourite();
 
-      const unfavourite = function() {
+      const unfavourite = function(e) {
         // change icn back to heart outline
-        $(this).removeClass('fa-solid').addClass('fa-regular');
+        $icon.removeClass('fa-solid').addClass('fa-regular');
       };
 
-      $.post(`/users/${userid}/favourites`, () => { // Not getting past here
+      $.post(`/users/${userid}/favourites`, () => { // CRITICAL:: Not getting past here
         console.log('Map added to user favourites');
       });
 
-      isFav ? unfavourite() : favourite();
+      // isFav ? unfavourite() : favourite();
     });
 
     /**

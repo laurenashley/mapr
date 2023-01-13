@@ -71,5 +71,6 @@ module.exports = {
   getMapWithPins,
   updateMap,
   addNewMap,
-  deleteMap
+  deleteMap,
+  addFavourite
 };
