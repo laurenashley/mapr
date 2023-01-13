@@ -26,14 +26,19 @@
       <label class="form-label" for="pinImageUrl">Image link:</label>
       <input id="pinImageUrl" class="form-control" name="pinImageUrl" type="text" value="https://picsum.photos/100/100" required>
     </p>
-    <p>
-      <label class="form-label" for="pinLat">Latitude</label>
-      <input class="form-control" id="pinLat" name="pinLat" type="text" value="0" required>
-    </p>
-    <p>
-      <label class="form-label" for="pinLong">Longitude</label>
-      <input class="form-control" id="pinLong" name="pinLong" type="text" value="0" required>
-    </p>
+    <div class="alert alert-light py-3">
+      <p>Click on the map to set your new pin coordinates:</p>
+      <div class="row">
+        <p class="col">
+          <label class="form-label" for="pinLat">Latitude:</label>
+          <input class="form-control" id="pinLat" name="pinLat" type="text" value="0" required>
+        </p>
+        <p class="col">
+          <label class="form-label" for="pinLong">Longitude:</label>
+          <input class="form-control" id="pinLong" name="pinLong" type="text" value="0" required>
+        </p>
+      </div>
+    </div>
     <input class="btn btn-primary" type="submit" name="submit" value="Save" data-referer="/maps/<%= mapid %>">  
   </form>
 <% } else { %>

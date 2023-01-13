@@ -10,6 +10,8 @@ let setZoom = 2.3;
 let pinsData = {};
 let markers = [];
 let infoWindows = [];
+let tempMarker;
+let currentPosition = null;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -148,6 +150,49 @@ $(() => {
     });
   };
 
+
+  /**
+   * Load new pin from clicking on map
+   * Get coordinates when clicking on map
+   * 
+   */
+
+  const getCurrentCoordinates = () => {
+    // Get Lat on Long from the map
+    map.addListener("click", (mapsMouseEvent) => {
+        // Clear previous marker
+        if (tempMarker) {
+          tempMarker.setMap(null);
+        }
+
+        // Log Lat and Long object to console
+        console.log(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2));
+
+        // Save the position
+        const position = mapsMouseEvent.latLng;
+
+        // Update global variable
+        currentPosition = position;
+
+        // Create the marker
+        tempMarker = new google.maps.Marker({
+          position: position,
+          map,
+        });
+
+        if (currentPosition) {
+          // Set the map id from the referring button
+          $('#newPinForm').find('#pinLat').val(currentPosition["lat"]);
+          // Set the map id from the referring button
+          $('#newPinForm').find('#pinLong').val(currentPosition["lng"]);
+        }
+
+        // Simulate click event
+        // $('#newPinBtn').click();
+
+    });
+  }
+
   const mapNavigation = () => {
     /**
     * All Map - Back Button
@@ -174,7 +219,7 @@ $(() => {
 
       loadTemplateHTML(href, '.ajaxWrap');
 
-      getSingleMap($(this));
+      // getSingleMap($(this));
     });
   };
 
@@ -237,6 +282,9 @@ $(() => {
     $('#newPinBtn').on('click', function(e) {
       e.preventDefault();
 
+      // Create temp pin and get coordinates when clicking on the map
+      getCurrentCoordinates();
+
       const mapid = $(this).data('mapid');
       const url = $(this).attr('href');
 
@@ -244,6 +292,10 @@ $(() => {
 
       // Set the map id from the referring button
       $('#newPinForm').find('#mapid').val(mapid);
+
+      console.log(currentPosition["lat"]);
+
+      // Set Lat and Lng from clicking on the map
 
       // Set back button url
       $('#backBtnMap').attr('href', '/maps/' + mapid);
@@ -401,7 +453,7 @@ $(() => {
   getSingleMap($('#mapsList a'));
 
   // Load on ajaxComplete
-  $(document).on('ajaxComplete', function() {
+  $(document).on('ajaxStop', function() {
     mapForms();
     mapNavigation();
     pins();
