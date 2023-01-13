@@ -26,18 +26,15 @@
             <% }); %>
           </ul>
         </section>
-        <hr>
-        <div>
-          <section id="contrib" class="contrib pb-3">
-            <h4 class="h5 mb-2">Maps I've contributed to</h4>
-            <ul id="user-favs" class="list-group">
-              <% contrib.forEach((map) => { %>
-                <li class="list-group-item">
-                  <a data-mapid="<%= map.id %>" href="/maps/<%= map.id %>" class="" data-bs-dismiss="modal" aria-label="Close"><%= map.title %></a></li>
-              <% }); %>
-            </ul>
-          </section>
-      </div>
+        <section id="contrib" class="contrib pb-3">
+          <h4 class="h5 mb-2">Maps I've contributed to</h4>
+          <ul id="user-favs" class="list-group">
+            <% userContribs.forEach((map) => { %>
+              <li class="list-group-item">
+                <a data-mapid="<%= map.id %>" href="/maps/<%= map.id %>" class="" data-bs-dismiss="modal" aria-label="Close"><%= map.title %></a></li>
+            <% }); %>
+          </ul>
+        </section>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>

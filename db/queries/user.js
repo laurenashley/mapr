@@ -32,8 +32,6 @@ const getFavourites = (id) => {
 };
 
 const getContributed = (id) => {
-  // To Do this query needs tweaking to get map associated with pin_id
-  console.log('getContributed Query');
   const query = `
   SELECT DISTINCT map_id, maps.*
   FROM contributors
