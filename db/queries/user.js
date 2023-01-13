@@ -89,10 +89,21 @@ const addFavourite = (mapid, userid) => {
   });
 };
 
+const rmvFavourite = (mapid, userid) => {
+  return db.query(`DELETE FROM favourite_maps
+  WHERE map_id = $1 AND user_id = $2;
+  `, [mapid, userid])
+  .then(data => {
+    console.log('Favourite removed from db now');
+    return data.rows;
+  });
+};
+
 module.exports = { getSingleUser,
   getFavourites,
   getMapsByUser,
   addMapToContributors,
   getContributed,
-  addFavourite
+  addFavourite,
+  rmvFavourite
 };

@@ -343,14 +343,18 @@ $(() => {
       if (isFav) {
         // change icn back to heart outline
         $icon.removeClass('fa-solid').addClass('fa-regular');
+
+        $.post(`/users/${userid}/favs/remove`, (res) => {
+          console.log('Map added to user favourites', res);
+        });
       } else {
         // change icn to filled in heart
         $icon.removeClass('fa-regular').addClass('fa-solid');
-      }
 
-      $.post(`/users/${userid}/favs`, (res) => { // CRITICAL:: Not getting past here
-        console.log('Map added to user favourites', res);
-      });
+        $.post(`/users/${userid}/favs/add`, (res) => {
+          console.log('Map added to user favourites', res);
+        });
+      }
     });
 
     /**
