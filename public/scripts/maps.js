@@ -85,7 +85,7 @@ $(() => {
       const favIcon = $('#favouriteBtn').children('i');
       $.ajax({
         type: 'GET',
-        url: '/users/1/favs' // To Do replace userid with cookie
+        url: '/users/1/favourites' // To Do replace userid with cookie
       })
         .done((res) => {
           console.log('is favourite ', res);
