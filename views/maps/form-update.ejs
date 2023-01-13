@@ -1,5 +1,5 @@
-<div id="updateMapForm" class="ajaxWrap">
-  <form id="updateMapForm" action="/maps/<%= map.id %>/update" method="post">
+<div class="ajaxWrap">
+  <form id="updateMapForm" action="/maps/<%= map.id %>/update" method="post" data-mapid="<%= map.id %>">
     <h3 class="h5">Update <%= map.title %> map</h3>
     <p>
       <label class="form-label" for="mapNameEdit">Map name</label>
@@ -17,6 +17,6 @@
       <label class="form-label" for="mapZoomEdit">Zoom</label>
       <input id="mapZoomEdit" class="form-control" name="mapZoom" type="text" value="<%= map.zoom %>" required>
     </p>
-    <input class="btn btn-primary" type="submit" name="submit" value="Save">
+    <input data-mapid="<%= map.id %>" class="btn btn-primary" type="submit" name="submit" value="Save">
   </form>
 </div>
