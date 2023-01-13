@@ -37,8 +37,7 @@ const getContributed = (id) => {
     FROM pins
     JOIN maps ON maps.id = pins.map_id
     WHERE pins.user_id = $1
-    GROUP BY maps.title
-  ;
+    GROUP BY maps.title;
   `;
   const value = [`${id}`];
   return db.query(query, value)
