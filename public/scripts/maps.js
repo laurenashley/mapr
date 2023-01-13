@@ -398,6 +398,7 @@ $(() => {
 
   // Load Function Groups for Users and Maps List on initial page load
   users();
+  mapForms();
   getSingleMap($('#mapsList a'));
 
   // Load on ajaxComplete
