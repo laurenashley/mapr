@@ -28,12 +28,14 @@ const getMapWithPins = (mapID) => {
     });
 };
 
-const updateMap = (user_id, name, long, lat, zoom) => {
-  return db.query(`
-  INSERT INTO maps(user_id, title, longitude, latitude, zoom)
-  VALUES($1, $2, $3, $4, $5);
-  `,
-  [user_id, name, long, lat, zoom])
+const updateMap = (user_id, name, long, lat, zoom, mapid) => {
+  const query = `
+    UPDATE maps SET user_id = $1, title = $2, longitude = $3, latitude = $4, zoom = $5
+    WHERE id = $6
+    ;
+  `;
+  const values = [user_id, name, long, lat, zoom, mapid];
+  return db.query(query, values)
     .then(data => {
       return data.rows;
     });
