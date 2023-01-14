@@ -10,7 +10,7 @@ let setZoom = 2.3;
 let pinsData = {};
 let markers = [];
 let infoWindows = [];
-let tempMarker;
+let tempMarker = null;
 let currentPosition = null;
 let currentZoom = null;
 
@@ -72,6 +72,11 @@ $(() => {
     
     $('#sidenavContent').load(url + ' ' + div, function() {
       console.log("Loaded");
+
+      // Clear previous marker
+      if (tempMarker != null) {
+        tempMarker.setMap(null);
+      }
     });
   };
 

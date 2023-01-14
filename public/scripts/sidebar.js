@@ -1,8 +1,8 @@
-$(() => {
-  $(document).ready(function() {
-    loadCategories();
-  });
-});
+// $(() => {
+//   $(document).ready(function() {
+//     loadCategories();
+//   });
+// });
 
 // ----------------- MAPS -----------------
 const createMapItem = (mapInfo) => {
@@ -37,12 +37,12 @@ const renderMapList = (maps) => {
   $('#sidebarContent').append($mapList);
 };
 
-const loadMaps = (id) => {
-  $.get(`/categories/${id}`)
-  .then(data => {
-    renderMapList(data);
-  });
-};
+// const loadMaps = (id) => {
+//   $.get(`/categories/${id}`)
+//   .then(data => {
+//     renderMapList(data);
+//   });
+// };
 
 
 // ------------------- CATEGORIES -------------------
@@ -74,12 +74,12 @@ const renderCategoriesList = (categories) => {
   $('#sidebarContent').append($categoryList);
 };
 
-const loadCategories = () => {
-  $.get(`/categories/`)
-  .then(data => {
-    renderCategoriesList(data);
-  });
-}
+// const loadCategories = () => {
+//   $.get(`/categories/`)
+//   .then(data => {
+//     renderCategoriesList(data);
+//   });
+// }
 
 // ------------------- TOGGLE SIDEDBAR -------------------
 
