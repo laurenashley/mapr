@@ -138,6 +138,70 @@
   color: white;
 
  }
+ 
+}
+.btn-group {
+  margin-left: .5vw;
+  display: flex;
+  cursor: pointer;
+
+  #newPinBtn {
+    color: #3367d6;
+
+   &:hover{
+
+    background-color: #3367d6;
+    color: white;
+
+   }
+  }
+
+  #favouriteBtn {
+    color: #ea4335;
+
+   &:hover{
+
+    background-color: #ea4335;
+    color: white;
+
+   }
+  }
+
+  #updateMap {
+    color: green;
+
+    &:hover{
+
+     background-color: green;
+     color: white;
+
+    }
+
+  }
+
+  #deleteMap {
+    color: rgb(35, 36, 35);
+
+    &:hover{
+
+     background-color: rgb(35, 36, 35);
+     color: white;
+
+    }
+
+  }
+}
+
+
+#newPinBtn {
+  color: #3367d6;
+
+ &:hover{
+
+  background-color: #3367d6;
+  color: white;
+
+ }
 }
 
 #deletePin{

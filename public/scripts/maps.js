@@ -82,6 +82,19 @@ $(() => {
 
       loadTemplateHTML(url, '.ajaxWrap');
 
+      // To Do if map is fav'd by user show filled heart icon
+      // SELECT * FROM favourite_maps WHERE user_id = $1 AND map_id = $2;
+      // if above is not empty, switch icon class to solid
+      const favIcon = $('#favouriteBtn').children('i');
+      $.ajax({
+        type: 'GET',
+        url: '/users/1/favs' // To Do replace userid with cookie
+      })
+        .done((res) => {
+          console.log('is favourite ', res);
+          // if res not empty set icon to solid
+        });
+
       $.ajax({
         type: 'GET',
         url: api
@@ -208,7 +221,7 @@ $(() => {
 
   /**
    * Handle User Profile Links
-   * 
+   *
    */
 
   const users = () => {
@@ -219,7 +232,7 @@ $(() => {
 
       loadTemplateHTML(url, '.ajaxWrap');
     });
-  }
+  };
 
   /**
    * Handle Pins & Pin Forms
@@ -269,7 +282,7 @@ $(() => {
      * Submit new pin form via AJAX
      *
      */
-    $('#newPinForm').submit( function(e) {
+    $('#newPinForm').submit(function(e) {
       e.preventDefault();
 
       url = $(this).find('input[type="submit"]').data('referer');
@@ -277,8 +290,6 @@ $(() => {
       const data = $(this).serialize();
 
       $.post('/pins/new', data, function(data) {
-        console.log('Created new pin');
-
         loadTemplateHTML(url, '.ajaxWrap');
       });
     });
@@ -292,20 +303,16 @@ $(() => {
 
       const pinid = $(this).data('pinid');
       const url = $(this).attr('href');
-      console.log(url);
 
       loadTemplateHTML(url, '.ajaxWrap');
     });
 
     $('#updatePinForm').submit(function(e) {
-      // To Do this crashes app, nothing opens
       e.preventDefault();
-      console.log('save btn clicked');
       const data = $(this).serialize();
       const pinid = $(this).data('pinid');
       const mapid = $(this).data('mapid');
       const url = '/maps/' + mapid;
-      console.log(mapid);
 
       submitForm(`/pins/${pinid}/update`, data, loadTemplateHTML(url, '.ajaxWrap'));
     });
@@ -335,9 +342,8 @@ $(() => {
    */
   const mapForms = function() {
     /** Load New Map form */
-    $('.addNewMapBtn').on('click', (e) => {
+    $('.addNewMapBtn').off().on('click', (e) => {
       e.preventDefault();
-      console.log('add new map btn clicked');
       loadTemplateHTML('/maps/new', '.ajaxWrap');
     });
 
@@ -353,27 +359,24 @@ $(() => {
     /**
      * Add Map to Favourites
      */
-    $('a#favouriteBtn').on('click', function(e) {
+    $('a#favouriteBtn').off().on('click', function(e) {
       e.preventDefault();
-      console.log('favourite btn clicked');
+
       const userid = 1;
-      const isFav = $(this).hasClass('fa-regular');
+      const $icon = $(this).children('i');
+      const isFav = $icon.hasClass('fa-solid');
 
-      const favourite = function() {
-        // change icn to filled in heart
-        $(this).removeClass('fa-regular').addClass('fa-solid');
-      };
-
-      const unfavourite = function() {
+      if (isFav) {
         // change icn back to heart outline
-        $(this).removeClass('fa-solid').addClass('fa-regular');
-      };
+        $icon.removeClass('fa-solid').addClass('fa-regular');
 
-      $.post(`/users/${userid}/favourites`, () => { // Not getting past here
-        console.log('Map added to user favourites');
-      });
+        $.post(`/users/${userid}/favs/remove`, () => {});
+      } else {
+        // change icn to filled in heart
+        $icon.removeClass('fa-regular').addClass('fa-solid');
 
-      isFav ? unfavourite() : favourite();
+        $.post(`/users/${userid}/favs/add`, () => {});
+      }
     });
 
     /**
@@ -381,17 +384,15 @@ $(() => {
      */
 
     /** Load Update Map form */
-    $('a#updateMap').on('click', function(e) {
+    $('a#updateMap').off().on('click', function(e) {
       e.preventDefault();
-      console.log('update map btn clicked');
       const mapID = $(this).data('mapid');
-      console.log('mapid: ', mapID);
+
       loadTemplateHTML(`/maps/${mapID}/update`, '.ajaxWrap');
     });
 
     $('#updateMapForm').submit(function(e) {
       e.preventDefault();
-      console.log('Update form submit');
       const data = $(this).serialize();
       const mapid = $(this).data('mapid');
 
@@ -402,7 +403,7 @@ $(() => {
     * Delete Map
     */
 
-    $('#deleteMap').on('click', function(e) {
+    $('#deleteMap').off().on('click', function(e) {
       e.preventDefault();
 
       if (confirmDelete()) {
@@ -414,23 +415,19 @@ $(() => {
         });
       }
     });
-  }
+  };
 
-  // Load Function Groups on initial page load
-  mapForms();
-  mapNavigation();
-  pins();
+  // Load Function Groups for Users and Maps List on initial page load
   users();
-
+  mapForms();
   getSingleMap($('#mapsList a'));
 
-  // Load again on ajaxComplete
+  // Load on ajaxComplete
   $(document).on('ajaxComplete', function() {
     mapForms();
     mapNavigation();
     pins();
     users();
-
     getSingleMap($('#mapsList a'));
   });
 });

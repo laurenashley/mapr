@@ -7,7 +7,7 @@
       <% if(userid) { %>
         <div class="btn-group">
           <a id="newPinBtn" class="btn btn-sm btn-outline-dark" href="/maps/<%= item.id %>/pins/new" data-mapid="<%= item.id %>"><i class="fa-solid fa-plus"></i><span class="sr-only">Add pin</span></a>
-          <a id="favouriteBtn" data-mapid="<%= item.id %>" class="btn btn-sm btn-outline-dark" href=""><i class="fa-regular fa-heart text-danger"></i><span class="sr-only">Add map to favourites</span></a>
+          <a id="favouriteBtn" data-mapid="<%= item.id %>" class="btn btn-sm btn-outline-dark" href=""><i class="fa-regular fa-heart"></i><span class="sr-only">Add map to favourites</span></a>
           <a id="updateMap" class="btn btn-sm btn-outline-dark" href="/maps/<%= map[0].id %>/update" data-mapid="<%= map[0].id %>"><i class="fa-solid fa-pen"></i><span class="sr-only">Edit</span></a>
           <a id="deleteMap" class="btn btn-sm btn-outline-dark"  href="/maps/<%= map[0].id %>/delete" data-mapid="<%= map[0].id %>"><i class="fa-solid fa-trash"></i><span class="sr-only">Delete</span></a>
         </div>
