@@ -311,6 +311,8 @@ $(() => {
     });
   }
 
+  map.addListener('click', clearMap);
+
   const mapNavigation = () => {
     /**
     * All Map - Back Button
