@@ -31,6 +31,7 @@ router.get('/login', (req, res) => {
  * Description: User clicks on the logout link in the header and the cookie is cleared
  */
 
+// To Do is this being used?
 router.get('/logout', (req, res) => {
   // Clear the logged in cookie (simulated)
   res.clearCookie('userid');
@@ -44,7 +45,7 @@ router.get('/:id/favs', (req, res) => {
   Promise.all([favsData])
     .then(data => {
       const userFavs = data[0];
-      console.log(data);
+
       res.render('./user/favs', { userFavs });
     })
     .catch(err => {
@@ -59,13 +60,33 @@ router.get('/:id/contrib', (req, res) => {
   Promise.all([userMapsData])
     .then(data => {
       const contrib = data[0];
-      console.log(data);
+
       res.render('./user/contrib', { contrib });
     })
     .catch(err => {
       res
         .status(500)
         .json({ error: err.message });
+    });
+});
+
+router.post('/:id/favs/add', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
+
+  userQueries.addFavourite(mapid, userid)
+    .then(data => {
+      return data.rows;
+    });
+});
+
+router.post('/:id/favs/remove', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
+
+  userQueries.rmvFavourite(mapid, userid)
+    .then(data => {
+      return data.rows;
     });
 });
 

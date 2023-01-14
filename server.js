@@ -59,8 +59,7 @@ app.use('/pins-api', pinApiRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 const { getMaps } = require('./db/queries/maps');
-const { getSingleUser, getMapsByUser, getFavourites } = require('./db/queries/user');
-const { getCategories }= require('./db/queries/categories');
+const { getSingleUser, getMapsByUser, getFavourites, getContributed } = require('./db/queries/user');
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
@@ -72,22 +71,32 @@ app.get('/', (req, res) => {
     const promiseUser = getSingleUser(userid);
     const prmoiseUserMaps = getMapsByUser(userid);
     const promiseGetFavourites = getFavourites(userid);
+    const promiseGetContributed = getContributed(userid);
     const promiseMaps = getMaps();
     const promiseCategories = getCategories();
 
-    Promise.all([userid, promiseMaps, promiseUser, prmoiseUserMaps, promiseGetFavourites, promiseCategories]).then(data => {
-      const maps = data[1];
-      const user = data[2];
-      const userMaps = data[3];
-      const userFavs = data[4];
-      const categories = data[5];
-      res.render('index', { user, maps, userMaps, userFavs, userid, categories });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
+    Promise.all([
+      userid,
+      promiseMaps,
+      promiseUser,
+      prmoiseUserMaps,
+      promiseGetFavourites,
+      promiseGetContributed
+    ])
+      .then(data => {
+        const maps = data[1];
+        const user = data[2];
+        const userMaps = data[3];
+        const userFavs = data[4];
+        const userContribs = data[5];
+        console.log(userMaps);
+        res.render('index', { user, maps, userMaps, userFavs, userid, userContribs });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
   } else {
     const promiseMaps = getMaps();
     const promiseCategories = getCategories();

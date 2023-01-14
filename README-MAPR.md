@@ -53,6 +53,7 @@
 ### Contributors
 - pin_id
 - user_id
+- map_id ** empty map user created should still be in contrib's 
 
 ## Routes to interact w the resources
 * REST (Representational State Transfer) - naming convention

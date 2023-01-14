@@ -21,11 +21,10 @@ router.get('/', (req, res) => {
 
 /**
  * Show json data for pins
- * 
+ *
  * i.e. /pins-api/1
  */
 router.get('/:id', (req, res) => {
-  console.log(req.params.id);
   const pinData = pinsQueries.getSinglePin(req.params.id);
   Promise.all([pinData]).then(data => {
     res.json({ pin: data[0]});

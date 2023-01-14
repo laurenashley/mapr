@@ -15,7 +15,7 @@ router.get('/:id/favourites', (req, res) => {
   Promise.all([favsData])
     .then(data => {
       const userFavs = data[0];
-      console.log(data);
+
       res.json({ userFavs });
     })
     .catch(err => {
@@ -26,11 +26,11 @@ router.get('/:id/favourites', (req, res) => {
 });
 
 router.get('/:id/contributions', (req, res) => {
-  const userMapsData = userQueries.getMapsByUser(req.params.id);
-  Promise.all([userMapsData])
+  const contribsData = userQueries.getContributed(req.params.id);
+  Promise.all([contribsData])
     .then(data => {
       const contributions = data[0];
-      console.log(data);
+
       res.json({ contributions });
     })
     .catch(err => {

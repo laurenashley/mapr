@@ -9,11 +9,11 @@ const express = require('express');
 const cookie = require('cookie');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
+const usersQueries = require('../db/queries/user');
 
 router.get('/', (req, res) => {
   const query = `SELECT * FROM maps`;
   const maps = mapsQueries.getMaps();
-  console.log(maps);
   Promise.all([maps])
     .then(data => {
       const maps = data[0];
@@ -34,7 +34,6 @@ router.get('/:id/update', (req, res) => {
   Promise.all([mapData])
     .then(data => {
       const map = data[0][0]; // Renders as an object, why?
-      console.log(map);
       res.render('./maps/form-update', { userid, map });
     });
 });
@@ -47,7 +46,6 @@ router.get('/:id', (req, res) => {
     .then(data => {
       const map = data[0];
       const pins = data[1];
-      console.log(data);
       res.render('./maps/map', { map, pins, userid });
     })
     .catch(err => {
@@ -67,7 +65,8 @@ router.get('/:id/pins/new', (req, res) => {
 // POST
 router.post('/new', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
-  mapsQueries.addNewMap(
+  const mapid = req.params.id;
+  const addMap = mapsQueries.addNewMap(
     userid,
     req.body.mapName,
     req.body.mapLong,
@@ -75,31 +74,32 @@ router.post('/new', (req, res) => {
     req.body.mapZoom
   );
 
-  // To Do add row to contributors table
+  Promise.all([addMap])
+    .then(data => {
+      const map = data[0];
+
+      res.render('./maps/map', { map, userid });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
 
   res.redirect('/');
 });
 
-router.post('/users/:id/favourites', (req, res) => {
-  console.log('router starting');
-  const userid = cookie.parse(req.headers.cookie || '').userid;
-  const mapid = req.params.id;
-
-  mapsQueries.addFavourite(mapid, userid)
-    .then(data => {
-      console.log('Router: Favourite row added to favourites table');
-    });
-});
-
 router.post('/:id/update', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
 
   mapsQueries.updateMap(
     userid,
     req.body.mapName,
     req.body.mapLong,
     req.body.mapLat,
-    req.body.mapZoom
+    req.body.mapZoom,
+    mapid
   );
 
   res.redirect('/');
