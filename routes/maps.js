@@ -32,7 +32,7 @@ router.get('/:id/update', (req, res) => {
 
   Promise.all([mapData])
     .then(data => {
-      const map = data[0][0]; // Renders as an object, why?
+      const map = data[0][0]; // Renders as an object, why? Popilates the form with existing data
       console.log(map);
       res.render('./maps/form-update', { userid, map });
     });
@@ -95,13 +95,14 @@ router.post('/new', (req, res) => {
 router.post('/:id/update', (req, res) => {
   const userid = cookie.parse(req.headers.cookie || '').userid;
   const mapid = req.params.id;
+  console.log("Req Body: ", req.body);
+  console.log("Map ID", mapid);
 
   mapsQueries.updateMap(
-    userid,
     req.body.mapName,
-    req.body.mapLong,
-    req.body.mapLat,
-    req.body.mapZoom,
+    req.body.mapLatEdit,
+    req.body.mapLongEdit,
+    req.body.mapZoomEdit,
     mapid
   );
 

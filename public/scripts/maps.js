@@ -31,6 +31,10 @@ function newLocation(newLat, newLng, newZoom) {
 }
 
 function clearMarkers() {
+  if (tempMarker != null) {
+    tempMarker = null;
+  }
+
   for (let marker of markers) {
     marker.setMap(null);
   }
@@ -60,6 +64,10 @@ $(() => {
   const sidenavContent = $('#sidenavContent');
 
   const loadTemplateHTML = function(url, div) {
+    tempMarker = null;
+    currentPosition = null;
+    currentZoom = null;
+    
     $('#sidenavContent').load(url + ' ' + div, function() {
       console.log("Loaded");
     });
@@ -78,19 +86,6 @@ $(() => {
       const api = `/maps-api/${mapID}`;
 
       loadTemplateHTML(url, '.ajaxWrap');
-
-      // To Do if map is fav'd by user show filled heart icon
-      // SELECT * FROM favourite_maps WHERE user_id = $1 AND map_id = $2;
-      // if above is not empty, switch icon class to solid
-      // const favIcon = $('#favouriteBtn').children('i');
-      // $.ajax({
-      //   type: 'GET',
-      //   url: '/users/1/favourites' // To Do replace userid with cookie
-      // })
-      //   .done((res) => {
-      //     console.log('is favourite ', res);
-      //     // if res not empty set icon to solid
-      //   });
 
       $.ajax({
         type: 'GET',
@@ -160,6 +155,86 @@ $(() => {
     });
   };
 
+  // Rebuild Map
+  const rebuildMap = function(mapid) {
+    const url = `/maps/${mapid}`;
+    const api = `/maps-api/${mapid}`;
+
+    $.ajax({
+      type: 'GET',
+      url: api
+    })
+      .done((res) => {
+        const map = res["map"][0];
+        const pins = res["pins"];
+        console.log(pins);
+
+        // Get from mapsAPI
+        const mapLat = Number(map["latitude"]);
+        const mapLong = Number(map["longitude"]);
+        const mapZoom = Number(map["zoom"]);
+        console.log(mapLat);
+
+        // Recenter the map
+        newLocation(mapLat, mapLong, mapZoom);
+
+        // Clear markers from previous map
+        clearMarkers();
+
+        // Load new pin data and create markers
+        pins.forEach(pin => {
+          // Create new object with lat and long
+          const position = {};
+          position['lat'] = Number(pin["latitude"]);
+          position['lng'] = Number(pin["longitude"]);
+
+          // Create the marker
+          const marker = new google.maps.Marker({
+            position: position,
+            map,
+          });
+
+          // Add to global array
+          markers.push(marker);
+
+          // Create Info Windows
+
+          const infoWindowContent = `
+            <div class="info-content d-flex p-3">
+              <div class="pe-3">
+                <img src="${pin["image_url"]}">
+              </div>
+              <div class="">
+                <h6>${pin["title"]}</h6>
+                <p>${pin["description"]}</p>
+              </div>
+            </div>
+          `;
+
+          const infoWindow = new google.maps.InfoWindow({
+            content: infoWindowContent,
+            ariaLabel: pin["title"],
+          });
+
+          // Add to global array
+          infoWindows.push(infoWindow);
+
+          /**
+           * Add Event Listener when marker is clicked to open infoWindow
+           */
+          marker.addListener('click', () => {
+            infoWindow.open({
+              anchor: marker,
+              map
+            });
+          });
+        }); // END forEach
+      })
+      .fail((err) => {
+        console.log('there was an error: ', err);
+      });
+  };
+
   /**
    * Load coordiates and zoom and set a temp marker by clicking on map
    * Use this data to set add new pin and new map forms
@@ -194,6 +269,10 @@ $(() => {
           $('#newMapForm').find('#mapLat').val(currentPosition["lat"]);
           $('#newMapForm').find('#mapLong').val(currentPosition["lng"]);
 
+          //Map Update
+          $('#updateMapForm').find('#mapLatEdit').val(currentPosition["lat"]);
+          $('#updateMapForm').find('#mapLongEdit').val(currentPosition["lng"]);
+
           // Pin Form
           $('#newPinForm').find('#pinLat').val(currentPosition["lat"]);
           $('#newPinForm').find('#pinLong').val(currentPosition["lng"]);
@@ -207,6 +286,9 @@ $(() => {
           console.log(currentZoom);
           // Get current zoom from map
           $('#newMapForm').find('#mapZoom').val(currentZoom);
+
+          //Update map
+          $('#updateMapForm').find('#mapZoomEdit').val(currentZoom);
         }
 
         // Simulate click event
@@ -240,7 +322,7 @@ $(() => {
       const href = $(this).attr('href');
 
       loadTemplateHTML(href, '.ajaxWrap');
-
+      getSingleMap($(this));
     });
   };
 
@@ -266,13 +348,13 @@ $(() => {
    *
    */
 
-  const users = () => {
+  const users = function() {
     $('#user-favs a').on('click', function(e) {
       e.preventDefault();
 
       const url = $(this).attr('href');
       console.log('clicked on map link in profile: ', url);
-      loadTemplateHTML(url, '#mapSingle');
+      loadTemplateHTML(url, '.ajaxWrap');
     });
   };
 
@@ -285,7 +367,6 @@ $(() => {
      * Load Single Pin via AJAX
      *
      */
-    const pinDiv = '#pinSingle';
 
     $('#pinsList li a').on('click', function(e) {
       e.preventDefault();
@@ -318,6 +399,7 @@ $(() => {
 
       // Set back button url
       $('#backBtnMap').attr('href', '/maps/' + mapid);
+
     });
 
     /**
@@ -333,8 +415,8 @@ $(() => {
 
       $.post('/pins/new', data, function(data) {
         console.log('Created new pin');
-        loadTemplateHTML(url, '.ajaxWrap');
-        getSingleMap($(this).find('input[type="submit"]'));      
+        loadTemplateHTML(url, '.ajaxWrap');  
+        rebuildMap(mapid);   
       });
     });
 
@@ -344,6 +426,8 @@ $(() => {
 
     $('a#updatePin').on('click', function(e) {
       e.preventDefault();
+
+      getCurrentCoordinates();
 
       const pinid = $(this).data('pinid');
       const url = $(this).attr('href');
@@ -359,11 +443,12 @@ $(() => {
       const data = $(this).serialize();
       const pinid = $(this).data('pinid');
       const mapid = $(this).data('mapid');
-      const url = '/maps/' + mapid;
-      console.log(mapid);
+      const url = $(this).find('input[type="submit"]').data('referer');
+      console.log(url);
 
-      submitForm(`/pins/${pinid}/update`, data, loadTemplateHTML(url, '.ajaxWrap'));
-      getSingleMap($(this).find('input[type="submit"]'));
+      submitForm(`/pins/${pinid}/update`, data, function() {
+        loadTemplateHTML(url, '.ajaxWrap')
+      });
     });
 
     /**
@@ -375,7 +460,6 @@ $(() => {
       e.preventDefault();
 
       if (confirmDelete('pin')) {
-        const $this = $(this);
         const pinid = $(this).data('pinid');
 
         $.post(`/pins/${pinid}/delete`, () => {
@@ -411,7 +495,7 @@ $(() => {
     /**
      * Add Map to Favourites
      */
-    $('a#favouriteBtn').on('click', function(e) {
+    $('a#favouriteBtn').off().on('click', function(e) {
       e.preventDefault();
 
       const userid = $(this).data('uid');
@@ -437,6 +521,7 @@ $(() => {
         // change icn to filled in heart
         $icon.removeClass('fa-regular').addClass('fa-solid').data('fav', true);
 
+
         $.post(`/maps/${mapid}/favourites/add`, function() {
           console.log("Posted");
           $('#ajaxModalWrap').load('/ #profileModal', function() {
@@ -457,6 +542,7 @@ $(() => {
     /** Load Update Map form */
     $('a#updateMap').on('click', function(e) {
       e.preventDefault();
+      getCurrentCoordinates();
       console.log('update map btn clicked');
       const mapID = $(this).data('mapid');
       console.log('mapid: ', mapID);
@@ -468,8 +554,16 @@ $(() => {
       console.log('Update form submit');
       const data = $(this).serialize();
       const mapID = $(this).attr('data-mapid');
-      const url = `/maps/3/update`;
-      submitForm(url, data, loadTemplateHTML('/maps', '.ajaxWrap'));
+      const url = `/maps/${mapID}/update`;
+      const btn = $(this).find('input[type="submit"]');
+      // submitForm(url, data, function() {
+      //   loadTemplateHTML(`/maps/${mapID}`, '.ajaxWrap')
+      // });
+
+      $.post(`/maps/${mapID}/update`, data, function() {
+        console.log('Updated map');
+        loadTemplateHTML(`/maps/${mapID}`, '.ajaxWrap');
+      });
     });
 
     /**
@@ -491,7 +585,7 @@ $(() => {
   };
 
   // Load Function Groups for Users and Maps List on initial page load
-  // mapForms();
+  mapForms();
   mapNavigation();
   pins();
   users();

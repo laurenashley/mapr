@@ -49,13 +49,13 @@ We are located in the heart of downtown Vancouver  on Granville Street.', 'https
 (4, 2, 'Mont Tremblant', 'Ski resorts in the Canadian Laurentians are favorite winter destinations, and chief among them is Mont Tremblant - the highest peak in the Laurentians (960 meters), located about 150 kilometers north of Montréal. Good dining, entertainment, and ample accommodations define the resort community, which is housed in a quaint pedestrian village. The region is also a fall destination, when leaves turn autumn shades of orange, red, and gold.', 'https://officialmonttremblant.com/wp-content/uploads/2022/09/mont-tremblant-1.jpg', '-74.5891426', '46.11588'),
 
 -- TORONTO
-(5, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(5, 2, 'Test map 1', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
 
-(5, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(5, 2, 'Test map 2', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
 
-(5, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(5, 2, 'Test map 3', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
 
-(5, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(5, 2, 'Test map 4', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
 
 (5, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
 

@@ -1,4 +1,7 @@
 <div class="ajaxWrap">
+
+  <a id="backBtnMap" class="btn btn-outline-secondary mb-3" href="/maps/<%= map.id %>">Back to map</a>
+
   <form id="updateMapForm" action="/maps/<%= map.id %>/update" method="post" data-mapid="<%= map.id %>">
     <h3 class="h5">Update <%= map.title %> map</h3>
     <p>
@@ -7,15 +10,15 @@
     </p>
     <p>
       <label class="form-label" for="mapLatEdit">Latitude</label>
-      <input class="form-control" id="mapLatEdit" name="mapLat" type="text" value="<%= map.latitude %>" required>
+      <input class="form-control" id="mapLatEdit" name="mapLatEdit" type="text" value="<%= map.latitude %>" required>
     </p>
     <p>
       <label class="form-label" for="mapLongEdit">Longitude</label>
-      <input class="form-control" id="mapLongEdit" name="mapLong" type="text" value="<%= map.longitude %>" required>
+      <input class="form-control" id="mapLongEdit" name="mapLongEdit" type="text" value="<%= map.longitude %>" required>
     </p>
     <p>
       <label class="form-label" for="mapZoomEdit">Zoom</label>
-      <input id="mapZoomEdit" class="form-control" name="mapZoom" type="text" value="<%= map.zoom %>" required>
+      <input id="mapZoomEdit" class="form-control" name="mapZoomEdit" type="text" value="<%= map.zoom %>" required>
     </p>
     <input data-mapid="<%= map.id %>" class="btn btn-primary" type="submit" name="submit" value="Save">
   </form>

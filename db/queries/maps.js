@@ -24,20 +24,23 @@ const getSingleMap = (id) => {
 };
 
 const getMapWithPins = (mapID) => {
-  return db.query(`SELECT * FROM pins
-  WHERE map_id = $1;`, [mapID])
+  return db.query(`
+  SELECT * FROM pins
+  WHERE map_id = $1
+  ORDER BY title
+  ;`, [mapID])
     .then(data => {
       return data.rows;
     });
 };
 
-const updateMap = (user_id, name, long, lat, zoom, mapid) => {
+const updateMap = (title, lat, long, zoom, mapid) => {
   const query = `
-    UPDATE maps SET user_id = $1, title = $2, longitude = $3, latitude = $4, zoom = $5
-    WHERE id = $6
+    UPDATE maps SET title = $1, latitude = $2, longitude = $3, zoom = $4
+    WHERE id = $5
     ;
   `;
-  const values = [user_id, name, long, lat, zoom, mapid];
+  const values = [`${title}`, `${lat}`, `${long}`, `${zoom}`, `${mapid}`];
   return db.query(query, values)
     .then(data => {
       return data.rows;
