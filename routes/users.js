@@ -70,24 +70,4 @@ router.get('/:id/contrib', (req, res) => {
     });
 });
 
-router.post('/:id/favourites/add', (req, res) => {
-  const userid = cookie.parse(req.headers.cookie || '').userid;
-  const mapid = req.params.id;
-
-  userQueries.addFavourite(mapid, userid)
-    .then(data => {
-      return data.rows;
-    });
-});
-
-router.post('/:id/favourites/remove', (req, res) => {
-  const userid = cookie.parse(req.headers.cookie || '').userid;
-  const mapid = req.params.id;
-
-  userQueries.rmvFavourite(mapid, userid)
-    .then(data => {
-      return data.rows;
-    });
-});
-
 module.exports = router;

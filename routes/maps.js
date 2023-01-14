@@ -9,7 +9,7 @@ const express = require('express');
 const cookie = require('cookie');
 const router  = express.Router();
 const mapsQueries = require('../db/queries/maps');
-const usersQueries = require('../db/queries/user');
+const userQueries = require('../db/queries/user');
 
 router.get('/', (req, res) => {
   const maps = mapsQueries.getMaps();
@@ -46,8 +46,16 @@ router.get('/:id', (req, res) => {
     .then(data => {
       const map = data[0];
       const pins = data[1];
+      let isFav;
+      if ( map[0]['fav'] == null ) {
+        isFav = false;
+      } else {
+        isFav = true;
+      }
 
-      res.render('./maps/map', { map, pins, userid });
+      console.log(map);
+
+      res.render('./maps/map', { map, pins, userid, isFav });
     })
     .catch(err => {
       res
@@ -109,6 +117,26 @@ router.post('/:id/delete', (req, res) => {
     });
 
   res.redirect('/');
+});
+
+router.post('/:id/favourites/add', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
+
+  userQueries.addFavourite(mapid, userid)
+    .then(data => {
+      return data.rows;
+    });
+});
+
+router.post('/:id/favourites/remove', (req, res) => {
+  const userid = cookie.parse(req.headers.cookie || '').userid;
+  const mapid = req.params.id;
+
+  userQueries.rmvFavourite(mapid, userid)
+    .then(data => {
+      return data.rows;
+    });
 });
 
 module.exports = router;

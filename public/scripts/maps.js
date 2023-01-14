@@ -59,10 +59,8 @@ $(() => {
   // Global Vars
   const sidenavContent = $('#sidenavContent');
 
-  const loadTemplateHTML = function(url, div, selector) {
-    const container = selector ? selector : '#sidenavContent';
-
-    $(container).load(url + ' ' + div, function() {
+  const loadTemplateHTML = function(url, div) {
+    $('#sidenavContent').load(url + ' ' + div, function() {
       console.log("Loaded");
     });
   };
@@ -161,7 +159,6 @@ $(() => {
         });
     });
   };
-
 
   /**
    * Load coordiates and zoom and set a temp marker by clicking on map
@@ -386,7 +383,7 @@ $(() => {
         });
       }
     });
-  };
+  }; // END Pins
 
   /**
    * Handle Map Forms
@@ -414,25 +411,43 @@ $(() => {
     /**
      * Add Map to Favourites
      */
-    $('a#favouriteBtn').off().on('click', function(e) {
+    $('a#favouriteBtn').on('click', function(e) {
       e.preventDefault();
 
-      const userid = 1;
-      const $icon = $(this).children('i');
-      const isFav = $icon.hasClass('fa-solid');
+      const userid = $(this).data('uid');
+      const $icon = $(this).find('i');
+      const isFav = $(this).data('fav');
+      const mapid = $(this).data('mapid');
+
+      console.log("Clicked on favourties button")
 
       if (isFav) {
         // change icn back to heart outline
+        $(this).attr('data-fav', false);
         $icon.removeClass('fa-solid').addClass('fa-regular');
 
-        $.post(`/users/${userid}/favourites/remove`, () => {});
+        $.post(`/maps/${mapid}/favourites/remove`, function() {
+          console.log("Posted");
+          $('#ajaxModalWrap').load('/ #profileModal', function() {
+            console.log("1 Done reloading profile");
+          });
+        });
       } else {
+        $(this).attr('data-fav', true);
         // change icn to filled in heart
-        $icon.removeClass('fa-regular').addClass('fa-solid');
+        $icon.removeClass('fa-regular').addClass('fa-solid').data('fav', true);
 
-        $.post(`/users/${userid}/favourites/add`, () => {});
+        $.post(`/maps/${mapid}/favourites/add`, function() {
+          console.log("Posted");
+          $('#ajaxModalWrap').load('/ #profileModal', function() {
+            console.log("2 Done reloading profile");
+          });
+        });
       }
-      loadTemplateHTML('/', '#profileModal', '#ajaxModalWrap');
+
+      $('#ajaxModalWrap').load('/ #profileModal', function() {
+        console.log("2 Done reloading profile");
+      });
     });
 
     /**
@@ -440,7 +455,7 @@ $(() => {
      */
 
     /** Load Update Map form */
-    $('a#updateMap').off().on('click', function(e) {
+    $('a#updateMap').on('click', function(e) {
       e.preventDefault();
       console.log('update map btn clicked');
       const mapID = $(this).data('mapid');
@@ -461,7 +476,7 @@ $(() => {
     * Delete Map
     */
 
-    $('#deleteMap').off().on('click', function(e) {
+    $('#deleteMap').on('click', function(e) {
       e.preventDefault();
 
       if (confirmDelete('map')) {
@@ -476,8 +491,10 @@ $(() => {
   };
 
   // Load Function Groups for Users and Maps List on initial page load
+  // mapForms();
+  mapNavigation();
+  pins();
   users();
-  mapForms();
   getSingleMap($('#mapsList a'));
 
   // Load on ajaxComplete

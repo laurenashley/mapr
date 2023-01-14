@@ -10,8 +10,11 @@ const getMaps = () => {
 
 const getSingleMap = (id) => {
   const query = `
-    SELECT * FROM maps
-     WHERE id = $1;
+    SELECT maps.*, favourite_maps.map_id AS fav
+    FROM maps
+    LEFT JOIN favourite_maps ON maps.id = favourite_maps.map_id
+    WHERE maps.id = $1
+    GROUP BY fav, maps.id;
   `;
   const value = [`${id}`];
   return db.query(query, value)
