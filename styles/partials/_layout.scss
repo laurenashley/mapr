@@ -63,6 +63,9 @@ html {
   &#map {
     width: 75vw;
   }
+  &.toggleBounce {
+    width: 75vw;
+  }
 }
 
 .hideNav {
@@ -72,8 +75,20 @@ html {
   &.headerBar, &#map {
     width: 100vw;
   }
-
   &.section-footer {
     width: 100vw;
   }
+  &.toggleBounce {
+    width: 100%;
+  }
+}
+
+.toggleBounce {
+  position: absolute;
+  top: 62px;
+  height: 100%;
+  background-color: gray;
+  opacity: 0;
+  z-index: 1000;
+  display: none;
 }

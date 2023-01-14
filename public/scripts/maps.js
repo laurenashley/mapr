@@ -49,6 +49,12 @@ function addInfoWindow(string) {
   });
 }
 
+// clears the animation and the info window on click
+function clearMap() {
+  markers.forEach(marker => marker.setAnimation(null));
+  infoWindows.forEach(window => window.close());
+}
+
 // https://developers.google.com/maps/documentation/javascript/examples/event-click-latlng
 
 window.initMap = initMap;
@@ -107,7 +113,10 @@ $(() => {
             const marker = new google.maps.Marker({
               position: position,
               map,
+              animation: google.maps.Animation.DROP,
             });
+            // marker.addListener("click", toggleBounce);
+            marker.pinID = pin.id;
 
             // Add to global array
             markers.push(marker);
@@ -138,11 +147,15 @@ $(() => {
              * Add Event Listener when marker is clicked to open infoWindow
              */
             marker.addListener('click', () => {
+              clearMap(); // calls the function when click
+              marker.setAnimation(google.maps.Animation.BOUNCE);
+
               infoWindow.open({
                 anchor: marker,
                 map
               });
             });
+
           }); // END forEach
         })
         .fail((err) => {
@@ -316,7 +329,7 @@ $(() => {
       e.preventDefault();
 
       const href = $(this).attr('href');
-
+      clearMap();
       loadTemplateHTML(href, '.ajaxWrap');
       getSingleMap($(this));
     });
@@ -369,6 +382,11 @@ $(() => {
       const pinID = $(this).data('pinid');
       const url = `/pins/${pinID}`;
 
+      for (let marker of markers) {
+        if (marker.pinID === pinID) {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      }
       loadTemplateHTML(url, '.ajaxWrap');
     });
 
@@ -410,7 +428,6 @@ $(() => {
       const data = $(this).serialize();
 
       $.post('/pins/new', data, function(data) {
-        console.log('Created new pin');
         loadTemplateHTML(url, '.ajaxWrap');  
         rebuildMap(mapid);   
       });
@@ -427,7 +444,6 @@ $(() => {
 
       const pinid = $(this).data('pinid');
       const url = $(this).attr('href');
-      console.log(url);
 
       loadTemplateHTML(url, '.ajaxWrap');
       getCurrentCoordinates();
@@ -435,12 +451,10 @@ $(() => {
 
     $('#updatePinForm').submit(function(e) {
       e.preventDefault();
-      console.log('save btn clicked');
       const data = $(this).serialize();
       const pinid = $(this).data('pinid');
       const mapid = $(this).data('mapid');
       const url = $(this).find('input[type="submit"]').data('referer');
-      console.log(url);
 
       submitForm(`/pins/${pinid}/update`, data, function() {
         loadTemplateHTML(url, '.ajaxWrap')
@@ -541,13 +555,12 @@ $(() => {
       getCurrentCoordinates();
       console.log('update map btn clicked');
       const mapID = $(this).data('mapid');
-      console.log('mapid: ', mapID);
+
       loadTemplateHTML(`/maps/${mapID}/update`, '.ajaxWrap');
     });
 
     $('#updateMapForm').submit(function(e) {
       e.preventDefault();
-      console.log('Update form submit');
       const data = $(this).serialize();
       const mapID = $(this).attr('data-mapid');
       const url = `/maps/${mapID}/update`;

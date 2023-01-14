@@ -60,7 +60,7 @@ router.get('/:id/contrib', (req, res) => {
   Promise.all([userMapsData])
     .then(data => {
       const contrib = data[0];
-      console.log('contrib data: ', data);
+
       res.render('./user/contrib', { contrib });
     })
     .catch(err => {

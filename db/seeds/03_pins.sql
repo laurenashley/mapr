@@ -49,23 +49,32 @@ We are located in the heart of downtown Vancouver  on Granville Street.', 'https
 (4, 2, 'Mont Tremblant', 'Ski resorts in the Canadian Laurentians are favorite winter destinations, and chief among them is Mont Tremblant - the highest peak in the Laurentians (960 meters), located about 150 kilometers north of Montréal. Good dining, entertainment, and ample accommodations define the resort community, which is housed in a quaint pedestrian village. The region is also a fall destination, when leaves turn autumn shades of orange, red, and gold.', 'https://officialmonttremblant.com/wp-content/uploads/2022/09/mont-tremblant-1.jpg', '-74.5891426', '46.11588'),
 
 -- TORONTO
-(5, 2, 'Test map 1', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(5, 2, 'Mogouyan Hand-Pulled Noodles', 'Mogouyan first opened in 2019, bringing authentic Chinese cuisine to the city and serving bowls and bowls of its mouthwatering beef noodles. Its menu features an assortment of appetizers and grilled skewer variations, including 12 different noodle bowls to choose from.', 'https://images.dailyhive.com/20220704112925/Mogouyan-Hand-Pulled-Noodles.jpg', '-79.3866313', '43.6694587'),
 
-(5, 2, 'Test map 2', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(5, 2, 'Bar St. Lo', 'Torontos St Lawrence district is not only known for its historical past and iconic market, its also home to a rustic and intimate dining destination thats worth a visit.
+Its design features heavy stone and wood accents from its exterior to its interior, offering a more laidback yet mysterious atmosphere. As for its menu, Bar St. Lo serves modern Canadian cuisine that is worth sharing with whoever is at your table. Pro tip: order a couple of its popular items to share.
+', 'https://images.dailyhive.com/20220704055937/interior.jpg', '-79.39763935428266', '43.7015074'),
 
-(5, 2, 'Test map 3', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(5, 2, 'Pennys Hot Chicken', 'Toronto cant get enough hot fried chicken spots, and this new addition is nothing to joke about. Get ready for some hot and steamin eats. Pennys Hot Chicken has opened at 372 Yonge Street, offering Nashville-inspired fried chicken thats sure to heat up your summer foodie plans. From Plain Jane to No Georgie, Pennys has a seven-tier heat meter so customers can decide how hot they want their chicken.', 'https://images.dailyhive.com/20220629095831/fried-chicken.jpg', '-79.38079276646786', '43.6541457'),
 
-(5, 2, 'Test map 4', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(5, 2, ' SHINYI Handmade Dumplings', 'Theres an exciting Asian eatery hidden in plain sight on one of Torontos busiest streets and it serves the most colourful dumplings around. SHINYI Handmade Dumplings can be found at 641 Yonge Street and is known for its handmade dumplings, dim sum and more, made fresh every day. Dumplings are even made by the store window for passersbys to check out what they have in store. This spot ensures that its cuisine stays true to its authentic Chinese flavour. The team is passionate about every dish on the menu which is proven with every plate served.', 'https://images.dailyhive.com/20220713120438/shinyi-entry.jpg', '-79.3855938', '43.6677913'),
 
-(5, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(5, 2, 'Capis', '1962 Capis pizzas has been feeding the families of Etobicoke. Now we are taking it back to the roots, way back to Italy. A passion for food and family, thats what started Capis and thats where we circle back to today.', 'https://images.pexels.com/photos/1566837/pexels-photo-1566837.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', '-79.5127261', '43.6597964'),
 
 -- NF
-(6, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(6, 2, 'Entire bungalow', 'My property is not a new modern luxury home, it is a very comfy, cozy and homey cottage feel house. Perfect location, very close to all attractions (all main attractions within 10-20 mins walk), its located in a very quiet neighborhood.  My property provides free WIFI, free stream TV and free Netflix. The main theme of my house is: families, friends can relax and bond in the sunroom, porch and sunny private deck. Kids can play in the games room. Just leave your cars and walk to the Falls.', 'https://a0.muscache.com/im/pictures/170f6c0a-5a92-40ca-bdd6-c693d9a3082a.jpg?im_w=1200', '-79.1056998', '43.0812918'),
 
-(6, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(6, 2, 'Rustic Modern home steps', 'Welcome to our home, the perfect spot between Niagara Falls and Niagara-on-the-Lake, and just minutes from all the Casinos, entertainment and attractions Niagara region has to offer. This Airbnb is fully equipped with the basic household essentials, ready for you to enjoy the entire home.
+Close to nearby attractions:
+Niagara Falls (2.0 km) 30 minute walk
+Niagara Whirlpool (1.5 km) 15 minute walk
+Historic Niagara-on-The-Lake (14 km) 25 minute drive', 'https://a0.muscache.com/im/pictures/miso/Hosting-671821391261354242/original/fd1d7bf7-203f-40ec-aa05-95a2da05dae7.jpeg?im_w=1200', '-79.5403113', '43.040265'),
 
-(6, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(6, 2, 'Charming Carriage House in Niagaras Wine Country', 'A converted carriage house and former blacksmith shop with a rich history dating back to the 1800s - fully updated with brand new modern amenities. This is a one level plus loft bedroom, ideal for those who have challenges with stairs. Centrally located near the Falls, Niagara Parkway, Niagara-on-the-Lake, casinos, wineries and the largest outlet mall in Canada. A great gathering spot in any season with a full kitchen, laundry and outdoor space ready to entertain family and friends.', 'https://a0.muscache.com/im/pictures/b666d8c6-c955-418e-bb48-89d0b86ec467.jpg?im_w=720', '-79.0836614', '43.0669342'),
 
-(6, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457'),
+(6, 2, 'Cabin Rental', 'Lighthouse Landing is a cozy cottage rental located in Port Maitland, Ontario (10 minutes from Dunnville, ON).
+This gorgeous home has south facing panoramic lakefront views that transcend calmness and relaxation. During your stay, you will have access to our private beach and entire home that all guests can enjoy.', 'https://a0.muscache.com/im/pictures/miso/Hosting-628147560679285718/original/d26e30c4-f283-46b4-a70b-145933fc1ce0.jpeg?im_w=1200', '-79.6188457', '42.9059168'),
 
-(6, 2, 'Test map 5', 'desc', 'https://picsum.photos/100/100', '-123.0998032', '49.2829457');
+(6, 2, 'Luxury Romantic Glamping Dome', 'Youll love this unique and romantic escape for 2, located 30 minutes from Niagara Falls in Port Colborne.
+Our 400 sq ft geodome offers all the amenities needed for a relaxing, romantic getaway. Panoramic floor to ceiling window over looking a private pond with the opportunity to see wildlife from the comfort of inside the dome.
+Enjoy a fireplace, hot tub, comfy queen size bed, private deck with a fire table, outdoor shower, firepit on your own island, incinerating indoor toilet, AC, and wifi.', 'https://a0.muscache.com/im/pictures/miso/Hosting-640956956932882729/original/218fa3c3-60ac-4249-b502-70d371e5370b.jpeg?im_w=1200', '-79.2513905', '42.8862392');

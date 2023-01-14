@@ -3,14 +3,14 @@
     <ul class="nav flex-column">
       <% maps.forEach((map) => { %>
         <% if (map.title) { %>
-          <li id="map-<%= map.id %>" map-id="<%= map.id %>" class="nav-item">
-            <a class="nav-link" href="/maps/<%= map.id %>" 
+          <ul id="map-<%= map.id %>" map-id="<%= map.id %>" class="nav-item">
+            <a class="nav-link" href="/maps/<%= map.id %>"
               data-mapid="<%= map.id %>"
               data-lat="<%= map.latitude %>"
               data-long="<%= map.longitude %>"
               data-zoom="<%= map.zoom %>"
             ><%= map.title %></a>
-          </li>
+          </ul>
         <% } %>
       <% }); %>
   </ul>
