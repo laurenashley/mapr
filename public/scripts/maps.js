@@ -31,10 +31,6 @@ function newLocation(newLat, newLng, newZoom) {
 }
 
 function clearMarkers() {
-  if (tempMarker != null) {
-    tempMarker = null;
-  }
-
   for (let marker of markers) {
     marker.setMap(null);
   }
@@ -495,7 +491,7 @@ $(() => {
     /**
      * Add Map to Favourites
      */
-    $('a#favouriteBtn').off().on('click', function(e) {
+    $('a#favouriteBtn').on('click', function(e) {
       e.preventDefault();
 
       const userid = $(this).data('uid');
@@ -585,7 +581,6 @@ $(() => {
   };
 
   // Load Function Groups for Users and Maps List on initial page load
-  mapForms();
   mapNavigation();
   pins();
   users();
