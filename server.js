@@ -35,8 +35,6 @@ app.use(express.static('public'));
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
 const mapsRoutes = require('./routes/maps');
-const categoriesRoutes = require('./routes/categories')
-
 const pinsRoutes = require('./routes/pins');
 const mapsApiRoutes = require('./routes/maps-api');
 const pinApiRoutes = require('./routes/pins-api');
@@ -47,8 +45,6 @@ const pinApiRoutes = require('./routes/pins-api');
 app.use('', authRoutes);
 app.use('/maps', mapsRoutes);
 app.use('/users', usersRoutes);
-app.use('/categories', categoriesRoutes);
-
 app.use('/pins', pinsRoutes);
 app.use('/maps-api', mapsApiRoutes);
 app.use('/pins-api', pinApiRoutes);
@@ -63,9 +59,7 @@ const { getSingleUser, getMapsByUser, getFavourites, getContributed } = require(
 
 app.get('/', (req, res) => {
   // Store the cookie in a variable and pass to the template
-  const userid = cookie.parse(req.headers.cookie || '').userid;
-  // const userid = 1;
-  console.log("userid: ", userid);
+  const { userid } = cookie.parse(req.headers.cookie || '');
 
   if (userid) {
     const promiseUser = getSingleUser(userid);
@@ -73,7 +67,6 @@ app.get('/', (req, res) => {
     const promiseGetFavourites = getFavourites(userid);
     const promiseGetContributed = getContributed(userid);
     const promiseMaps = getMaps();
-    const promiseCategories = getCategories();
 
     Promise.all([
       userid,
@@ -99,13 +92,11 @@ app.get('/', (req, res) => {
       });
   } else {
     const promiseMaps = getMaps();
-    const promiseCategories = getCategories();
 
-    Promise.all([userid, promiseMaps, promiseCategories]).then(data => {
-        const maps = data[1];
-        const categories = data[2];
-        res.render('index', { maps, userid, categories });
-      })
+    Promise.all([userid, promiseMaps]).then(data => {
+      const maps = data[1];
+      res.render('index', { maps, userid });
+    })
       .catch(err => {
         res
           .status(500)

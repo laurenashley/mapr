@@ -1,5 +1,8 @@
-LHL Node Skeleton
-=========
+# Mapr
+
+## Overview
+
+A global map app that enables users to view, create, favorite and delete maps and pins. Any users may view all maps that have been created, but may only favorite, edit and delete a pin once logged in. 
 
 ## Project Setup
 
